@@ -1,0 +1,4 @@
+interface:
+  display_name: "编剧"
+  short_description: "统一原创剧本、小说改编与导演意见修订，优先制作完整可表演的 AI 短剧"
+  default_prompt: "使用 $film-screenwriter，依据本项目材料完成剧本或修订，先判断导演意见影响并保持人物和跨集连续性。"

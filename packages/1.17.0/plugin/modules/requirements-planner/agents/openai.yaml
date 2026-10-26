@@ -1,0 +1,4 @@
+interface:
+  display_name: "需求澄清与执行规划"
+  short_description: "分批深问澄清应用或内容需求，形成适度方案并衔接已授权执行"
+  default_prompt: "使用 $requirements-planner 梳理已知需求和遗漏，分批讨论关键取舍并形成可执行方案。"

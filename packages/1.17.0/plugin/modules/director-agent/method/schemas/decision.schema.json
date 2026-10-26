@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:director-agent:v1:decision",
+  "type": "object",
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "user_statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_version": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "target_hash": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decision": {
+      "enum": [
+        "adopted",
+        "rejected",
+        "reconsider_requested"
+      ]
+    },
+    "provenance": {
+      "enum": [
+        "synthetic",
+        "human",
+        "unverified"
+      ]
+    },
+    "source_verified": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "decision_id",
+    "source_ref",
+    "user_statement",
+    "target_id",
+    "target_version",
+    "target_hash",
+    "received_at",
+    "decision",
+    "provenance",
+    "source_verified"
+  ]
+}

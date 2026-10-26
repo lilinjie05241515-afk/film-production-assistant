@@ -1,0 +1,18 @@
+{
+  "initial": {
+    "金币": 10,
+    "经验": 0
+  },
+  "events": [
+    {
+      "id": "chapter-01-buy-item",
+      "requires": {"金币": 3},
+      "delta": {"金币": -3}
+    },
+    {
+      "id": "chapter-01-complete-task",
+      "requires": {},
+      "delta": {"经验": 5}
+    }
+  ]
+}

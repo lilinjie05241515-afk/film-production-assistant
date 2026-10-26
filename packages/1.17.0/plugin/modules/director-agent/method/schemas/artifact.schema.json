@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:director-agent:v1:artifact",
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "source_task": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "sealed",
+        "registered",
+        "superseded"
+      ]
+    },
+    "freshness_status": {
+      "enum": [
+        "current",
+        "needs_recheck"
+      ]
+    },
+    "user_decision": {
+      "enum": [
+        "none",
+        "adopted",
+        "rejected",
+        "reconsider_requested"
+      ]
+    },
+    "review_status": {
+      "enum": [
+        "not_requested",
+        "pending",
+        "needs_revision",
+        "passed",
+        "inconclusive"
+      ]
+    }
+  },
+  "required": [
+    "artifact_id",
+    "version",
+    "kind",
+    "path",
+    "sha256",
+    "source_task",
+    "status",
+    "freshness_status",
+    "user_decision",
+    "review_status"
+  ]
+}

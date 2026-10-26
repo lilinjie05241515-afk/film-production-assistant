@@ -178,6 +178,27 @@ class ScaffoldTests(unittest.TestCase):
             self.run_scaffold()
         self.assertFalse((self.root / "00-设定与依据").exists())
 
+    @unittest.skipUnless(sys.platform == "darwin", "macOS system /var alias")
+    def test_verified_var_alias_works_but_custom_ancestor_link_is_rejected(self):
+        canonical_root = self.root.resolve()
+        if not canonical_root.is_relative_to(Path("/private/var")):
+            self.skipTest("Synthetic temp root is outside the macOS /var alias")
+        raw_alias = Path("/var") / canonical_root.relative_to(Path("/private/var"))
+        before_db = self.db_path.read_bytes()
+        result = module.scaffold(str(raw_alias), ID)
+        self.assertFalse(result["registry_written"])
+        self.assertEqual(self.index()["root"], str(canonical_root))
+        self.assertEqual(before_db, self.db_path.read_bytes())
+        link = canonical_root.parent / "TEST-custom-ancestor"
+        link.symlink_to(canonical_root.parent, target_is_directory=True)
+        index_before = (canonical_root / module.INDEX / "对话索引.json").read_bytes()
+        try:
+            with self.assertRaisesRegex(ValueError, "链接或重解析"):
+                module.scaffold(str(link / canonical_root.name), ID)
+            self.assertEqual(index_before, (canonical_root / module.INDEX / "对话索引.json").read_bytes())
+        finally:
+            link.unlink()
+
     def test_link_destination_rejected(self):
         target = Path(self.tmp.name) / "outside"
         target.mkdir()

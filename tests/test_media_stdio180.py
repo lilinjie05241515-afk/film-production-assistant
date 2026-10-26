@@ -18,7 +18,7 @@ from test_image_preview180 import png
 class MediaStdioTests(unittest.TestCase):
     def test_metadata_only_binary_and_verified_image_video_originals(self):
         with tempfile.TemporaryDirectory(prefix="film-media-stdio180-test_only-") as temp:
-            base = Path(temp)
+            base = Path(temp).resolve()
             source = base / "synthetic.png"
             original_bytes = png(source)
             video = base / "synthetic.mp4"
@@ -81,7 +81,7 @@ class MediaStdioTests(unittest.TestCase):
 
     def test_import_error_reports_outcome_without_claiming_success(self):
         with tempfile.TemporaryDirectory(prefix="film-media-error180-test_only-") as temp:
-            base = Path(temp)
+            base = Path(temp).resolve()
             root = base / "test_only-project"
             registry = Registry(root)
             registry.dispatch("project.init", {"op_id": "init", "project_id": "TEST-ERROR", "title": "Synthetic only", "test_only": True})

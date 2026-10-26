@@ -88,10 +88,18 @@ class ImagePreviewTests(unittest.TestCase):
         self.assertEqual(_dimensions(base64.b64decode(result["preview_data_uri"].split(",", 1)[1]))[1:], (33, 21))
         for suffix in (".jpg", ".webp"):
             target = self.base / ("synthetic" + suffix)
-            subprocess.run([shutil.which("ffmpeg"), "-hide_banner", "-loglevel", "error", "-i", str(self.source), "-frames:v", "1", "-y", str(target)], check=True, capture_output=True)
+            if suffix == ".webp":
+                # Original 33x21 solid RGBA(42,100,180,125) fixture, encoded once
+                # as lossless WebP. Preview only needs the native WebP decoder;
+                # requiring optional libwebp encoding would test a different feature.
+                target.write_bytes(base64.b64decode("UklGRh4AAABXRUJQVlA4TBEAAAAvIAAFEAdQsqqUtn2BiOh/AAA="))
+            else:
+                subprocess.run([shutil.which("ffmpeg"), "-hide_banner", "-loglevel", "error", "-i", str(self.source), "-frames:v", "1", "-y", str(target)], check=True, capture_output=True)
             result = import_image(self.registry, {**self.request, "op_id": "import-" + suffix[1:], "media_id": "IMAGE-" + suffix[1:], "path": str(target)})
             self.assertEqual(result["preview_status"], "ready", result)
             self.assertEqual(Path(result["local_path"]).read_bytes(), target.read_bytes())
+            preview = preview_image(self.registry, {"media_id": "IMAGE-" + suffix[1:]})
+            self.assertEqual(_dimensions(base64.b64decode(preview["preview_data_uri"].split(",", 1)[1]))[1:], (33, 21))
 
     def test_replay_keeps_frozen_original_and_rejects_changed_parameters(self):
         first = import_image(self.registry, self.request)

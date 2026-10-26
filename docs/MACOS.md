@@ -65,7 +65,11 @@ command -v ffprobe
 bash release/bootstrap.sh env
 ```
 
-从 Finder 启动的桌面程序可能没有 Terminal 的完整 PATH。本版媒体查找先使用显式工具路径，再查当前 PATH；仅在 macOS 上继续检查 `/opt/homebrew/bin`（Apple Silicon 常见位置）和 `/usr/local/bin`（Intel 常见位置）。不会修改全局 PATH，也不会读取或执行 shell 启动文件。显式给出的路径无效时会报错，不绕过该选择改用另一份工具。
+从 Finder 启动的桌面程序可能没有 Terminal 的完整 PATH。本版媒体查找先使用显式工具路径，再查当前 PATH；仅在 macOS 上继续检查 `/opt/homebrew/opt/ffmpeg-full/bin`、`/usr/local/opt/ffmpeg-full/bin`，然后检查 `/opt/homebrew/bin`（Apple Silicon 常见位置）和 `/usr/local/bin`（Intel 常见位置）。不会修改全局 PATH，也不会读取或执行 shell 启动文件。显式给出的路径无效时会报错，不绕过该选择改用另一份工具。
+
+基础图片、音频和视频低清预览可以使用提供相应解码器的 FFmpeg。本地时间线渲染另需 H.264/AAC 编码；测试渲染的水印需要 `drawtext`。Homebrew 的精简 `ffmpeg` 配方可能不含这一滤镜，完整渲染可选择 [Homebrew ffmpeg-full](https://formulae.brew.sh/formula/ffmpeg-full)。已使用 Homebrew 的用户可自行执行 `brew install ffmpeg-full`；这不是插件自动安装步骤。若 PATH 中优先存在精简版，请在渲染请求的 `ffmpeg`、`ffprobe` 参数中明确指定完整构建的两个绝对路径，或在启动客户端的环境中将完整构建的 `bin` 放在 PATH 前面。缺少滤镜时会报错，插件不会移除水印后继续生成测试片。
+
+本版将滤镜文件参数更新为 FFmpeg 官方推荐的 `-/filter_complex`，兼容已经移除旧参数的 FFmpeg 9。过旧、不支持该文件参数的构建需要更新；不改用可能超过命令长度限制的内联大滤镜。
 
 这些位置只是常见安装路径；FFmpeg 和 Python 仍须实际可运行。插件不要求 Rosetta，也不自动安装 Rosetta 或转换二进制架构。其他自定义工具位置应通过目标运行环境的 PATH，或相应功能支持的明确工具参数配置。
 

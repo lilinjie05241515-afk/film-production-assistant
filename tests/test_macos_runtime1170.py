@@ -1,5 +1,6 @@
 """Platform defaults and desktop media discovery; no real projects or installs."""
 import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -152,6 +153,19 @@ class DesktopMediaDiscoveryTests(unittest.TestCase):
         executable = _exe("python", sys.executable)
         raw = _run([executable, "-X", "utf8", "-c", "import sys; print(sys.argv[1])", value])
         self.assertEqual(raw.decode("utf-8").strip(), value)
+
+    def test_missing_preview_watermark_filter_reports_required_build_without_retry(self):
+        failed = subprocess.CompletedProcess(["ffmpeg"], 1, b"", b"[AVFilterGraph] No such filter: 'drawtext'")
+        with patch("filmprod.render.subprocess.run", return_value=failed) as run:
+            with self.assertRaisesRegex(ValueError, "ffmpeg-full"):
+                _run(["ffmpeg", "-/filter_complex", "filters.txt"])
+            self.assertEqual(run.call_count, 1)
+
+    def test_old_ffmpeg_file_option_failure_is_explicit(self):
+        failed = subprocess.CompletedProcess(["ffmpeg"], 1, b"", b"Unrecognized option '/filter_complex'.")
+        with patch("filmprod.render.subprocess.run", return_value=failed):
+            with self.assertRaisesRegex(ValueError, "更新到支持 -/filter_complex"):
+                _run(["ffmpeg", "-/filter_complex", "filters.txt"])
 
 
 if __name__ == "__main__":

@@ -1,18 +1,19 @@
 """Project deregistration uses isolated TEST data and never removes source files."""
 import hashlib
 import tempfile
+import sys
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 from filmprod.core import ConflictError, Registry
-from filmprod.projects import ProjectCatalog, project_identity
+from filmprod.projects import ProjectCatalog, project_identity, catalog_root_key
 
 
 class ProjectRemoval192Test(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="film-remove192-TEST-")
-        self.base = Path(self.temp.name)
+        self.base = Path(self.temp.name).resolve()
         self.catalog = ProjectCatalog(self.base / "catalog.sqlite3")
 
     def tearDown(self):
@@ -110,6 +111,27 @@ class ProjectRemoval192Test(unittest.TestCase):
         with patch("filmprod.projects.project_identity", side_effect=AssertionError("no source lookup")):
             result = self.catalog.dispatch("forget", {**self.request(a), "expected_root": equivalent})
         self.assertEqual(result["forgotten"], "A")
+
+    def test_system_alias_comparison_is_lexical_and_does_not_accept_other_paths(self):
+        with patch("filmprod.projects.sys.platform", "darwin"), \
+             patch("filmprod.projects.Path.resolve", side_effect=AssertionError("no source lookup")):
+            self.assertEqual(catalog_root_key("/var/folders/TEST/A"), catalog_root_key("/private/var/folders/TEST/A"))
+            self.assertEqual(catalog_root_key("/tmp/TEST/unused/../A"), catalog_root_key("/private/tmp/TEST/A"))
+            self.assertNotEqual(catalog_root_key("/variable/TEST/A"), catalog_root_key("/private/var/TEST/A"))
+            self.assertNotEqual(catalog_root_key("/var/TEST/A"), catalog_root_key("/private/var/TEST/B"))
+
+    @unittest.skipUnless(sys.platform == "darwin", "macOS system /var alias")
+    def test_macos_alias_confirmation_keeps_unavailable_source_read_free(self):
+        a = self.create("A")
+        canonical_root = Path(a["root"])
+        if not canonical_root.is_relative_to(Path("/private/var")):
+            self.skipTest("Synthetic temp root is outside the macOS /var alias")
+        raw_alias = Path("/var") / canonical_root.relative_to(Path("/private/var"))
+        with patch("filmprod.projects.project_identity", side_effect=AssertionError("no source lookup")), \
+             patch("filmprod.projects.Path.resolve", side_effect=AssertionError("no source resolution")):
+            result = self.catalog.dispatch("forget", {**self.request(a), "expected_root": str(raw_alias)})
+        self.assertEqual(result["forgotten"], "A")
+        self.assertTrue(canonical_root.is_dir())
 
     def test_reregister_preserves_content_and_does_not_restore_old_bindings_or_replay_deletion(self):
         a = self.create("A", thread_id="chat-A", client_project_id="client-A")

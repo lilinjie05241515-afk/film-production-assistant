@@ -25,7 +25,8 @@ from pathlib import Path, PurePosixPath
 IDENTITY = "film-production-agent@film-production-local"
 MANIFEST = "release-manifest.json"
 ACTIVE_STATUSES = {"created", "in_progress", "needs_review"}
-MAC_MEDIA_DIRECTORIES = ("/opt/homebrew/bin", "/usr/local/bin")
+MAC_MEDIA_DIRECTORIES = ("/opt/homebrew/opt/ffmpeg-full/bin", "/usr/local/opt/ffmpeg-full/bin",
+                         "/opt/homebrew/bin", "/usr/local/bin")
 CATALOG_SQL = """
 CREATE TABLE IF NOT EXISTS projects(project_id TEXT PRIMARY KEY, root TEXT UNIQUE NOT NULL, data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS bindings(kind TEXT NOT NULL, binding_id TEXT NOT NULL, project_id TEXT NOT NULL, PRIMARY KEY(kind,binding_id));
@@ -253,7 +254,7 @@ def environment(python=None):
     result.update(current_platform=current_platform, supported_platforms=["windows", "macos"],
                   platform_supported=current_platform in {"windows", "macos"}, environment_checked=True,
                   ffmpeg=optional_executable("ffmpeg", current_platform), ffprobe=optional_executable("ffprobe", current_platform),
-                  ffmpeg_required=False, missing_optional_guidance="FFmpeg/ffprobe 缺失时文字创作与登记可用；媒体预览和本地渲染需安装 FFmpeg。macOS 同时检查 /opt/homebrew/bin 与 /usr/local/bin，其他安装位置需加入启动环境 PATH。不会自动下载或调用付费服务。")
+                  ffmpeg_required=False, missing_optional_guidance="FFmpeg/ffprobe 缺失时文字创作与登记可用；媒体预览和本地渲染需安装 FFmpeg。macOS 同时检查 Homebrew ffmpeg-full 与标准 bin 目录，其他安装位置需加入启动环境 PATH；带字幕本地渲染需要含 drawtext 的完整构建。不会自动下载或调用付费服务。")
     return result
 
 

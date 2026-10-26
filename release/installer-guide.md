@@ -1,6 +1,6 @@
 # 影视制作助手 1.17.0 · Windows / macOS 安装、升级与恢复
 
-本版提供 Windows 与 macOS 桌面本地执行适配，两种系统使用同一发行 ZIP。Python 3.11 或更新版本及其内置 sqlite3 为必要依赖；安装器只用标准库。FFmpeg 与 ffprobe 用于媒体探测、预览和本地渲染，文字创作、版本登记不依赖它们。安装器检查缺项并用中文说明，不自动联网下载、不配置模型 API、不启动 HTTP 服务。
+本版提供 Windows 与 macOS 桌面本地执行适配，两种系统使用同一发行 ZIP。Python 3.11 或更新版本及其内置 sqlite3 为必要依赖；安装器只用标准库。FFmpeg 与 ffprobe 用于媒体探测、预览和本地渲染，文字创作、版本登记不依赖它们。Mac 如需带水印的视频预览渲染，使用包含 drawtext 的完整 FFmpeg 构建（例如 Homebrew `ffmpeg-full`）；详细步骤见源码 `docs/MACOS.md`，发行包内对应 `plugin/docs/MACOS.md`。安装器检查缺项并用中文说明，不自动联网下载、不配置模型 API、不启动 HTTP 服务。
 
 程序发行 ZIP 与作品移交包分开。发行 ZIP 不应包含作品数据库、媒体、账号秘密、Pages 或聊天绑定。SHA-256 可以证明取得的字节与已知摘要一致；发布源身份仍须来自可信的 Git 地址或明确交付渠道。
 

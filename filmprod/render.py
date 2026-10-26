@@ -19,9 +19,10 @@ from pathlib import Path
 from .core import ConflictError, Registry, canonical, content_hash, now, required
 
 
-RENDERER_VERSION = "1.1.0"
+RENDERER_VERSION = "1.1.1"
 CLEARED_RIGHTS = {"owned", "licensed", "public_domain", "cleared"}
-MACOS_EXECUTABLE_DIRS = ("/opt/homebrew/bin", "/usr/local/bin")
+MACOS_EXECUTABLE_DIRS = ("/opt/homebrew/opt/ffmpeg-full/bin", "/usr/local/opt/ffmpeg-full/bin",
+                         "/opt/homebrew/bin", "/usr/local/bin")
 
 
 def _hash(path):
@@ -55,7 +56,7 @@ def _exe(name, supplied=None):
     found = shutil.which(name)
     candidates = [Path(found)] if found else []
     # Desktop apps on macOS do not necessarily inherit the interactive shell's
-    # Homebrew PATH. Check only its two standard locations; never alter PATH.
+    # Homebrew PATH. Check full-build and standard locations; never alter PATH.
     if sys.platform == "darwin" and name in {"ffmpeg", "ffprobe"}:
         candidates.extend(Path(directory) / name for directory in MACOS_EXECUTABLE_DIRS)
     for path in candidates:
@@ -67,7 +68,13 @@ def _exe(name, supplied=None):
 def _run(args, cwd=None, timeout=600):
     result = subprocess.run(args, cwd=cwd, capture_output=True, timeout=timeout, shell=False)
     if result.returncode:
-        raise ValueError("本地媒体命令失败: " + result.stderr.decode("utf-8", errors="replace")[-6000:])
+        detail = result.stderr.decode("utf-8", errors="replace")[-6000:]
+        if "No such filter" in detail and "drawtext" in detail:
+            raise ValueError("当前 FFmpeg 缺少 drawtext，无法保留测试预览水印；请使用带 drawtext/libfreetype/libharfbuzz 的完整构建。"
+                             "macOS 可使用 ffmpeg-full，并在渲染参数中明确指定其 ffmpeg 与 ffprobe，或在启动客户端的环境 PATH 中选择它。未移除水印或标记渲染成功。\n" + detail)
+        if "Unrecognized option" in detail and "/filter_complex" in detail:
+            raise ValueError("当前 FFmpeg 不支持滤镜文件参数；请更新到支持 -/filter_complex 的版本后重试。\n" + detail)
+        raise ValueError("本地媒体命令失败: " + detail)
     return result.stdout
 
 
@@ -298,7 +305,9 @@ def _command(manifest, job, ffmpeg, preview):
     # A filter file keeps the command bounded and contains only numeric config
     # and fixed labels. Paths and arbitrary subtitle strings never enter it.
     (job / "filters.txt").write_text(";\n".join(filters), encoding="utf-8")
-    args += ["-filter_complex_script", "filters.txt", "-map", f"[{video_label}]", "-map", "[mixedaudio]"]
+    # FFmpeg 9 removed filter_complex_script. The generic file-value syntax
+    # keeps the same graph and bounded argv on current FFmpeg releases.
+    args += ["-/filter_complex", "filters.txt", "-map", f"[{video_label}]", "-map", "[mixedaudio]"]
     if manifest["subtitles"]:
         args += ["-map", f"{subtitle_index}:s:0", "-c:s", "mov_text", "-disposition:s:0", "default", "-metadata:s:s:0", "language=zho"]
     args += ["-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p", "-r", str(fps), "-c:a", "aac", "-b:a", str(spec.get("bitrate", 192000)), "-ar", "48000", "-ac", "2", "-t", str(manifest["duration_seconds"]), "-movflags", "+faststart", "-metadata", "comment=" + ("TEST PREVIEW; NOT APPROVED" if preview else "LOCAL RENDER; NOT ADOPTED OR PUBLISHED"), "output.mp4"]

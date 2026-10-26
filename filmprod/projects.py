@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import posixpath
 import sqlite3
 import sys
 from pathlib import Path
@@ -23,6 +24,19 @@ def catalog_path():
         local_app_data = os.environ.get("LOCALAPPDATA")
         base = Path(local_app_data) if local_app_data else Path.home() / "AppData/Local"
     return base / "FilmProduction/projects.sqlite3"
+
+
+def catalog_root_key(value):
+    """Compare a recorded location without accessing an unavailable source."""
+    if sys.platform == "darwin":
+        normalized = posixpath.normpath(value)
+        # These system aliases are stable spellings, not arbitrary user links.
+        # Do not resolve project paths: forget must work while the source is absent.
+        for alias, target in (("/var", "/private/var"), ("/tmp", "/private/tmp")):
+            if normalized == alias or normalized.startswith(alias + "/"):
+                return target + normalized[len(alias):]
+        return normalized
+    return os.path.normcase(os.path.normpath(value))
 
 
 def project_identity(root):
@@ -230,8 +244,7 @@ class ProjectCatalog:
                 expected_root = p["expected_root"]
                 if not isinstance(expected_root, str) or not expected_root.strip() or not Path(expected_root).is_absolute():
                     raise ValueError("expected_root 必须为登记项目的绝对目录")
-                normalize = lambda value: os.path.normcase(os.path.normpath(value))
-                if normalize(expected_root) != normalize(project["root"]):
+                if catalog_root_key(expected_root) != catalog_root_key(project["root"]):
                     raise ConflictError("项目源文件夹登记已变化，请重新打开项目设置后再删除登记")
             if "expected_registered_at" in p:
                 expected_time = p["expected_registered_at"]

@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import sqlite3
 import stat
+import sys
 import uuid
 
 RULES = Path(__file__).resolve().parents[1] / "references/project-bootstrap.md"
@@ -49,14 +50,30 @@ def encoded(value) -> bytes:
     return (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
+def trusted_mac_system_alias(path: Path) -> bool:
+    if sys.platform != "darwin":
+        return False
+    target = {"/var": "/private/var", "/tmp": "/private/tmp"}.get(path.as_posix())
+    if not target:
+        return False
+    try:
+        return path.resolve(strict=True) == Path(target) and Path(target).is_dir()
+    except (OSError, RuntimeError):
+        return False
+
+
 def check_path(path: Path, kind: str | None = None) -> None:
-    """Reject links/reparse points, including ancestors, before following paths."""
+    """Reject user links/reparse points; verify only macOS's fixed system aliases."""
     for item in reversed((path, *path.parents)):
         try:
             info = item.lstat()
         except FileNotFoundError:
             continue
         if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+            if stat.S_ISLNK(info.st_mode) and trusted_mac_system_alias(item):
+                if item == path and kind == "file":
+                    raise ValueError(f"目标不是普通文件：{item}")
+                continue
             raise ValueError(f"拒绝链接或重解析路径：{item}")
         if item != path and not stat.S_ISDIR(info.st_mode):
             raise ValueError(f"父路径不是目录：{item}")

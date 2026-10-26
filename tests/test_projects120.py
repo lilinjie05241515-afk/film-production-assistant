@@ -17,7 +17,7 @@ from filmprod.media120 import import_video, preview_video
 class CatalogTest(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="film-catalog-TEST-")
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         self.catalog_path = self.root / "catalog.sqlite3"
         self.catalog = ProjectCatalog(self.catalog_path)
 
@@ -107,7 +107,7 @@ class NativeMediaTest(unittest.TestCase):
     def test_pending_import_recovers_after_restore_without_retargeting_committed_payload(self):
         for interrupted_after_commit in (False, True):
             with self.subTest(interrupted_after_commit=interrupted_after_commit), tempfile.TemporaryDirectory(prefix="film-import-restore-TEST-") as temp:
-                base=Path(temp); original=base/"original"; registry=Registry(original)
+                base=Path(temp).resolve(); original=base/"original"; registry=Registry(original)
                 registry.dispatch("project.init",{"op_id":"init","project_id":"TEST-MEDIA-RESTORE","title":"TEST restored import","test_only":True})
                 source=base/"synthetic.mp4"; source.write_bytes(b"SYNTHETIC-VIDEO-ONLY")
                 payload={"op_id":"import","media_id":"M1","path":str(source),"kind":"clip","expected_project_id":"TEST-MEDIA-RESTORE"}
@@ -146,7 +146,7 @@ class NativeMediaTest(unittest.TestCase):
 
     def test_completed_import_cache_resolves_current_root_after_move(self):
         with tempfile.TemporaryDirectory(prefix="film-import-move-TEST-") as temp:
-            base=Path(temp); original=base/"original"; registry=Registry(original)
+            base=Path(temp).resolve(); original=base/"original"; registry=Registry(original)
             registry.dispatch("project.init",{"op_id":"init","project_id":"TEST-MEDIA-MOVE","title":"TEST moved import","test_only":True})
             source=base/"synthetic.mp4"; source.write_bytes(b"SYNTHETIC-VIDEO-ONLY")
             payload={"op_id":"import","media_id":"M1","path":str(source),"kind":"clip"}
@@ -165,7 +165,7 @@ class NativeMediaTest(unittest.TestCase):
     @unittest.skipUnless(shutil.which("ffmpeg") and shutil.which("ffprobe"), "requires local FFmpeg")
     def test_video_import_preview_idempotency_and_project_isolation(self):
         with tempfile.TemporaryDirectory(prefix="film-media-TEST-") as temp:
-            root=Path(temp)
+            root=Path(temp).resolve()
             source=root/"synthetic.mp4"
             subprocess.run([shutil.which("ffmpeg"),"-hide_banner","-loglevel","error","-f","lavfi","-i","color=c=blue:s=320x180:d=0.4","-c:v","libx264","-pix_fmt","yuv420p","-y",str(source)],check=True,capture_output=True)
             registry=Registry(root/"A")

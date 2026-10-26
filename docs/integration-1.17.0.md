@@ -8,7 +8,8 @@
 - 环境检查记录真实操作系统、CPU 架构和 Python；平台支持范围与本次检测分别表达，不把识别出 macOS 当作已经完成客户端验收。
 - 安装器继续为目标机器生成绝对 Python、脚本、catalog 与配置路径。Mac 与 Windows 使用同一套发行哈希校验、独立部署、升级锁、备份及恢复流程。
 - 未指定 catalog 时，Mac 运行时使用用户的 Application Support 目录；显式环境配置及已有安装器选择优先。不会猜测、搬迁或合并旧 Windows 风格路径下的登记库。
-- 媒体工具在当前 PATH 之外支持 macOS 常见 Homebrew 位置；用户显式工具路径仍有最高优先级，失效时明确报错，不自动切换来源。
+- 媒体工具在当前 PATH 之外支持 macOS 常见 Homebrew 位置，包括 `ffmpeg-full` 的两个 `opt` 目录；用户显式工具路径仍有最高优先级，失效时明确报错，不自动切换来源。
+- 渲染器 1.1.1 使用 `-/filter_complex` 读取原有滤镜文件，适配 FFmpeg 9 删除旧参数后的行为；时间线、音频、字幕和审批边界不变。测试片仍保留水印，缺少 `drawtext` 时给出完整 FFmpeg 构建的说明并停止，不降级去除水印。图片预览只要求 WebP 解码，不额外要求安装 WebP 编码器。
 - 补齐 Mac 安装、客户端接入、媒体依赖、Windows 作品迁移及验收边界说明。具体操作见同目录 `MACOS.md` 与发行 ZIP 根的 `release/installer-guide.md`。
 
 ## 保持的行为

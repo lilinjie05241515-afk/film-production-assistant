@@ -16,7 +16,7 @@ spec.loader.exec_module(p)
 class PublisherTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix="film-publisher-TEST-")
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.payload = self.root / "payload"
         (self.payload / "plugin/.codex-plugin").mkdir(parents=True)
         (self.payload / "plugin/skills/film-production-agent").mkdir(parents=True)

@@ -20,7 +20,7 @@ spec.loader.exec_module(installer)
 class InstallerTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix="filmprod-synthetic-install-")
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.app = self.root / "different-user/program"
         self.data = self.root / "different-drive/data"
         self.config = self.root / "different-user/config"

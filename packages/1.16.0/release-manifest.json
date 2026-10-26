@@ -1,0 +1,1342 @@
+{
+  "channel": "stable",
+  "created_at": "2026-10-26T17:08:23.075829+00:00",
+  "distribution": "source_and_optional_dependency_rights_recorded_in_module_manifest",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "aec851e34bea6bbd12de2b5d4e7fd46a69b5e356f185e7b7758832d219fc36e8",
+      "size": 2699
+    },
+    {
+      "path": "install.py",
+      "sha256": "6bacdebe97ec93031582dc5a182762ed92ad0967316770b62811d0299a324692",
+      "size": 76
+    },
+    {
+      "path": "plugin/.codex-plugin/plugin.json",
+      "sha256": "6f4a42f11677ad21e5b5dd9412d473b9900c43102dc765b52973f94ea2a623a0",
+      "size": 481
+    },
+    {
+      "path": "plugin/.mcp.json",
+      "sha256": "77a77840e0a797e1eea87dee8d240d5a03bbfe336d49e7fb5a6bb3d21d340303",
+      "size": 285
+    },
+    {
+      "path": "plugin/AGENTS.md",
+      "sha256": "7fafb21760305377680a2aa1e8da8e19e52229ee7bacc727fc415a43958b1e3e",
+      "size": 1946
+    },
+    {
+      "path": "plugin/CONTRACT.md",
+      "sha256": "6c274322cb1eff898bbb2fb2c56445c03b7b8c00dac589ca3ccb52bfd32ea3b7",
+      "size": 48508
+    },
+    {
+      "path": "plugin/docs/FEATURES.md",
+      "sha256": "4af9802284513a9f6177c9b589bfc800d9018290f9a7a346dddb5527dc515d5c",
+      "size": 2737
+    },
+    {
+      "path": "plugin/docs/INSTALL.md",
+      "sha256": "87f16d520c374cb530fe0fec49b8a0a7d8c08c95f704beb113a9bfe5cd4c66f3",
+      "size": 2078
+    },
+    {
+      "path": "plugin/docs/UPGRADE.md",
+      "sha256": "f2d66cea97d81a7280baa0b28666519cac7770f922b31bd3dc8b25c90de8c1c5",
+      "size": 2050
+    },
+    {
+      "path": "plugin/docs/integration-1.10.0.md",
+      "sha256": "6ad08b0cc453e1e00bd3b4a397dbcc1dd25a628a271b3bcafb066731e8cb865b",
+      "size": 4497
+    },
+    {
+      "path": "plugin/docs/integration-1.11.0.md",
+      "sha256": "facdd06e0169296c4511f6db4b589c9fe2e6a738a5e97a06771f7eb1b51aeb05",
+      "size": 2804
+    },
+    {
+      "path": "plugin/docs/integration-1.12.0.md",
+      "sha256": "be999e3d72bc272a16e242f4591c3f1a089dd294e82f2ad18df7ce70487a2c79",
+      "size": 1268
+    },
+    {
+      "path": "plugin/docs/integration-1.13.0.md",
+      "sha256": "07106d7692a67451ef734bff59273d13c01e7ebc6321da9d15808a2b7fcd65d6",
+      "size": 3261
+    },
+    {
+      "path": "plugin/docs/integration-1.14.0.md",
+      "sha256": "af5f54247c2bcb014b12429446d5f93f3be1fb11767476f33d1307dd4e5598ec",
+      "size": 5159
+    },
+    {
+      "path": "plugin/docs/integration-1.15.0.md",
+      "sha256": "a2433b2d38a7da34091702a1713e52e32ccdc3f6768a96a93441c86f41a39401",
+      "size": 5987
+    },
+    {
+      "path": "plugin/docs/integration-1.15.1.md",
+      "sha256": "ec90339bb1d8f1853a50744a2f9c3568533cb31b32cdd2de8515dcc2151b42fa",
+      "size": 1208
+    },
+    {
+      "path": "plugin/docs/integration-1.15.2.md",
+      "sha256": "9abd82b41413742952bea32f29cb3e7066945fa1911d88f4e398b914628cf0d5",
+      "size": 817
+    },
+    {
+      "path": "plugin/docs/integration-1.16.0.md",
+      "sha256": "1f9e2fb7b97d761c4f192c4c70b81503794cc74bfc29e2303c2b7a2af13a579b",
+      "size": 3243
+    },
+    {
+      "path": "plugin/docs/integration-1.6.md",
+      "sha256": "15e14ef2a3812846cd669d75b9b78dc0e642d85a90c6a3ce62f4fc5e31e19d54",
+      "size": 5022
+    },
+    {
+      "path": "plugin/docs/integration-1.7.2.md",
+      "sha256": "2195dd73e3459e7c584f8c2549354c35f59b1c217c33dbcd748bee79dee4b363",
+      "size": 3403
+    },
+    {
+      "path": "plugin/docs/integration-1.7.3.md",
+      "sha256": "ee5674359687e93044ab5e146d6b67cc295f88731703fa50d742bb7fa574b69c",
+      "size": 1446
+    },
+    {
+      "path": "plugin/docs/integration-1.7.4.md",
+      "sha256": "694f4d156380954b1f0b6bccb3d16aa6d99260cc896490453e4b5193646c5671",
+      "size": 2910
+    },
+    {
+      "path": "plugin/docs/integration-1.7.md",
+      "sha256": "63b6abf61710b3fd79090d063c01944218ef5461d7ccca8ef6af0e207907cb31",
+      "size": 5486
+    },
+    {
+      "path": "plugin/docs/integration-1.8.0.md",
+      "sha256": "6be6774d517572338e76d811ae6c91bb7887139fb4fa69662b6919bc71c5b40b",
+      "size": 4937
+    },
+    {
+      "path": "plugin/docs/integration-1.9.0.md",
+      "sha256": "9165f0329fb7816be35ffcf25446110447cb51dedbcbf57d4966eb06cd77d761",
+      "size": 4708
+    },
+    {
+      "path": "plugin/docs/integration-1.9.1.md",
+      "sha256": "4e22ea2394e3d56402a605209a21a10b87722d16869523e45af38fcf6f3b48cf",
+      "size": 3233
+    },
+    {
+      "path": "plugin/docs/integration-1.9.2.md",
+      "sha256": "ebe68f9c0a406e4ccbc43986b6ebbbfead224b72c9f0306a2f232d14797625e8",
+      "size": 1473
+    },
+    {
+      "path": "plugin/docs/integration-1.9.3.md",
+      "sha256": "619a0f9865df96a1c4669e1e6065dde76b06d13f90fd30ee033a2f70ed45581f",
+      "size": 6500
+    },
+    {
+      "path": "plugin/docs/integration-1.9.4.md",
+      "sha256": "379a4f829a759e51a5fe72e43029acb94822704bb105dd19b9ead185057a4dbd",
+      "size": 4081
+    },
+    {
+      "path": "plugin/docs/integration-art-1.13.0.md",
+      "sha256": "8fe287fd12c7b9983c28dbdc1514efa52ca299bde54e102bde5bb7fc30425df9",
+      "size": 12222
+    },
+    {
+      "path": "plugin/docs/integration-brainstorm-1.4.md",
+      "sha256": "1a6a92aa5187b7b8eb98d2d98fd5821eb9bdc01deb882ede24934cfde3f9721d",
+      "size": 3498
+    },
+    {
+      "path": "plugin/docs/integration-cloud-1.12.0.md",
+      "sha256": "51e8500f9d379d16c51fe44af9f47a23901e9b1ce3996d3455b4867995864aa4",
+      "size": 8993
+    },
+    {
+      "path": "plugin/docs/integration-cloud-ui1120.md",
+      "sha256": "24c1382e970c61b11db53a937b3b4f0d28751ce655a5a2be5bedaf409115e18d",
+      "size": 3745
+    },
+    {
+      "path": "plugin/docs/integration-delivery-1.11.0.md",
+      "sha256": "2ed2680658ef4cbd59e7f0e0d9f33c9de3427dbce9dc2ace3d42ac7e64dc9a54",
+      "size": 6481
+    },
+    {
+      "path": "plugin/docs/integration-director.md",
+      "sha256": "8df080305435ec23791490f8978f11e58315640362ad6dd09b63a5de142f541c",
+      "size": 839
+    },
+    {
+      "path": "plugin/docs/integration-pages.md",
+      "sha256": "c2a7585af5d8ddf7cd8cc23b7a3fe389740397b328c4d3e112bac3706714aeda",
+      "size": 5984
+    },
+    {
+      "path": "plugin/docs/integration-screenwriter-1.13.0.md",
+      "sha256": "bb0cd6663f7738732c762a1b8e51ced0508bb37eb4643e91d9aae83681ba310d",
+      "size": 5210
+    },
+    {
+      "path": "plugin/docs/integration-screenwriter-overview-1.14.0.md",
+      "sha256": "7e0e5f28fc4c2b5a9d1ef85c903cc27d181a73f85f2d50f9fdf9a3b54b5c3d8e",
+      "size": 3380
+    },
+    {
+      "path": "plugin/docs/integration-skills.json",
+      "sha256": "b42d1e69f7a1ac269abb83c32a3d9f60cee4cc56146121974294305a8580744c",
+      "size": 116
+    },
+    {
+      "path": "plugin/docs/integration-style-feedback-1.14.0.md",
+      "sha256": "fc1291658f5dfbe4bd12f5f1523e6387da6662184330d07f9d2a9a46698ee04f",
+      "size": 8237
+    },
+    {
+      "path": "plugin/docs/integration-video-prompt-1.5.md",
+      "sha256": "86db8fde19af6a6932bd47455d84ae415418c31e56d2091dbae948469185ca70",
+      "size": 4055
+    },
+    {
+      "path": "plugin/docs/integration-workflow-1.3.md",
+      "sha256": "403c29c8714921f714c43198238f2ce3bfd21d30cdeddb1cc9ea39341fddb667",
+      "size": 5397
+    },
+    {
+      "path": "plugin/docs/integration-workspace-1.11.0.md",
+      "sha256": "9ee6521fc89d2e6304e9bdc837a6bec7b5b72a8bb0594219dd40759710947c61",
+      "size": 13446
+    },
+    {
+      "path": "plugin/docs/integration-workspace-ui1110.md",
+      "sha256": "4fa9b4b32a96a8e26c798d3b52c43ce416d99efd30b27a4dd6635d9282aedcf7",
+      "size": 7081
+    },
+    {
+      "path": "plugin/docs/integration.md",
+      "sha256": "1f9e2fb7b97d761c4f192c4c70b81503794cc74bfc29e2303c2b7a2af13a579b",
+      "size": 3243
+    },
+    {
+      "path": "plugin/docs/剪辑导出.md",
+      "sha256": "5a0ca2bac0bfe4519fa08c65b4237bc3ade4fabea0341869f49925353bf49d61",
+      "size": 1234
+    },
+    {
+      "path": "plugin/mcp_server.py",
+      "sha256": "7c5b045c840f1b273b6f30830e54bb794f893f6785a6d2d533a1148ba9568cd2",
+      "size": 27642
+    },
+    {
+      "path": "plugin/modules/director-agent/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/director-agent/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+      "size": 441
+    },
+    {
+      "path": "plugin/modules/director-agent/SKILL.md",
+      "sha256": "61d1985e295bf3d554535a1a10ce2f8dfcacbf982baf57516ac0b1aa0c45ed65",
+      "size": 1990
+    },
+    {
+      "path": "plugin/modules/director-agent/agents/openai.yaml",
+      "sha256": "c02072b28cbd58bc08599c80ba4b0a37cd42816d58395865185c91eed89ce1c4",
+      "size": 355
+    },
+    {
+      "path": "plugin/modules/director-agent/method/docs/导演与提示词执行Agent交接.md",
+      "sha256": "db7f683d09712f6c895e32ce98227772f838c06fbf3d52e8c3885f325268d4f4",
+      "size": 5469
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/artifact.schema.json",
+      "sha256": "ecfdfc288df9cfeb71ab81034454d987f0389e37dc636d21a3d411e53d4f9a8e",
+      "size": 1474
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/checkpoint.schema.json",
+      "sha256": "e589e22dc231de59f0d4982d28cabc6238e8cf55a3919a1a1739df82205d4c39",
+      "size": 1686
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/decision.schema.json",
+      "sha256": "b49793f87fb91ba6fcd1ff4800a4d8f40e9e85e8041688ba70c560f8fcc52e44",
+      "size": 1632
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/direction.schema.json",
+      "sha256": "c030c381c8bec750bb9064fb282bc6f4043ac1e3e6a66173c4edefb7173c8e1a",
+      "size": 27120
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/project.schema.json",
+      "sha256": "b4e62fcb2c6ef151e90f4f4ea46a91a417048ebb248bbc86e99c8c4fd3adb4f7",
+      "size": 572
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/recovery.schema.json",
+      "sha256": "878691df81ab324c185b85efb7e76624b718b17ad3c451342362ead14e4910c0",
+      "size": 1590
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/review.schema.json",
+      "sha256": "b3608b9472ac2cacda87d4dae0a1c69d8f5e1e106c9ef08eb8bc609e68c586d2",
+      "size": 4247
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/shot.schema.json",
+      "sha256": "6a15ef1a6a96f36f672c1dada8a9f93b98275a461be3c922dbdb45f8f5c412e3",
+      "size": 4183
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/submission.schema.json",
+      "sha256": "f72bbe0b2105a059c60928a25957076802adc4dc37150efe96e5606dc449303c",
+      "size": 1832
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/sync-receipt.schema.json",
+      "sha256": "cdf4b8be950be89c8ad9dc991f721d8ee5847065fd5badb008e7ea85d7b305d4",
+      "size": 1011
+    },
+    {
+      "path": "plugin/modules/director-agent/method/schemas/task.schema.json",
+      "sha256": "1830c90db073571694f14fd87312440f175af5f34d04d5672bff5218415164a5",
+      "size": 2289
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/SKILL.md",
+      "sha256": "ab96fcaee5cd96a92186a26d4594dbf852278aee029ee015674dd856fca1f5d6",
+      "size": 12395
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/action-environment.md",
+      "sha256": "1cedebbfac0876c2b797f5e27f02c814b8d73c5bafe627f504b212803c59fe5f",
+      "size": 11832
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/action-evaluation.md",
+      "sha256": "e5edbed8eba68e7f9dcf72fd429f05715ba22be21652850bcc79b059b7972719",
+      "size": 3320
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/action-impact.md",
+      "sha256": "e9f0c8b448a36e6b75e2dda6b6862a443d4c344a063ca3f9c1776bbba4a85ad9",
+      "size": 11458
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/action.md",
+      "sha256": "31c571df960737fb768bd76ad6f594e83f0eb1946a9f148faad339027e11d2f3",
+      "size": 8603
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/clear-directing-output.md",
+      "sha256": "9ac36a929e19326e7a170eab9d88f3d27c60a415ce17c663f6b47d77842628ca",
+      "size": 6764
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/comedy.md",
+      "sha256": "2927dc1937030f2df1ac2647c99f61bd3bff446f503968e1cd8492fa178b2e2a",
+      "size": 10660
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/continuity.md",
+      "sha256": "58855fc4886db3e612c6a2fd2136e3a33096d69efecb7fa38d85d4069199e60c",
+      "size": 1498
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/delivery-and-routing.md",
+      "sha256": "ca967a244af5cf60243d57171b276ca7cd3396d6ac87388763a714cba8306225",
+      "size": 3936
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/directing-craft.md",
+      "sha256": "41ad6a4f91f1e4d706a31b74e5e42ce9ecb530592e5a6b2a9dd418ef665d9a8d",
+      "size": 8215
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/family-direction.md",
+      "sha256": "ff88222b3dd2478fab4e39ea018047b27eb84d042edfb916d3a3fc857af485cf",
+      "size": 8722
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/family-evaluation.md",
+      "sha256": "33f0c84320fe91d53d2ba9c8fcefb52f21a2d0161434bf83b7bc20c2a80cd11d",
+      "size": 4089
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/family-method-cases.md",
+      "sha256": "f45b60d96700e4f8fc8adce1b4edc77c90d3f093756c922574b318cf5a947784",
+      "size": 18167
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/film-case-method.md",
+      "sha256": "15c73dd44e6cb498204531ff3465a78fb7f29a0a06a78cf408d5a7bec209f020",
+      "size": 14300
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/format-adaptation.md",
+      "sha256": "253ac16d684ff468303011d3247aef6e25f6367b389688319169af66333b8edc",
+      "size": 11919
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/genre-routing.md",
+      "sha256": "8d9bf767f47d21fe927dbd9c51423a533a2eed20b5182520a286ea7f8427de97",
+      "size": 6853
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/horror.md",
+      "sha256": "4a1acf00babbc4047a5a0e6a3ea98f1fcc5be8825a31c8bc36ef8c646de1b1db",
+      "size": 11431
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/production-interface.md",
+      "sha256": "6b498017bd38984f1612b45def990952e897a5b771cd6e627945ef2e6388745a",
+      "size": 3666
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/relationship.md",
+      "sha256": "4a78b97bb0902d63e91d3fb447d9d678be5f5cfc52426c480b771c81c1bd31be",
+      "size": 1495
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/review-protocol.md",
+      "sha256": "5970685de4c05c330ebd6d7dce2ab4e6e94a27ce932e39a00af61369fbf9051c",
+      "size": 5900
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/scene-forms.md",
+      "sha256": "569d54516baceeadfead0fc09df4fca3f7d67275350a656ec84766265f1aaa51",
+      "size": 11645
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/shot-choice-evaluation.md",
+      "sha256": "9c7e42e5e23273f0d43f8166304f9aee1f7b734311a23828b6caa06af2d544a7",
+      "size": 4651
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/shot-choice.md",
+      "sha256": "96c4f921b701f794582f16d24e1086a12196bccfd567cfbbed55442441abec2e",
+      "size": 7452
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/shot-techniques.md",
+      "sha256": "b42029f6f7911654b1045e28eb6e963545d73ef5c3a596408e881d366e48aca8",
+      "size": 23071
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/simple-start.md",
+      "sha256": "e42056c3d0ceebb05ab0e52abdba3e8fa5a08cf68f2fe392300be7c783037ffe",
+      "size": 1991
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/state-and-recovery.md",
+      "sha256": "5c86d1d1be48aff89443714ad9c38c70b5c38414f79e29e7ee81a420a0c6c2c9",
+      "size": 3285
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/suspense.md",
+      "sha256": "ff4a624640b4d62f32a9d60192be3e77b6de06cbe4e5390cf62d5bc3e4195e54",
+      "size": 8076
+    },
+    {
+      "path": "plugin/modules/director-agent/method/skills/director-orchestrator/references/world-and-period.md",
+      "sha256": "3bfe981b25f847bc184cd84d51508a1e46426c5ba809a80a3802057f96e100d9",
+      "size": 8925
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/01-treatment.md",
+      "sha256": "b361d94d278a05db09ecf67a90a21f9403782815c1c083cf4a29d7adbffd2fce",
+      "size": 1692
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/02-scene-direction.md",
+      "sha256": "a6d5245505cbf86926c3ac920f118c7fef5dbbe713553c79e88fca0489d66ef9",
+      "size": 3438
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/03-shot-plan.md",
+      "sha256": "71ee4107303f6966b00741630418701d05844f52ea9dd075bb6ef3beb13c2441",
+      "size": 4048
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/04-editing-sound.md",
+      "sha256": "3c0af9b03ec1ff84cdaee7a4c4b79c9e413dec7fdabe53c48c46cfd226dac1d2",
+      "size": 1290
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/05-production-handoff.md",
+      "sha256": "2b1f365b38224d8af7cc44c623dfd06d40574e9dee08465310c6486c45a9b78a",
+      "size": 2186
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/06-review-revision.md",
+      "sha256": "641adee6e42ed6dfe9c6cbc03d04011d5200f6b50df9542e94d69060e6d935c9",
+      "size": 2078
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/INDEX.md",
+      "sha256": "5c1c89c08086796ce20cd6e624de27cbb5e01a3876ecbacd08379fde3a181460",
+      "size": 1742
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/action-beat-card.md",
+      "sha256": "3b9f6213b5d777dafe6254dbdceccbed4480bfceb03a931eb9460a6084218ae8",
+      "size": 2425
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/film-case-card.md",
+      "sha256": "fb4c8cd9586746aff699774c8a6eb0166ecd55d655bda0c613f4fe6f4b3f76c4",
+      "size": 6027
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/recovery-packet.md",
+      "sha256": "4ae3d1006de0a55e94ab397af093c90f34639bb55ab4aaa98b87d9d53390d9d2",
+      "size": 1486
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/reviewer-task.md",
+      "sha256": "c3b3c61b8a63948d029b8848f8623727e331ba12ddadd56646544f708d9f37e1",
+      "size": 1372
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/shot-choice-note.md",
+      "sha256": "2c6f62f330e225623735cd3731fa975f931284a6e09e7a97a940fdca7475c9d8",
+      "size": 1352
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/specialist-call.md",
+      "sha256": "006652d7b124625d34e30e1642f3dd1f51af07cdce604c5f971b8826000970bb",
+      "size": 726
+    },
+    {
+      "path": "plugin/modules/director-agent/method/templates/task-packet.md",
+      "sha256": "d4a62cd4f8d3b9bf438fa4382d2b2beb20bdf5e9398d284d06885381f556261d",
+      "size": 1422
+    },
+    {
+      "path": "plugin/modules/film-analysis/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/film-analysis/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "d4541ccb8bdbf404ecdcced77eed45339e701d41f4ec292d8befb7512e1fe0bc",
+      "size": 775
+    },
+    {
+      "path": "plugin/modules/film-analysis/SKILL.md",
+      "sha256": "58d4cbb1854548befcd4ee8f0719400b353a3642fba355af4c78eb4325c24afd",
+      "size": 8192
+    },
+    {
+      "path": "plugin/modules/film-analysis/agents/openai.yaml",
+      "sha256": "e9820f0b2cc1fd4411d7ca28f581eafaf0626ec1784246fe7e3c2c71893b59d9",
+      "size": 368
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/close-reading.md",
+      "sha256": "6c44080f4ab7ee32548a9821f76553d87c766fe375c8e5395a66e670849e6606",
+      "size": 3895
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/evidence.md",
+      "sha256": "ec1d83144e896c76b8b4c8a0c966e6f339b0526e13be4540d77a3d8a3f455c34",
+      "size": 7769
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/library.md",
+      "sha256": "eba13b821d0976711a2dc136188631f033bfaa18eaa4e31fb8abe2b29e1435dd",
+      "size": 3185
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/luoxiaoji-tv.md",
+      "sha256": "5e2d33bb042d59deb764b54e575deeda9a81285247659fe1c1dd02945d8e2c3b",
+      "size": 1783
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/prompts.md",
+      "sha256": "fc0557fff275bfe7c94b1514874d3f9c0eae36137e1a428f62ec93ae587973e5",
+      "size": 6516
+    },
+    {
+      "path": "plugin/modules/film-analysis/references/report.md",
+      "sha256": "63abdca635c6cc4890782372d55b4f00565c933714ad81dee0c8f1a8983f4efc",
+      "size": 6164
+    },
+    {
+      "path": "plugin/modules/film-analysis/scripts/open_site.ps1",
+      "sha256": "dab6fe574927ed32a9aeb8012fa6d0403de554818c782c616c0733e68bc9d902",
+      "size": 1186
+    },
+    {
+      "path": "plugin/modules/film-analysis/scripts/save_site_credential.ps1",
+      "sha256": "11bb6600a88be673341f80028685193bb28f579b9850a71974c4fecb9cbe1b0b",
+      "size": 1447
+    },
+    {
+      "path": "plugin/modules/film-analysis/scripts/site_browser.cjs",
+      "sha256": "2308866ab931883354a2530bf7a41ffaa0ea3d53ead8ee4f105e01429eab95b9",
+      "size": 3819
+    },
+    {
+      "path": "plugin/modules/film-art-director/MODULE_INTEGRATION.md",
+      "sha256": "be6c93f00a451e6f6255624a1786bd8e225cc0ade6376f81ff970008805b5345",
+      "size": 1949
+    },
+    {
+      "path": "plugin/modules/film-art-director/SKILL.md",
+      "sha256": "29edf2e24976b5fedb4d93ea062babbdd11050871d43f9e766dfa07a10b0d960",
+      "size": 4940
+    },
+    {
+      "path": "plugin/modules/film-art-director/agents/openai.yaml",
+      "sha256": "0057837e04d69fc22a454fe38b33dadcdc25aa41b52df4acc72a5c7c6b1244fc",
+      "size": 271
+    },
+    {
+      "path": "plugin/modules/film-art-director/references/reference-research.md",
+      "sha256": "db5a27af651487eb05b03c61728dbab22c883d86d71222829addfd81e3d36c63",
+      "size": 3754
+    },
+    {
+      "path": "plugin/modules/film-art-director/references/review-coordination.md",
+      "sha256": "1c72513987abf6f8c3d4c14eddcccc683dab98b431405dda396d08e605b26674",
+      "size": 3878
+    },
+    {
+      "path": "plugin/modules/film-art-director/references/visual-development.md",
+      "sha256": "d5381451c48651db4b6000bb984a1f023cd0ad6bc6831bb55e11085441692792",
+      "size": 5143
+    },
+    {
+      "path": "plugin/modules/idea-explorer/MODULE_INTEGRATION.md",
+      "sha256": "200b325a8e2ad948045797fed8ff27e4a1aca61f167e05b1149cc08f32911982",
+      "size": 3396
+    },
+    {
+      "path": "plugin/modules/idea-explorer/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "6110f4190d5ad90d7d3e1b260397497b43537102612325c444cc25585f950fa2",
+      "size": 567
+    },
+    {
+      "path": "plugin/modules/idea-explorer/SKILL.md",
+      "sha256": "fa0936cc8bd56aabe204e163f23ef1e844804ea6d755786e4c4228d409223a96",
+      "size": 4737
+    },
+    {
+      "path": "plugin/modules/idea-explorer/agents/openai.yaml",
+      "sha256": "4c157071cd30976b432bfadc22bf8f2a23c0b7f6b882a033eef141479b317e64",
+      "size": 287
+    },
+    {
+      "path": "plugin/modules/idea-explorer/assets/validation-card.md",
+      "sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+      "size": 702
+    },
+    {
+      "path": "plugin/modules/idea-explorer/references/app-development.md",
+      "sha256": "f2c720ee1b8df13ceb91a648073cfd15a3b96a797fe6b64aee588b043bb267df",
+      "size": 1114
+    },
+    {
+      "path": "plugin/modules/idea-explorer/references/content-production.md",
+      "sha256": "7e55b6ff0ce758013a4f542fcc8b97c32a7debaca1f17cff0fb3154c9f67baea",
+      "size": 1135
+    },
+    {
+      "path": "plugin/modules/idea-explorer/references/exploration.md",
+      "sha256": "ef64f43f94fcd4cf54a45d91797d1175038673a1cc1d4478bab292ed5d022707",
+      "size": 2696
+    },
+    {
+      "path": "plugin/modules/idea-explorer/references/storage.md",
+      "sha256": "19daa2a36bc9aca83e55ac5a6f8425715b362587307a91847d2e5fe39d41fa63",
+      "size": 14622
+    },
+    {
+      "path": "plugin/modules/idea-explorer/references/validation.md",
+      "sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+      "size": 1976
+    },
+    {
+      "path": "plugin/modules/idea-explorer/scripts/records.py",
+      "sha256": "ad377a78bde64105593ae5c2d343f75057e45badc59655e1e7eb5419084bcfe5",
+      "size": 36771
+    },
+    {
+      "path": "plugin/modules/manifest.json",
+      "sha256": "5ee962936e359dcda7304081ddabfc2db10ec359f6e6f32e199fb5afbd279ef2",
+      "size": 87892
+    },
+    {
+      "path": "plugin/modules/requirements-planner/MODULE_INTEGRATION.md",
+      "sha256": "200b325a8e2ad948045797fed8ff27e4a1aca61f167e05b1149cc08f32911982",
+      "size": 3396
+    },
+    {
+      "path": "plugin/modules/requirements-planner/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "6110f4190d5ad90d7d3e1b260397497b43537102612325c444cc25585f950fa2",
+      "size": 567
+    },
+    {
+      "path": "plugin/modules/requirements-planner/SKILL.md",
+      "sha256": "80c92681f86e2fa33cb3762dd4c73067432e971780e274645ec88771904f5f6e",
+      "size": 4838
+    },
+    {
+      "path": "plugin/modules/requirements-planner/agents/openai.yaml",
+      "sha256": "ef460dcec6c5f4502999f4240046e43cc3dfda8fdf88eff4867df57aaa4426d3",
+      "size": 300
+    },
+    {
+      "path": "plugin/modules/requirements-planner/assets/plan.md",
+      "sha256": "759f0dd789573824890ee2b892ec52f164a67f70590e3ea40ea12f1a65dd08d3",
+      "size": 1066
+    },
+    {
+      "path": "plugin/modules/requirements-planner/assets/validation-card.md",
+      "sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+      "size": 702
+    },
+    {
+      "path": "plugin/modules/requirements-planner/references/app-development.md",
+      "sha256": "96b4b5498c27d4c4274ed353549276a6c812d80d039243a05fa1cbc49859c341",
+      "size": 1730
+    },
+    {
+      "path": "plugin/modules/requirements-planner/references/clarification.md",
+      "sha256": "0495d10f640be2cc4b3fc87de5b90c19a65ba82d6fc81b78386269006373f603",
+      "size": 2194
+    },
+    {
+      "path": "plugin/modules/requirements-planner/references/content-production.md",
+      "sha256": "8e1e1f5b948c08d1cde54b0860b63bc0f88c696038e8eea419fbaeee9e15df6e",
+      "size": 1658
+    },
+    {
+      "path": "plugin/modules/requirements-planner/references/storage.md",
+      "sha256": "19daa2a36bc9aca83e55ac5a6f8425715b362587307a91847d2e5fe39d41fa63",
+      "size": 14622
+    },
+    {
+      "path": "plugin/modules/requirements-planner/references/validation.md",
+      "sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+      "size": 1976
+    },
+    {
+      "path": "plugin/modules/requirements-planner/scripts/records.py",
+      "sha256": "ad377a78bde64105593ae5c2d343f75057e45badc59655e1e7eb5419084bcfe5",
+      "size": 36771
+    },
+    {
+      "path": "plugin/modules/screenwriter/MODULE_INTEGRATION.md",
+      "sha256": "0e2a4faf46c0e19cc3cc11acd3073169a076e820d97f207d94f9c02d5e58db6d",
+      "size": 2343
+    },
+    {
+      "path": "plugin/modules/screenwriter/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "42c917de32236ad9306868dc852de88397c714e3fab001df930f13c46936c8b1",
+      "size": 335
+    },
+    {
+      "path": "plugin/modules/screenwriter/SKILL.md",
+      "sha256": "e1dbb42efebc57717e98470ce293442c7c8ed8e2abcf82da17c6feca0b298629",
+      "size": 4468
+    },
+    {
+      "path": "plugin/modules/screenwriter/agents/openai.yaml",
+      "sha256": "87b518269bdef12c18fe5fbe0a83155225b2990e685ce6d9aa950891d099677f",
+      "size": 309
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "ca6aa07cae8e5f9f87f3a8e36357328cbef5b714e7f6c46d5eca695e5e543647",
+      "size": 547
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/SKILL.md",
+      "sha256": "b2adeb41b10dc11fb2c67246b7d23f3481e9f096e479cc08a070224d4df82b58",
+      "size": 5217
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/agents/openai.yaml",
+      "sha256": "8f347a777252cd070f16845ab098e51878ad5e8b99b5a784a55d7d8395e45978",
+      "size": 325
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/references/script-and-audit.md",
+      "sha256": "11ed7db53dbbc06eff54bcbbba76bdb882553b90c531d26b8472d6ff824d5c1a",
+      "size": 4669
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/references/source-and-scope.md",
+      "sha256": "3aea242ea2d1d3202f3456cb961a6d7a526dbf4bf03ca4b6deb47fea0fabec9b",
+      "size": 3068
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/adaptation/references/video-conversion.md",
+      "sha256": "249dd57974a48f35cd37b122d646db50983818edf0a35681919e29f88ebae283",
+      "size": 1787
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+      "size": 441
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/SKILL.md",
+      "sha256": "97070c89eb64a60bfb64d4de3d56ed4be13a272988f59e75254dfddc3b4ff274",
+      "size": 7731
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/agents/openai.yaml",
+      "sha256": "122fba1419b81b1c0b64e08d96ebdb4173a82b9af0b162c65d8aa52d1d7f617f",
+      "size": 349
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/project/BIBLE.md",
+      "sha256": "b4e1f81671e958fff4e8a0e64cd8faf1e73242b098fb6ae3c8ccd9912d456282",
+      "size": 664
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/project/OUTLINE.md",
+      "sha256": "b95e46836ab814c370b2ec80df12fc3865f096f44989133090b77f21f5cb43e7",
+      "size": 663
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/project/PROJECT.md",
+      "sha256": "b1895efe3a69eebb035621e3123bdda6350239db90daddb3208a176a9b142f9e",
+      "size": 791
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/project/STATE.md",
+      "sha256": "88013655c7571684b3b7658bcfbd1c811a7b28e1dd7dbcda7c6e82d8b620b85c",
+      "size": 1009
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/project/VOICE.md",
+      "sha256": "bb3a7ef8720507b7fbc8062355ebc3bd620a32b68060aa1a3dc535174383c3f8",
+      "size": 1728
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/assets/system-ledger.example.json",
+      "sha256": "2e01a53d26f54f2adc3c95da5124c42109b5d0733975714eacf7ddad27e63b40",
+      "size": 290
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/agent-workflow.md",
+      "sha256": "d342cb01f48577fb3a107df08c351b39e59269cdb4ba135ece758894696a896d",
+      "size": 4519
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/continuity.md",
+      "sha256": "d534b4a812848e490e261bacbd8416b86090f04d676660d1578d0a51215040c5",
+      "size": 2299
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/controls.md",
+      "sha256": "cf643ffc81782b92a83e9f97c8b736759b7de11d41a812e3220bc666fafa5a80",
+      "size": 2735
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/dialogue-scene.md",
+      "sha256": "5377f4d0fbc75d79cbcb5f594746ad6db454ee079aeace00ba626d9bd29556f0",
+      "size": 12629
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/form-and-style.md",
+      "sha256": "a875d545352f5026229f13fe56bdb968379157d2cd4a90c2bea43eb33b3f256c",
+      "size": 3747
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/genres.md",
+      "sha256": "2442d04563199e81ae1ef0c74fd666382627413f2bd15327d6c4d130b3df4616",
+      "size": 2308
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/manuscript-voice.md",
+      "sha256": "ad4aa7c236bc10bb5ee6ad7d83b289d6ff51d7f497c05cbddabb61cc92a426cf",
+      "size": 2162
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/planning.md",
+      "sha256": "51058dacf03120c9cf5a23ed53a5254b3c0b66bc88c504fbfd832d3fd3e0e268",
+      "size": 3824
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/review.md",
+      "sha256": "4f377686ff6874b23a6c595047a9792c261cdc820fbe2719b80ccf9f57e147b9",
+      "size": 4866
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/validation.md",
+      "sha256": "506bfc4bafb28d11102d60b41c753c5c4a5448a139a8dde4a76edd9783429643",
+      "size": 3264
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/references/web-serial-writing.md",
+      "sha256": "2ee4ff3cb4e58927d1350523931ef256fc360bcbc8551a419c6c6c5de0b267fe",
+      "size": 4961
+    },
+    {
+      "path": "plugin/modules/screenwriter/methods/novel/scripts/novel_tool.py",
+      "sha256": "25d681a9e2d159579383512fed80e1182dd05a41b7e8f9903c5edd9e798b5326",
+      "size": 9247
+    },
+    {
+      "path": "plugin/modules/screenwriter/references/ai-short-drama.md",
+      "sha256": "22629c08dfadef2e52ddd97efc248505eb3534a66ad2ec2d9271b5bceef4d46b",
+      "size": 2978
+    },
+    {
+      "path": "plugin/modules/screenwriter/references/continuity-review.md",
+      "sha256": "db26ca2a494a1e21136f02c5d0cf8ead93c3fe340d9b2cbee1217d8205a7052f",
+      "size": 2491
+    },
+    {
+      "path": "plugin/modules/screenwriter/references/revision-and-director.md",
+      "sha256": "171af16dc73d664afbe166566386c011076b64a0ee341528e43779150b74b367",
+      "size": 3933
+    },
+    {
+      "path": "plugin/modules/screenwriter/references/screenplay-craft.md",
+      "sha256": "deda450f11abbf75bb673b73d58f13e5d359921ab7f43e47db681dcdbddd528a",
+      "size": 3607
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+      "size": 441
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/SKILL.md",
+      "sha256": "961249053169aeae95aaab3f9b4cd3a9ac94397e102114482f8e2562e8126ed5",
+      "size": 12938
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/agents/openai.yaml",
+      "sha256": "772af4409dba4d86753ccb08afc64d8c5024f2b0c9bb2a646a9a5431c29f43b6",
+      "size": 456
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/asset-design.md",
+      "sha256": "f2f4441002b00813cf218c0cf59d003c61cf04aca4bd0b8e1366e9f7abe92773",
+      "size": 9069
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/jimeng.md",
+      "sha256": "122dfc445ac2f06709456d6c030b06aceba9d3619f04157b421ab288608201b9",
+      "size": 5177
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/output-format.md",
+      "sha256": "ec8b5812992fdff7ce9a357db1355a271bbbaa292bf4e4ce73cf7fa52d905f44",
+      "size": 7394
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/project-state.md",
+      "sha256": "56db7ad1ef4b7aa6ec2c5cd86f520c4bc00586aa114369ded95182963ae5ea82",
+      "size": 5633
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/prompt-methods.md",
+      "sha256": "a92939532f00869af67f9514d95b34b9a8db64f5d12e78363e7e19a616ea5f92",
+      "size": 11365
+    },
+    {
+      "path": "plugin/modules/seedance-prompt/references/source-notes.md",
+      "sha256": "effae29d31b497414f7441f1167f59c639a155a59ff28438433d0b2f0a94a41d",
+      "size": 7368
+    },
+    {
+      "path": "plugin/modules/vfx-agent/MODULE_INTEGRATION.md",
+      "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+      "size": 2666
+    },
+    {
+      "path": "plugin/modules/vfx-agent/OPTIONAL_DEPENDENCIES.md",
+      "sha256": "ca6aa07cae8e5f9f87f3a8e36357328cbef5b714e7f6c46d5eca695e5e543647",
+      "size": 547
+    },
+    {
+      "path": "plugin/modules/vfx-agent/SKILL.md",
+      "sha256": "46292ff577754aea904569103fe2b69a82cdd34c0e6512cee8884d4ba5ee429e",
+      "size": 8357
+    },
+    {
+      "path": "plugin/modules/vfx-agent/agents/openai.yaml",
+      "sha256": "4281ea61ed48b95e627b2fffe840a9efbd9b74e5398f82d73d824feeaa8f13ec",
+      "size": 375
+    },
+    {
+      "path": "plugin/modules/vfx-agent/references/analysis-design.md",
+      "sha256": "5f5afac5ef10de75408836cb863da2005c674392daa029182c36b74897d161de",
+      "size": 5061
+    },
+    {
+      "path": "plugin/modules/vfx-agent/references/image25.md",
+      "sha256": "7dd4acbd268cd47472244e58bce89faee7c956d6d4e0977e575aa60abdced607",
+      "size": 4868
+    },
+    {
+      "path": "plugin/modules/vfx-agent/references/review.md",
+      "sha256": "5b0a33dcde9e6f42c0d0bcf45d32cad162aae45f4cdf0afd848a582a016dd6e2",
+      "size": 3179
+    },
+    {
+      "path": "plugin/modules/vfx-agent/references/seedance25.md",
+      "sha256": "fd93e2e11e71a68540ba62b9c0a50c4badabc399daf0d00446a0b7badf0b7c80",
+      "size": 5109
+    },
+    {
+      "path": "plugin/modules/vfx-agent/references/story-to-vfx.md",
+      "sha256": "8c70097cb96010b25ed1cf250b229bd9753915b3fc5906e9d7f80333389b1c91",
+      "size": 6765
+    },
+    {
+      "path": "plugin/runtime/film.py",
+      "sha256": "64d3c738bee1ade44edb3bc77b26842e33cc97b3fb8558ffc618232cd224af45",
+      "size": 3635
+    },
+    {
+      "path": "plugin/runtime/filmprod/__init__.py",
+      "sha256": "d39309806e07ce019bac357432d942a13b80ebe037f387f184d9024d6531f5b9",
+      "size": 111
+    },
+    {
+      "path": "plugin/runtime/filmprod/action_schemas.py",
+      "sha256": "767cef1ee583b8725b8605ccd1465e52f0cd6cd9876fcb0b6149b108566a78f9",
+      "size": 17186
+    },
+    {
+      "path": "plugin/runtime/filmprod/art1130.py",
+      "sha256": "79214b2d8aca9db15f15033d49436ac8b82e96098f599f6ba05f87e1c53f6dbb",
+      "size": 33081
+    },
+    {
+      "path": "plugin/runtime/filmprod/assets.py",
+      "sha256": "86691769ecd560323b87b124d00c0c75134e4a8c68a525430a22ef4a4343ecac",
+      "size": 1920
+    },
+    {
+      "path": "plugin/runtime/filmprod/audio1150.py",
+      "sha256": "ee18dc2047aa517457fca68549d97de947f404a85a763471ec3da037ed870694",
+      "size": 11905
+    },
+    {
+      "path": "plugin/runtime/filmprod/board1150.py",
+      "sha256": "c7b8b002f15505299e9958dc217ea15fd5b9410534645c2ae3e07e4ca76b0f8b",
+      "size": 44970
+    },
+    {
+      "path": "plugin/runtime/filmprod/board_gateway1150.py",
+      "sha256": "65fbd09a842a233dd6352e9ed93d50954c7d1d05d85c8e7365f821bfd938490e",
+      "size": 6745
+    },
+    {
+      "path": "plugin/runtime/filmprod/board_management190.py",
+      "sha256": "4dd7bea6852009818b3bc425a047c156475b2d68c3e403e4f26b2a8e998eded9",
+      "size": 7748
+    },
+    {
+      "path": "plugin/runtime/filmprod/brainstorm.py",
+      "sha256": "4b763b14fb1a3b6bc0d025e0a59cce166cddb3f4d1ea7db43fc063c0d6c0bbff",
+      "size": 11770
+    },
+    {
+      "path": "plugin/runtime/filmprod/cloud1120.py",
+      "sha256": "f06a7f723abe532024b6943d534a55b722d201321637fd195da2e6d3aee4e9eb",
+      "size": 24908
+    },
+    {
+      "path": "plugin/runtime/filmprod/core.py",
+      "sha256": "0e7ddd0173cad54a1ad7c3bc15cce5ae28ef5ca2a9f44f69718d8fd66c7c9858",
+      "size": 118660
+    },
+    {
+      "path": "plugin/runtime/filmprod/delivery1110.py",
+      "sha256": "43f977e3d18f9da378b3194f60b3067b1e92ab68b2011a7de88646ab56eb99d4",
+      "size": 25581
+    },
+    {
+      "path": "plugin/runtime/filmprod/documents.py",
+      "sha256": "2aa4baeab2332331a578b48649400f8cd9722411d0b6e07bb91c7213a3c94869",
+      "size": 8691
+    },
+    {
+      "path": "plugin/runtime/filmprod/efficient.py",
+      "sha256": "56462a2fd232e548afa9bf63dda79526d0dc3ff48d7861f32c9954bd3f89c7cb",
+      "size": 15892
+    },
+    {
+      "path": "plugin/runtime/filmprod/export.py",
+      "sha256": "5d8edcb231fb4b9b9179cae1b14b5667c4e8dfe78bc04be750eadd647ab76e5c",
+      "size": 13065
+    },
+    {
+      "path": "plugin/runtime/filmprod/image_preview180.py",
+      "sha256": "50b5d8ae9ed4b8e5e459ab8046a5fdd66701176779aea8af9b56875173f3c9e9",
+      "size": 19383
+    },
+    {
+      "path": "plugin/runtime/filmprod/media120.py",
+      "sha256": "f4176d44c2d4702ee571151605f7436e502c389419d738d2333ff8f9b0d4fa7e",
+      "size": 17394
+    },
+    {
+      "path": "plugin/runtime/filmprod/modules.py",
+      "sha256": "a42812539a0a991447f8cde7d8e08f786022e60a30cd79f8e946309e7d3bbb95",
+      "size": 8343
+    },
+    {
+      "path": "plugin/runtime/filmprod/pages_bridge.py",
+      "sha256": "c563c9ac7bc0a5fdeacc77db335e588d88b87a8898b7daf0667d7912ad4a4a06",
+      "size": 12315
+    },
+    {
+      "path": "plugin/runtime/filmprod/planning.py",
+      "sha256": "1d12908b80b27e8db69170dde85dfd9ca3c5b8d6aaabae871ce865a0f7c9d400",
+      "size": 12611
+    },
+    {
+      "path": "plugin/runtime/filmprod/presentation.py",
+      "sha256": "0853c41170704f645a6c074365c1d010bd7031efb328a26f1cc49baa775797fa",
+      "size": 4278
+    },
+    {
+      "path": "plugin/runtime/filmprod/projects.py",
+      "sha256": "cbea6ae556dc72a1811b2a86917d4413fa88e04d90aa565d5dd1c77d9e5ec22d",
+      "size": 14229
+    },
+    {
+      "path": "plugin/runtime/filmprod/render.py",
+      "sha256": "c23fb21ee45f3bf06812dcefc5daebfd82d9cc981c9c59825e71dfe2955b3b1e",
+      "size": 34491
+    },
+    {
+      "path": "plugin/runtime/filmprod/screenwriting1130.py",
+      "sha256": "0eda5d1885c80c923969d5daf7ae29faeb4b81186d5b9a77158da341de785474",
+      "size": 9884
+    },
+    {
+      "path": "plugin/runtime/filmprod/workflow.py",
+      "sha256": "c9f4ad571bf669996675306ccdbbbf18ee36737c91fc376f5520d1e28a868cf2",
+      "size": 10933
+    },
+    {
+      "path": "plugin/runtime/filmprod/workflow_tools1110.py",
+      "sha256": "399e90dba844bbd9e5c40e9081fa157e6ef050d0384e85b1268710629cb1897f",
+      "size": 5443
+    },
+    {
+      "path": "plugin/runtime/filmprod/workspace1110.py",
+      "sha256": "9e5ec01f9cebfed6e5a284ad8b0bf533eb3818e0fd9316c7498c846da7fde8b3",
+      "size": 21164
+    },
+    {
+      "path": "plugin/skills/film-art-director/SKILL.md",
+      "sha256": "4f116a425012841cda0605b15eddbe0a5b2e225c94d84f3e6ab7498600b71df4",
+      "size": 1543
+    },
+    {
+      "path": "plugin/skills/film-art-director/agents/openai.yaml",
+      "sha256": "fda073673be91a0f641aa8905d6c7a5e8ac4c3306751f7cce843191e35cbaeee",
+      "size": 268
+    },
+    {
+      "path": "plugin/skills/film-brainstorm-interface/SKILL.md",
+      "sha256": "b68b6abb22807c01264340691cf028dbd1764639346ba6b8246755decec7fd6f",
+      "size": 3181
+    },
+    {
+      "path": "plugin/skills/film-brainstorm-interface/agents/openai.yaml",
+      "sha256": "e798d351aea4311f475e6416c06d7f90a8aecfd3608bd0785b051ab80bf60cab",
+      "size": 337
+    },
+    {
+      "path": "plugin/skills/film-brainstorm-interface/references/interface-contract.md",
+      "sha256": "369bc27c204f684efd5fef0f693e02f14e4487d773c521fae91545b8ed2ce495",
+      "size": 3799
+    },
+    {
+      "path": "plugin/skills/film-production-agent/SKILL.md",
+      "sha256": "a59734771e697b6d553a2dcf2dafa558898c96ce0b64aeb2945a0306c4046014",
+      "size": 14561
+    },
+    {
+      "path": "plugin/skills/film-production-agent/agents/openai.yaml",
+      "sha256": "1696573fea50ec25bbb8be48268438cd73177a6e587fa9209083c8bd166a1ccf",
+      "size": 390
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/art-direction-workflow.md",
+      "sha256": "9dd02fec3c9f074603e727deafdbe99523fc0a2976e7f764b3f5b8690a3a2a92",
+      "size": 15994
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/client-workflow.md",
+      "sha256": "a5d0598ef3cdf78c4e221dd1f1723225861408292357e08cecefae30b3c96800",
+      "size": 16468
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/cloud-round-workflow.md",
+      "sha256": "beba81a4e6f3d50456cacf003d46f9e8beaa08998a9125fd24d6b797fd78b6e5",
+      "size": 12698
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/creation-workflow.md",
+      "sha256": "34bf2b2f7b8defd111cedb96dd8b24d70e8d4ec42494cd2a9efbcd688dc5dddc",
+      "size": 13388
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/delivery-quality.md",
+      "sha256": "a08e7db5f0a4c4d86f8b0a325cc6e10bbf496894512cb94382fbd6540388db1c",
+      "size": 4581
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/efficient-workflow.md",
+      "sha256": "d075e5412941a4adcfa38c9bda5ce6511747fe60fc0f532b27bc0e8ed23aa1a0",
+      "size": 7110
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/management.md",
+      "sha256": "1b6d61e9bd60a39bf6661bf2c1fb45341a89718271d32b5e502a63f7ee22c605",
+      "size": 4161
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/original-screenplay.md",
+      "sha256": "5f061ef8c1a62296bba7739c90235d3603bc5e430b73d4623d651d285fa8c3a0",
+      "size": 1004
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/planning-workflow.md",
+      "sha256": "e3274fc3ad2e2a567cea6708fcda76b4d025cd0da831b6b0fe25967aee3c1377",
+      "size": 6791
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/professional-routing.md",
+      "sha256": "780e99616683ae2fc3ec60aefffe34059e23de211330c5b478a16c108c1699ef",
+      "size": 4877
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/project-bootstrap.md",
+      "sha256": "9c0ec1bc1b9ca819fec7f619e5d55f322049e82efc33ddf81d8428a67b957260",
+      "size": 7030
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/registry-rules.md",
+      "sha256": "ca0fba83bab1c4f89543d5cc1e66c82ffd206b87bf95d9645e5e383db4e0940e",
+      "size": 12312
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/screenwriter-workflow.md",
+      "sha256": "4a0ccd96af861e814922b6d3c53c1758a8e87d3a8da4156365451da7e2bf4a13",
+      "size": 3724
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/video-prompts.md",
+      "sha256": "1e612292ba430961980e6642e2cf0b5ae6cc728f37815edb65cdbe66d5993fc1",
+      "size": 5292
+    },
+    {
+      "path": "plugin/skills/film-production-agent/references/workspace-management.md",
+      "sha256": "f154a901eef6edd81d481e9436f1b6f298e2027d5043d63706d5bbf0981b462e",
+      "size": 7564
+    },
+    {
+      "path": "plugin/skills/film-production-agent/scripts/scaffold_project.py",
+      "sha256": "ae639d8bc96ef0397494f2c16b7860b867c468b7b62fb2682f1fd86a37e2e608",
+      "size": 18087
+    },
+    {
+      "path": "plugin/skills/film-screenwriter/SKILL.md",
+      "sha256": "f6f67f138bc7665493256f56d1415149dce984bfdc2fad69c49fa83b66674588",
+      "size": 1699
+    },
+    {
+      "path": "plugin/skills/film-screenwriter/agents/openai.yaml",
+      "sha256": "6c031245849df93230488f15bb04e14f96f56ff04f76b02e925e34d3bbfbaa7c",
+      "size": 314
+    },
+    {
+      "path": "plugin/ui/board.html",
+      "sha256": "32090df15bce1a0073dc033ed072ad1d5378a591280b26e49ddf4e0759d6351b",
+      "size": 101144
+    },
+    {
+      "path": "release/assemble.py",
+      "sha256": "2a9f179c39f71743f1876ce8574c2c8b589adfd81a506c34b01497d4da91fe51",
+      "size": 7734
+    },
+    {
+      "path": "release/bootstrap.ps1",
+      "sha256": "87f007b507b1610517c03cf61d08b87f7c405eafb961a1b4bd0bcb6f20190680",
+      "size": 1767
+    },
+    {
+      "path": "release/installer-guide.md",
+      "sha256": "251482579aace6aa1b440751aba1d8b6e5dbb7c90cefe64aa74639ec21b5a798",
+      "size": 14173
+    },
+    {
+      "path": "release/installer.py",
+      "sha256": "729b825fa3ee4489145b8326e5deff657992647b21d33f340368094d34b1e42b",
+      "size": 41123
+    },
+    {
+      "path": "release/publisher.py",
+      "sha256": "242ee08e43c48e17d83a11dafc503ffae37568c84ec9f887c32dd677bb23f1cb",
+      "size": 24022
+    },
+    {
+      "path": "release/release-guide.md",
+      "sha256": "902611099cb5881121dcc09318a9a44919579bb4f79211c701b9ff1664b4a9d5",
+      "size": 9179
+    }
+  ],
+  "identity": "film-production-agent@film-production-local",
+  "modules_lock": {
+    "path": "plugin/modules/manifest.json",
+    "sha256": "5ee962936e359dcda7304081ddabfc2db10ec359f6e6f32e199fb5afbd279ef2"
+  },
+  "runtime": {
+    "data_schema_max": 2,
+    "data_schema_min": 2,
+    "platforms": [
+      "windows"
+    ],
+    "python": ">=3.11"
+  },
+  "schema_version": 1,
+  "version": "1.16.0"
+}

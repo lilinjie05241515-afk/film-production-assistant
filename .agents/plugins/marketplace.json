@@ -1,0 +1,20 @@
+{
+  "interface": {
+    "displayName": "影视制作稳定发行"
+  },
+  "name": "film-production-local",
+  "plugins": [
+    {
+      "category": "Productivity",
+      "name": "film-production-agent",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./packages/1.16.0/plugin",
+        "source": "local"
+      }
+    }
+  ]
+}

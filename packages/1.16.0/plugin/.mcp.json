@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "film-production": {
+      "command": "python",
+      "args": [
+        "-X",
+        "utf8",
+        "${PLUGIN_ROOT}/mcp_server.py"
+      ],
+      "cwd": "${PLUGIN_ROOT}",
+      "env": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "美术总监"
+  short_description: "统筹全片色调、场景风格与时代质感，按需研究参考并维护视觉一致性"
+  default_prompt: "使用 $film-art-director，根据本剧与已有参考完成本轮视觉方案或修订。"

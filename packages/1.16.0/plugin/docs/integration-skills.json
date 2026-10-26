@@ -1,0 +1,5 @@
+{
+  "manifest": "../modules/manifest.json",
+  "scope": "bundled_methods",
+  "original_sources_unchanged": true
+}

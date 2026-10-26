@@ -1,0 +1,18 @@
+{
+  "channel": "stable",
+  "identity": "film-production-agent@film-production-local",
+  "latest": "1.16.0",
+  "releases": [
+    {
+      "archive": "releases/stable/1.16.0/film-production-agent-1.16.0-stable.zip",
+      "archive_sha256": "199601dd6c096a145e3d74d1960a8ed465199cf2a990402379b0687a3f1200d1",
+      "channel": "stable",
+      "identity": "film-production-agent@film-production-local",
+      "manifest_sha256": "24a3045eea77efd2691614bbb8d230124ad187a708c3ed56ee13b77a67be5a80",
+      "schema_version": 1,
+      "size": 858795,
+      "version": "1.16.0"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,17 @@
+{
+  "name": "film-production-agent",
+  "version": "1.16.0",
+  "description": "影视开发制作总控：统一编剧、美术总监、专业协作与准确版本接续",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "影视制作助手",
+    "shortDescription": "创作任务、文稿与素材管理",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ]
+  }
+}

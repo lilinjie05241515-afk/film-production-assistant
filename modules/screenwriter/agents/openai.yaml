@@ -1,0 +1,4 @@
+interface:
+  display_name: "编剧"
+  short_description: "优先服务 AI 短剧，统一原创、小说改编和导演反馈修订，保持人物与跨集连续性"
+  default_prompt: "使用 $screenwriter，根据已有材料完成本轮剧本或修订，保留准确来源和必须保持的故事要求。"

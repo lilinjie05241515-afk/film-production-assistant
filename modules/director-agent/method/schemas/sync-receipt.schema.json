@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:director-agent:v1:sync-receipt",
+  "type": "object",
+  "properties": {
+    "package_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "operation_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remote_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "status": {
+      "enum": [
+        "not_configured",
+        "pending",
+        "sent_unconfirmed",
+        "confirmed",
+        "conflict",
+        "failed"
+      ]
+    },
+    "receipt": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "package_id",
+    "operation_id",
+    "target",
+    "remote_ref",
+    "source_revision",
+    "status",
+    "receipt"
+  ]
+}

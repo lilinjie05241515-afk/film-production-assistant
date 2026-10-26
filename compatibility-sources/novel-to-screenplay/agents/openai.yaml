@@ -1,0 +1,4 @@
+interface:
+  display_name: "小说改编动态剧本"
+  short_description: "把小说改成可演绎分场剧本，逐场核查原著含义与连续性"
+  default_prompt: "使用 $novel-to-screenplay，以我提供的小说为底本，先锁定改编范围，再写可演绎的动态分场剧本并列出差异审计。"

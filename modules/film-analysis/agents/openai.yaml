@@ -1,0 +1,4 @@
+interface:
+  display_name: "影视分析 skill"
+  short_description: "深入拆解影视，以学习卡突出重点、图文论证机制，提炼可直接使用的风格限制词"
+  default_prompt: "使用 $film-analysis 深入分析这部影视作品，以影片学习卡开篇，交付重点图文报告和独立成文风格限制词，查证资料放附录。"

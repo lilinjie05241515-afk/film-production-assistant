@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:director-agent:v1:review",
+  "type": "object",
+  "properties": {
+    "review_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "batch_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+    },
+    "artifact_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_hash": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$"
+    },
+    "rubric_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "isolation_level": {
+      "enum": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+          },
+          "location": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              {
+                "type": "object",
+                "minProperties": 1
+              }
+            ]
+          },
+          "severity": {
+            "enum": [
+              "blocker",
+              "major",
+              "minor",
+              "note"
+            ]
+          },
+          "issue": {
+            "type": "string",
+            "minLength": 1
+          },
+          "impact": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              {
+                "type": "object",
+                "minProperties": 1
+              }
+            ]
+          },
+          "recommendation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "confidence": {
+            "oneOf": [
+              {
+                "enum": [
+                  "high",
+                  "medium",
+                  "low",
+                  "unknown"
+                ]
+              },
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            ]
+          },
+          "pending_checks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "disposition": {
+            "enum": [
+              "open",
+              "addressed",
+              "disputed",
+              "deferred",
+              "not_applicable"
+            ]
+          }
+        },
+        "required": [
+          "finding_id",
+          "location",
+          "severity",
+          "issue",
+          "impact",
+          "evidence",
+          "recommendation",
+          "confidence",
+          "pending_checks",
+          "disposition"
+        ]
+      },
+      "minItems": 0
+    },
+    "verdict": {
+      "enum": [
+        "passed",
+        "needs_revision",
+        "inconclusive"
+      ]
+    },
+    "provenance": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "minProperties": 1
+        },
+        {
+          "type": "array",
+          "minItems": 1
+        }
+      ]
+    }
+  },
+  "required": [
+    "review_id",
+    "batch_id",
+    "artifact_id",
+    "artifact_version",
+    "artifact_hash",
+    "rubric_version",
+    "isolation_level",
+    "findings",
+    "verdict",
+    "provenance"
+  ]
+}

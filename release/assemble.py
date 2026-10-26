@@ -39,20 +39,20 @@ def assemble(source, output):
     shutil.copy2(source/'docs/editing-portable.md',plugin/'docs/剪辑导出.md')
     for name in ('INSTALL.md','UPGRADE.md','FEATURES.md'):
         shutil.copy2(source/'docs'/name,plugin/'docs'/name)
-    (plugin/'docs/integration-skills.json').write_text(json.dumps({'manifest':'../modules/manifest.json','scope':'bundled_methods','original_sources_unchanged':True},ensure_ascii=False,indent=2),encoding='utf-8')
+    (plugin/'docs/integration-skills.json').write_text(json.dumps({'manifest':'../modules/manifest.json','scope':'bundled_methods','original_sources_unchanged':True},ensure_ascii=False,indent=2),encoding='utf-8',newline='\n')
     manifest={'name':'film-production-agent','version':version,'description':'影视创作助手：灵感、剧本、导演、美术、任务与素材管理',
       'skills':'./skills/','mcpServers':'./.mcp.json','requires_local_executor':True,
       'interface':{'displayName':'影视制作助手','shortDescription':'创作任务、文稿与素材管理','category':'Productivity','capabilities':['Read','Write']}}
     (plugin/'.codex-plugin').mkdir()
-    (plugin/'.codex-plugin/plugin.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
+    (plugin/'.codex-plugin/plugin.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8',newline='\n')
     # Portable specification only. installer materializes a machine-local absolute config.
     server={'command':'python','args':['-X','utf8','${PLUGIN_ROOT}/mcp_server.py'],'cwd':'${PLUGIN_ROOT}',
             'env':{'PYTHONDONTWRITEBYTECODE':'1'}}
-    (plugin/'.mcp.json').write_text(json.dumps({'mcpServers':{'film-production':server}},indent=2),encoding='utf-8')
+    (plugin/'.mcp.json').write_text(json.dumps({'mcpServers':{'film-production':server}},indent=2),encoding='utf-8',newline='\n')
     (output/'release').mkdir()
     for name in ('installer.py','bootstrap.ps1','bootstrap.sh','publisher.py','assemble.py','installer-guide.md','release-guide.md'):
         shutil.copy2(source/'release'/name,output/'release'/name)
-    (output/'install.py').write_text('from release.installer import main\nif __name__ == "__main__":\n    main()\n',encoding='utf-8')
+    (output/'install.py').write_text('from release.installer import main\nif __name__ == "__main__":\n    main()\n',encoding='utf-8',newline='\n')
     (output/'README.md').write_text(f'''# 影视制作助手 {version} · Windows / macOS 本地发行
 
 请先阅读 `release/installer-guide.md`，运行环境检查、校验和安装，再添加安装器生成的本机 marketplace。
@@ -66,7 +66,7 @@ def assemble(source, output):
 本地发布源与远端更新上线分别验证。本版适配 Windows 与 macOS 本地运行；macOS 安装说明见 `plugin/docs/MACOS.md`。自动测试运行环境与结果见对应发行页，客户端原生看板与真实用户会话需要在目标客户端核验；纯云 Work 未适配。
 本包可从公开仓库下载并使用。模块来源与历史分发记录见 `plugin/modules/manifest.json`；第三方依赖保留各自许可状态，本次发布不将未声明的上游许可标为已核实。
 音乐生成未实现，外部脑暴提供方未连接；宿主可使用内置 idea-explorer 实际讨论创意，Pages 访问条件以实际工具为准。
-''',encoding='utf-8')
+''',encoding='utf-8',newline='\n')
     return {'payload':str(output),'version':version}
 
 if __name__=='__main__':

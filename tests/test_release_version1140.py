@@ -125,6 +125,10 @@ class ScreenwriterReleaseTest(unittest.TestCase):
                              {'film-production-agent', 'film-screenwriter', 'film-art-director', 'film-brainstorm-interface'})
             self.assertFalse((payload / 'plugin/modules/novel-master').exists())
             self.assertFalse((payload / 'plugin/modules/novel-to-screenplay').exists())
+            for generated in ('README.md', 'install.py', 'plugin/.mcp.json',
+                              'plugin/.codex-plugin/plugin.json', 'plugin/docs/integration-skills.json'):
+                self.assertNotIn(b'\r\n', (payload / generated).read_bytes(),
+                                 'Generated payload bytes must be identical across build platforms')
             files = {p.relative_to(payload).as_posix(): p.read_bytes() for p in payload.rglob('*') if p.is_file()}
             self.assertEqual(publisher.inspect_payload(files), [])
             self.assertTrue(build_modules.verify(payload / 'plugin/modules')['ok'])

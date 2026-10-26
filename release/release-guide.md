@@ -1,29 +1,33 @@
-# 影视制作助手 1.16.0 · 发行与更新
+# 影视制作助手 1.17.0 · 发行与更新
 
 正式插件身份固定为 `film-production-agent@film-production-local`。本工具只构建、核验、写入明确的本地 Git 发布目录及获取发行包；不会联网、设置远端、上传、注册宿主插件或切换运行中的聊天。
 
-目前支持 Windows 桌面。发行运行环境需要 Python 3.11+（核心使用 `hashlib.file_digest`），仅使用 Python 标准库；本地 Git 发布还需要 Git。其他操作系统未验收。Python、FFmpeg 与桌面宿主的可用性由安装器检查；FFmpeg 是媒体预览和渲染的可选外部依赖。
+发行平台声明为 Windows 与 macOS 桌面。发行运行环境需要 Python 3.11+（核心使用 `hashlib.file_digest`），仅使用 Python 标准库；本地 Git 发布还需要 Git。平台分支测试、macOS CI 与真实桌面验收分别记录，不以发行清单中的平台名称代替测试证据。Python、FFmpeg 与桌面宿主的可用性由安装器检查；FFmpeg 是媒体预览和渲染的可选外部依赖。
 
 ## 构建并冻结
 
-先在独立目录整理干净 payload。根目录包括 `plugin/`、`release/installer.py`、`release/bootstrap.ps1`、`release/publisher.py`、`install.py` 和必要文档。`plugin/` 内含兼容插件清单、相对路径 MCP 模板、完整 runtime、总控技能、脑暴接口和专业模块。构建器不会复制任意源码树或扫描作品。
+先在独立目录整理干净 payload。根目录包括 `plugin/`、`release/installer.py`、`release/bootstrap.ps1`、`release/bootstrap.sh`、`release/publisher.py`、`install.py` 和必要文档。`plugin/` 内含兼容插件清单、相对路径 MCP 模板、完整 runtime、总控技能、脑暴接口和专业模块。构建器不会复制任意源码树或扫描作品。
 
 ```powershell
 python -X utf8 -B release/assemble.py --source '<本版源码绝对路径>' --output '<新的payload绝对路径>'
-python -X utf8 -B release/publisher.py build --payload '<新的payload绝对路径>' --output '<新发行目录绝对路径>' --version 1.16.0 --channel stable
+python -X utf8 -B release/publisher.py build --payload '<新的payload绝对路径>' --output '<新发行目录绝对路径>' --version 1.17.0 --channel stable
 ```
 
 构建结果有三个同级文件：
 
-- `film-production-agent-1.16.0-stable.zip`：程序与方法发行包。
-- `film-production-agent-1.16.0-stable.release.json`：归档版本、文件大小、ZIP SHA-256 和内部清单 SHA-256。
-- `film-production-agent-1.16.0-stable.zip.sha256`：便于人工比对的摘要。
+- `film-production-agent-1.17.0-stable.zip`：程序与方法发行包。
+- `film-production-agent-1.17.0-stable.release.json`：归档版本、文件大小、ZIP SHA-256 和内部清单 SHA-256。
+- `film-production-agent-1.17.0-stable.zip.sha256`：便于人工比对的摘要。
 
 ZIP 根 `release-manifest.json` 的 `files` 列出除清单自身外的全部文件、大小和 SHA-256；清单本身由外部发行记录保护。运行 schema 区间在 `runtime` 中声明，专业模块清单用 `modules_lock` 固定。发行记录不代表代码已经安装，也不代表任何作品获批。
 
 相同输出版本只要 ZIP、发行记录或校验文件有一个已存在，构建立即拒绝覆盖。变更正文、模块、安装器或依赖锁后必须递增版本。保留旧 ZIP 和旧 Git 标签。
 
 构建与核验会拒绝数据库、作品目录、环境秘密文件、媒体原件、机器专属绝对路径、疑似凭据以及不安全 ZIP 成员。此扫描能检查既定模式，不能证明所有第三方文件的权利或所有秘密已经被自动识别；人工依赖来源审查仍以模块清单中的实际分发状态为准。
+
+Mac 可使用同一构建工具，将上述 `python` 改为已确认的 `python3`，并对含空格的绝对路径加双引号。`bootstrap.sh` 是安装器入口，不执行构建或发布动作。
+
+发布前至少检查本轮改动对应的 Windows 与 macOS 自动化结果，构建包实际 stdio 安装、模块哈希、版本一致性及目录隔离。CI 测试使用合成 TEST 数据，不注入个人作品或客户端凭据。macOS runner 的 CPU 架构与版本写入运行日志；没有执行过的机型和客户端保持未验证。
 
 ## 校验
 
@@ -59,7 +63,7 @@ development/packages/<version>/plugin/
 
 每个版本有 `stable/v<version>` 或 `development/v<version>` Git 标签。稳定 marketplace 名为 `film-production-local`；开发 marketplace 名为 `film-production-local-development`，用于明确选择的测试环境。稳定索引不会因发布开发版而更新。开发包仍保留正式产品身份于发行清单，开发 marketplace 后缀仅用于避免测试环境与稳定安装混淆。
 
-发布源中的 `.mcp.json` 是可移植模板。Windows 安装器会另建本机适配副本，并生成适合当前桌面的 marketplace；先完成该流程，再用桌面插件管理加载。不要把尚未替换运行环境的模板直接当作当前机器已可启动的配置。
+发布源中的 `.mcp.json` 是可移植模板。安装器会按当前系统另建本机适配副本，并生成适合当前桌面的 marketplace；先完成该流程，再用桌面插件管理加载。不要把尚未替换运行环境的模板直接当作当前机器已可启动的配置。
 
 本地发布工具不会执行 `git remote add` 或 `git push`。远端目标未确定时，`release-source.json` 保持 `remote_status=not_configured`、`remote_url=null`。本地 Git 仓库和固定身份已准备，不表示远端更新服务已经上线。
 
@@ -80,8 +84,8 @@ GitHub 上的 `Source code (zip)` 是 Git 标签对应的源码快照；用户�
 ## 检查与获取更新
 
 ```powershell
-python -X utf8 -B release/publisher.py check --repo '<已审查本地发布源绝对路径>' --installed-version 1.15.2 --channel stable
-python -X utf8 -B release/publisher.py fetch --repo '<已审查本地发布源绝对路径>' --destination '<下载目录绝对路径>' --version 1.16.0 --channel stable --sha256 '<可信ZIP摘要>'
+python -X utf8 -B release/publisher.py check --repo '<已审查本地发布源绝对路径>' --installed-version 1.16.0 --channel stable
+python -X utf8 -B release/publisher.py fetch --repo '<已审查本地发布源绝对路径>' --destination '<下载目录绝对路径>' --version 1.17.0 --channel stable --sha256 '<可信ZIP摘要>'
 ```
 
 `check` 校验所选本地源的最新包并比较版本，不刷新远端。`fetch` 复制指定发行包并核验，已存在同名包只在摘要相同时复用，下载后 `runtime_changed=false`。
@@ -100,4 +104,4 @@ python -X utf8 -B release/publisher.py fetch --repo '<已审查本地发布源�
 
 2026-10-24 核对的 [OpenAI 插件打包文档](https://developers.openai.com/plugins/build/plugins) 说明 marketplace 的相对路径与 Git 来源，并保留 `.codex-plugin/plugin.json` 兼容入口。[桌面插件文档](https://developers.openai.com/plugins/deploy/desktop-only) 说明 `${PLUGIN_ROOT}` 及 stdio 本地执行。规范支持与本机实际展开情况分别验收，发行流程使用安装时生成本机配置的兼容路径。
 
-本地 Git、合成安装目录和独立 stdio 进程测试不能替代另一台 Windows 电脑，也不能替代当前桌面聊天的真实面板。最终交付报告应逐项写明实际版本、安装副本摘要、当前聊天 health、面板操作、异机测试是否完成。
+本地 Git、合成安装目录和独立 stdio 进程测试不能替代另一台用户电脑，也不能替代当前桌面聊天的真实面板。macOS CI 能证明相应 runner 上运行过的代码与包流程；不能据此声称用户 Mac 的客户端安装、真实看板或媒体体验已经验收。最终交付报告应逐项写明实际版本、安装副本摘要、当前聊天 health、面板操作、异机测试是否完成。

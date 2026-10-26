@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
+import sys
 from pathlib import Path
 
 from .core import ConflictError, Registry, canonical, content_hash, identifier, now, required
@@ -16,7 +17,11 @@ def catalog_path():
         if not path.is_absolute():
             raise ValueError("FILMPROD_CATALOG_PATH must be absolute")
         return path
-    base = Path(os.environ.get("LOCALAPPDATA", str(Path.home() / "AppData/Local")))
+    if sys.platform == "darwin":
+        base = Path.home() / "Library/Application Support"
+    else:
+        local_app_data = os.environ.get("LOCALAPPDATA")
+        base = Path(local_app_data) if local_app_data else Path.home() / "AppData/Local"
     return base / "FilmProduction/projects.sqlite3"
 
 

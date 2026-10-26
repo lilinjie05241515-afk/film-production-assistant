@@ -5,10 +5,12 @@
 ## 安装顺序
 
 1. 从公开仓库的 [GitHub Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases) 下载对应版本的 `film-production-agent-<版本>-stable.zip`、`.zip.sha256` 和 `.release.json`。用户可直接下载并使用发布包，无需单独申请仓库访问。
-2. 核对下载摘要，完整解压发行 ZIP。运行环境为 Windows 桌面本地执行、Python 3.11+；媒体预览和渲染按需使用 FFmpeg／ffprobe。
+2. 核对下载摘要，完整解压发行 ZIP。运行环境为 Windows 或 macOS 桌面本地执行、Python 3.11+；媒体预览和渲染按需使用 FFmpeg／ffprobe。
 3. 在解压根目录运行 `release/installer.py env`、`verify` 和 `install`，明确应用、数据和配置目录。
 4. 运行 `release/installer.py host-plan`，取得本机 marketplace 路径，通过目标桌面的插件管理接入 `film-production-agent@film-production-local`。
-5. 新开工作会话，要求核实实际 `film_health` 版本和八个内置模块，并打开看板查看结果。本版预期版本为 `1.16.0`。
+5. 新开工作会话，要求核实实际 `film_health` 版本和八个内置模块，并打开看板查看结果。本版预期版本为 `1.17.0`。
+
+Mac 的 Terminal 命令、目录和媒体工具说明见 [Mac 安装指南](MACOS.md)。Windows 使用 `python`／PowerShell，Mac 使用 `python3`／Terminal 或随包 `bootstrap.sh`；两者安装同一个发行 ZIP。
 
 GitHub 自动生成的 `Source code (zip)` 是源码快照，与可直接安装的发行资产不同。下载安装包不会自动改变已打开的聊天。
 

@@ -51,10 +51,17 @@ class PublisherTests(unittest.TestCase):
         archive = self.build()
         result = p.verify(archive)
         self.assertTrue(result["verified"])
+        self.assertEqual(result["manifest"]["runtime"]["platforms"], ["windows", "macos"])
         self.assertFalse(result["runtime_changed"])
         self.assertEqual(p.verify(archive, p.sha256(archive.read_bytes()))["version"], "1.6.0")
         with self.assertRaisesRegex(ValueError, "SHA-256"):
             p.verify(archive, "0" * 64)
+
+    def test_macos_unicode_aliases_are_rejected_before_extraction(self):
+        for names in (["caf\u00e9.txt", "cafe\u0301.txt"],
+                      ["caf\u00e9", "cafe\u0301/child.txt"]):
+            with self.assertRaises(ValueError):
+                p.validate_names(names)
 
     def test_immutable_build(self):
         archive = self.build()

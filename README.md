@@ -1,10 +1,10 @@
 # 影视制作助手
 
-面向 Windows 上 Codex／ChatGPT 桌面本地工作模式的影视创作插件。把故事讨论、编剧、导演、美术、特效、提示词和资料管理放进同一套项目流程，保留每份成果的准确版本、审核记录及工作对话关联。
+面向 Windows 与 macOS 上 Codex／ChatGPT 桌面本地工作模式的影视创作插件。把故事讨论、编剧、导演、美术、特效、提示词和资料管理放进同一套项目流程，保留每份成果的准确版本、审核记录及工作对话关联。
 
-**当前发行：1.16.0。** 本版将项目目录与对话索引搭建助手纳入安装包，保留 1.15.2 的项目管理、连续阅读和素材管理功能。音乐创作技能留待后续接入。
+**当前发行：1.17.0。** 本版增加 macOS 安装启动、原生数据目录和媒体工具查找适配；Windows 与 Mac 使用同一发行包。保留项目搭建、编剧等八模块、连续阅读和素材管理功能，音乐创作技能留待后续接入。
 
-[下载发行包](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) · [安装与升级](release/installer-guide.md) · [1.16.0 更新说明](docs/integration-1.16.0.md) · [发行维护](release/release-guide.md)
+[下载发行包](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) · [安装与升级](release/installer-guide.md) · [Mac 安装](docs/MACOS.md) · [1.17.0 更新说明](docs/integration-1.17.0.md) · [发行维护](release/release-guide.md)
 
 ## 可以做什么
 
@@ -41,14 +41,14 @@
 
 ## 安装与换电脑
 
-从仓库的 **Releases** 下载 `film-production-agent-1.16.0-stable.zip` 及同版 `.zip.sha256`，按[安装指南](release/installer-guide.md)完成以下步骤：
+从仓库的 **Releases** 下载 `film-production-agent-1.17.0-stable.zip` 及同版 `.zip.sha256`，按[安装指南](release/installer-guide.md)完成以下步骤：
 
 1. 核对下载的 SHA-256，完整解压发行 ZIP。
 2. 用包内安装器检查环境、核验并部署到所选本机目录。
 3. 运行 `host-plan`，把生成的本地 marketplace 接入桌面插件管理。
-4. 在新会话中核实 `film_health` 返回 `1.16.0`，再使用项目看板与工作对话。
+4. 在新会话中核实 `film_health` 返回 `1.17.0`，再使用项目看板与工作对话。
 
-需要 Python 3.11+；图片、视频、音频的部分探测、预览与渲染还需要 FFmpeg／ffprobe。插件不要求额外模型 API，也不启动独立 HTTP 网站。
+需要 Python 3.11+；Mac 使用 `python3` 或 `bash release/bootstrap.sh`，路径含空格或中文时保留引号。图片、视频、音频的部分探测、预览与渲染还需要 FFmpeg／ffprobe。插件不要求额外模型 API，也不启动独立 HTTP 网站。
 
 GitHub 仓库和 `git pull` 用于取得程序与更新包，不会自动切换正在运行的聊天。另一台电脑需要单独安装；作品、个人规则和本机路径按实际范围另行迁移。插件身份保持 `film-production-agent@film-production-local`，升级时沿用原安装目录和数据目录。
 
@@ -58,7 +58,8 @@ GitHub 仓库和 `git pull` 用于取得程序与更新包，不会自动切换�
 - 云端工作稿和批注由宿主 Pages 工具处理；相关工具必须在当前客户端可用。按轮同步不代表后台实时双向同步。
 - 音乐、音频、配乐位置及已有素材可以登记和管理；本版没有集成音乐创作技能，也没有连接音乐或视频生成提供方。提示词交付不等于媒体已经生成。
 - 第三方参考库、登录信息及个人资料不随包分发。影视研究和特效模块的可选外部资料需在目标环境单独配置。
-- Windows 之外的平台和真实异机运行情况，以对应版本实际验收记录为准。
+- macOS 安装器、Python 运行时与包内容的验证，以本版测试和 CI 记录为准。macOS CI 通过不代表已完成个人 Mac 上的客户端安装、真实面板或媒体体验验收；这些仍需在目标客户端核对。
+- 插件运行时没有绑定特定 CPU 架构；Python、FFmpeg 与桌面客户端必须支持目标 Mac。Apple Silicon 与 Intel 的媒体工具路径均纳入查找，不能据此推定所有 Intel Mac 都支持当前桌面客户端。
 
 ## 维护与分发
 

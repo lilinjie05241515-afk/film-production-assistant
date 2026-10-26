@@ -1,4 +1,4 @@
-"""Windows local installer. Standard library only; no downloads or host mutations.
+"""Windows and macOS local installer. Standard library only; no downloads or host mutations.
 
 The archive is immutable. A separate deployment contains machine-specific MCP
 configuration. Only explicitly supplied project roots are ever inspected.
@@ -16,6 +16,7 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+import unicodedata
 import uuid
 import zipfile
 from datetime import datetime, timezone
@@ -24,6 +25,7 @@ from pathlib import Path, PurePosixPath
 IDENTITY = "film-production-agent@film-production-local"
 MANIFEST = "release-manifest.json"
 ACTIVE_STATUSES = {"created", "in_progress", "needs_review"}
+MAC_MEDIA_DIRECTORIES = ("/opt/homebrew/bin", "/usr/local/bin")
 CATALOG_SQL = """
 CREATE TABLE IF NOT EXISTS projects(project_id TEXT PRIMARY KEY, root TEXT UNIQUE NOT NULL, data TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS bindings(kind TEXT NOT NULL, binding_id TEXT NOT NULL, project_id TEXT NOT NULL, PRIMARY KEY(kind,binding_id));
@@ -75,6 +77,12 @@ def safe_name(name):
     return name
 
 
+def path_identity(name):
+    # APFS/HFS+ may expose decomposed Unicode even when ZIP names use NFC.
+    # The release remains portable to case-insensitive filesystems as well.
+    return unicodedata.normalize("NFC", name).casefold()
+
+
 def no_links(root):
     for path in [root, *root.rglob("*")]:
         if path.is_symlink() or (hasattr(path, "is_junction") and path.is_junction()):
@@ -108,11 +116,11 @@ def package_directory(package):
             for info in entries:
                 name = info.filename.rstrip("/")
                 safe_name(name)
-                if name.casefold() in seen:
-                    raise ValueError("ZIP 包含重复或仅大小写不同的路径")
-                seen.add(name.casefold())
-                folded = name.casefold()
-                ancestors = {str(p).casefold() for p in PurePosixPath(name).parents if str(p) != "."}
+                if path_identity(name) in seen:
+                    raise ValueError("ZIP 包含重复、仅大小写或 Unicode 规范形式不同的路径")
+                seen.add(path_identity(name))
+                folded = path_identity(name)
+                ancestors = {path_identity(str(p)) for p in PurePosixPath(name).parents if str(p) != "."}
                 if files & ancestors or (not info.is_dir() and folded in parents):
                     raise ValueError("ZIP 文件与目录路径冲突")
                 parents.update(ancestors)
@@ -155,25 +163,33 @@ def verify_directory(root, overrides=None):
     folded = set()
     for entry in entries:
         name = safe_name(entry["path"])
-        if name == MANIFEST or name.casefold() in folded:
+        if name == MANIFEST or path_identity(name) in folded:
             raise ValueError("发行清单重复路径或包含自身")
-        folded.add(name.casefold())
+        folded.add(path_identity(name))
         if not re.fullmatch(r"[0-9a-f]{64}", entry["sha256"]):
             raise ValueError("SHA-256 格式错误")
         expected[name] = entry
     overrides = overrides or {}
-    actual = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
-    if len({n.casefold() for n in actual}) != len(actual):
-        raise ValueError("发行目录包含仅大小写不同的文件")
-    if actual != set(expected) | {MANIFEST} | set(overrides):
-        raise ValueError("发行文件缺失或存在未登记文件: " + str(sorted(actual ^ (set(expected) | {MANIFEST} | set(overrides)))))
+    if len({path_identity(safe_name(n)) for n in overrides}) != len(overrides):
+        raise ValueError("本机配置包含 Unicode 或大小写重复路径")
+    normalized = lambda name: unicodedata.normalize("NFC", name)
+    expected = {normalized(n): entry for n, entry in expected.items()}
+    overrides = {normalized(n): sha for n, sha in overrides.items()}
+    actual_files = list(p for p in root.rglob("*") if p.is_file())
+    actual_names = [p.relative_to(root).as_posix() for p in actual_files]
+    if len({path_identity(n) for n in actual_names}) != len(actual_names):
+        raise ValueError("发行目录包含仅大小写或 Unicode 规范形式不同的文件")
+    actual = {normalized(n): p for n, p in zip(actual_names, actual_files)}
+    wanted_names = set(expected) | {MANIFEST} | set(overrides)
+    if set(actual) != wanted_names:
+        raise ValueError("发行文件缺失或存在未登记文件: " + str(sorted(set(actual) ^ wanted_names)))
     for name, entry in expected.items():
-        path = root / name
+        path = actual[name]
         wanted = overrides.get(name, entry["sha256"])
         if digest(path) != wanted or (name not in overrides and path.stat().st_size != entry["size"]):
             raise ValueError(f"文件校验失败: {name}")
     for name, sha in overrides.items():
-        if digest(root / safe_name(name)) != sha:
+        if digest(actual[name]) != sha:
             raise ValueError(f"本机配置校验失败: {name}")
     plugin = read_json(root / "plugin/.codex-plugin/plugin.json")
     if plugin.get("name") != "film-production-agent" or plugin.get("version") != manifest["version"]:
@@ -201,19 +217,43 @@ def verify_package(package):
                 "archive_sha256": digest(package) if Path(package).is_file() else None}
 
 
+def optional_executable(name, current_platform):
+    executable = shutil.which(name)
+    if executable:
+        return str(Path(executable).resolve())
+    # GUI-launched apps on macOS do not necessarily inherit the shell's PATH.
+    if current_platform == "macos":
+        for directory in MAC_MEDIA_DIRECTORIES:
+            candidate = Path(directory) / name
+            if candidate.is_file() and os.access(candidate, os.X_OK):
+                return str(candidate.resolve())
+    return None
+
+
 def environment(python=None):
     executable = absolute(python or sys.executable, "Python")
+    probe_code = ("import sys,sqlite3,json,platform; "
+                  "print(json.dumps({'version':list(sys.version_info[:3]),'sqlite':sqlite3.sqlite_version,"
+                  "'executable':sys.executable,'sys_platform':sys.platform,'machine':platform.machine()}))")
+    guidance = "请安装 Python 3.11 或更新版本（含 sqlite3），并用 --python 指定解释器的绝对路径；macOS 使用 python3，Windows 使用 python.exe"
     try:
-        probe = subprocess.run([str(executable), "-I", "-c", "import sys,sqlite3,json; print(json.dumps({'version':list(sys.version_info[:3]),'sqlite':sqlite3.sqlite_version,'executable':sys.executable}))"], capture_output=True, text=True, encoding="utf-8", timeout=30)
+        probe = subprocess.run([str(executable), "-I", "-c", probe_code], capture_output=True, text=True, encoding="utf-8", timeout=30)
     except OSError as exc:
-        raise ValueError("找不到可运行的 Python；请安装 Windows Python 3.11 或更新版本并用 --python 指定 python.exe") from exc
+        raise ValueError("找不到可运行的 Python；" + guidance) from exc
     if probe.returncode:
-        raise ValueError("Python 无法运行；请安装 Windows Python 3.11 或更新版本并用 --python 指定 python.exe")
-    result = json.loads(probe.stdout)
-    if tuple(result["version"]) < (3, 11, 0):
-        raise ValueError("需要 Python 3.11 或更新版本，且必须包含 sqlite3")
-    result.update(supported_platform="windows", platform_tested=os.name == "nt", ffmpeg=shutil.which("ffmpeg"), ffprobe=shutil.which("ffprobe"),
-                  ffmpeg_required=False, missing_optional_guidance="FFmpeg/ffprobe 缺失时文字创作与登记可用；媒体预览和本地渲染需安装 FFmpeg 并加入 PATH。不会自动下载或调用付费服务。")
+        raise ValueError("Python 无法运行；" + guidance)
+    try:
+        result = json.loads(probe.stdout)
+        if tuple(result["version"]) < (3, 11, 0):
+            raise ValueError("需要 Python 3.11 或更新版本，且必须包含 sqlite3")
+        result["executable"] = str(absolute(result["executable"], "Python"))
+        current_platform = {"win32": "windows", "darwin": "macos"}.get(result["sys_platform"], result["sys_platform"])
+    except (KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise ValueError("Python 环境探测未返回有效信息；" + guidance) from exc
+    result.update(current_platform=current_platform, supported_platforms=["windows", "macos"],
+                  platform_supported=current_platform in {"windows", "macos"}, environment_checked=True,
+                  ffmpeg=optional_executable("ffmpeg", current_platform), ffprobe=optional_executable("ffprobe", current_platform),
+                  ffmpeg_required=False, missing_optional_guidance="FFmpeg/ffprobe 缺失时文字创作与登记可用；媒体预览和本地渲染需安装 FFmpeg。macOS 同时检查 /opt/homebrew/bin 与 /usr/local/bin，其他安装位置需加入启动环境 PATH。不会自动下载或调用付费服务。")
     return result
 
 
@@ -326,10 +366,14 @@ def install(package, app_root, data_root, config_root, python=None, catalog_path
     config_file = config / "user.json"
     configured_python = read_json(config_file).get("python") if config_file.is_file() else None
     env = environment(python or configured_python)
+    if not env["platform_supported"]:
+        raise ValueError("当前安装器仅支持 Windows 和 macOS；检测到 " + env["current_platform"])
     desired = {"config_version": 1, "app_root": str(app), "data_root": str(data), "catalog_path": str(catalog),
                "python": env["executable"], "cloud_bindings": {}, "default_project": None}
     with installation_lock(app), package_directory(package) as source:
         manifest = verify_directory(source)
+        if env["current_platform"] not in manifest["runtime"].get("platforms", []):
+            raise ValueError("发行包未声明支持当前系统 " + env["current_platform"] + "；请使用兼容版本")
         version = manifest["version"]
         if config_file.exists():
             existing = read_json(config_file)
@@ -700,7 +744,7 @@ def restore_entry(receipt_path):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="影视插件 Windows 安装/检查/恢复。不会联网、扫描作品、调用宿主安装或删除作品。")
+    parser = argparse.ArgumentParser(description="影视插件 Windows/macOS 安装/检查/恢复。不会联网、扫描作品、调用宿主安装或删除作品。")
     sub = parser.add_subparsers(dest="command", required=True)
     env = sub.add_parser("env"); env.add_argument("--python")
     verify = sub.add_parser("verify"); verify.add_argument("--package", required=True)

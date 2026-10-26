@@ -1,6 +1,6 @@
 {
   "name": "film-production-agent",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "description": "影视开发制作总控：统一编剧、美术总监、专业协作与准确版本接续",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",

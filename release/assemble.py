@@ -7,7 +7,7 @@ from pathlib import Path
 
 IGNORE=shutil.ignore_patterns('__pycache__','*.pyc','.DS_Store')
 DOCS=('integration-pages.md','integration-workflow-1.3.md','integration-brainstorm-1.4.md',
-      'integration-video-prompt-1.5.md','integration-1.6.md','integration-1.7.md','integration-1.7.2.md','integration-1.7.3.md','integration-1.7.4.md','integration-1.8.0.md','integration-1.9.0.md','integration-1.9.1.md','integration-1.9.2.md','integration-1.9.3.md','integration-1.9.4.md','integration-1.10.0.md','integration-1.11.0.md','integration-workspace-1.11.0.md','integration-delivery-1.11.0.md','integration-workspace-ui1110.md','integration-1.12.0.md','integration-cloud-1.12.0.md','integration-cloud-ui1120.md','integration-1.13.0.md','integration-art-1.13.0.md','integration-director.md','integration-1.14.0.md','integration-screenwriter-overview-1.14.0.md','integration-screenwriter-1.13.0.md','integration-style-feedback-1.14.0.md','integration-1.15.0.md','integration-1.15.1.md','integration-1.15.2.md','integration-1.16.0.md')
+      'integration-video-prompt-1.5.md','integration-1.6.md','integration-1.7.md','integration-1.7.2.md','integration-1.7.3.md','integration-1.7.4.md','integration-1.8.0.md','integration-1.9.0.md','integration-1.9.1.md','integration-1.9.2.md','integration-1.9.3.md','integration-1.9.4.md','integration-1.10.0.md','integration-1.11.0.md','integration-workspace-1.11.0.md','integration-delivery-1.11.0.md','integration-workspace-ui1110.md','integration-1.12.0.md','integration-cloud-1.12.0.md','integration-cloud-ui1120.md','integration-1.13.0.md','integration-art-1.13.0.md','integration-director.md','integration-1.14.0.md','integration-screenwriter-overview-1.14.0.md','integration-screenwriter-1.13.0.md','integration-style-feedback-1.14.0.md','integration-1.15.0.md','integration-1.15.1.md','integration-1.15.2.md','integration-1.16.0.md','integration-1.17.0.md','MACOS.md')
 
 def assemble(source, output):
     source,output=Path(source).resolve(),Path(output).resolve()
@@ -35,7 +35,7 @@ def assemble(source, output):
     (plugin/'docs').mkdir()
     for name in DOCS:
         shutil.copy2(source/'docs'/name,plugin/'docs'/name)
-    shutil.copy2(source/'docs/integration-1.16.0.md',plugin/'docs/integration.md')
+    shutil.copy2(source/'docs/integration-1.17.0.md',plugin/'docs/integration.md')
     shutil.copy2(source/'docs/editing-portable.md',plugin/'docs/剪辑导出.md')
     for name in ('INSTALL.md','UPGRADE.md','FEATURES.md'):
         shutil.copy2(source/'docs'/name,plugin/'docs'/name)
@@ -50,10 +50,10 @@ def assemble(source, output):
             'env':{'PYTHONDONTWRITEBYTECODE':'1'}}
     (plugin/'.mcp.json').write_text(json.dumps({'mcpServers':{'film-production':server}},indent=2),encoding='utf-8')
     (output/'release').mkdir()
-    for name in ('installer.py','bootstrap.ps1','publisher.py','assemble.py','installer-guide.md','release-guide.md'):
+    for name in ('installer.py','bootstrap.ps1','bootstrap.sh','publisher.py','assemble.py','installer-guide.md','release-guide.md'):
         shutil.copy2(source/'release'/name,output/'release'/name)
     (output/'install.py').write_text('from release.installer import main\nif __name__ == "__main__":\n    main()\n',encoding='utf-8')
-    (output/'README.md').write_text(f'''# 影视制作助手 {version} · Windows 本地发行
+    (output/'README.md').write_text(f'''# 影视制作助手 {version} · Windows / macOS 本地发行
 
 请先阅读 `release/installer-guide.md`，运行环境检查、校验和安装，再添加安装器生成的本机 marketplace。
 本包 `.mcp.json` 为可移植模板；兼容宿主必须经安装器生成本机配置，不能把模板成功解析当成实际启动。
@@ -63,7 +63,7 @@ def assemble(source, output):
 本版同时提供统一编剧与美术总监。编剧合并小说、改编与原创剧本，优先完整AI短剧分场正文，底稿为可选；导演反馈关联准确剧本，重大变化先交方案与用户选择。美术总监负责：主选/备选定调、统一视觉基准、场景资产指导与实际成果视觉复核，影视分析作为按需研究能力。保留完整初稿与每轮明确修订的云端工作稿接续：准确成果关联、持久待同步记录、未知结果恢复与完整读回。默认按轮处理不代表后台实时双向同步。保留项目工作对话、完整成稿复核、Markdown 阅读导出与精简正文提交；云稿修改不自动批准内容。
 本版内置八个方法模块（旧小说与改编合为编剧，原方法完整保留在其内部）；灵感探索与需求规划是可选入口，未立项可以直接讨论，持久化时明确选择外部灵感库。项目内统一使用 planning.record/read，不建立第二套状态。
 更新检查不会切换正在运行的聊天。程序包不包含作品、私人 Pages 或账号绑定。
-本地发布源与远端更新上线分别验证。本版面向 Windows 桌面；其他平台、真实异机和纯云 Work 尚未验收。
+本地发布源与远端更新上线分别验证。本版适配 Windows 与 macOS 本地运行；macOS 安装说明见 `plugin/docs/MACOS.md`。自动测试运行环境与结果见对应发行页，客户端原生看板与真实用户会话需要在目标客户端核验；纯云 Work 未适配。
 本包可从公开仓库下载并使用。模块来源与历史分发记录见 `plugin/modules/manifest.json`；第三方依赖保留各自许可状态，本次发布不将未声明的上游许可标为已核实。
 音乐生成未实现，外部脑暴提供方未连接；宿主可使用内置 idea-explorer 实际讨论创意，Pages 访问条件以实际工具为准。
 ''',encoding='utf-8')

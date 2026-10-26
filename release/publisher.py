@@ -17,6 +17,7 @@ import subprocess
 import tempfile
 from datetime import datetime, timezone
 import zipfile
+import unicodedata
 
 IDENTITY = "film-production-agent@film-production-local"
 NAME = "film-production-agent"
@@ -85,12 +86,12 @@ def validate_names(names: list[str]) -> None:
     normalized = set()
     for name in names:
         safe_name(name)
-        key = name.casefold()
+        key = unicodedata.normalize("NFC", name).casefold()
         if key in normalized:
-            raise ValueError(f"重复或大小写冲突路径: {name}")
+            raise ValueError(f"重复、大小写或 Unicode 等价冲突路径: {name}")
         normalized.add(key)
     for name in normalized:
-        if any(parent.as_posix().casefold() in normalized for parent in PurePosixPath(name).parents if parent.as_posix() != "."):
+        if any(unicodedata.normalize("NFC", parent.as_posix()).casefold() in normalized for parent in PurePosixPath(name).parents if parent.as_posix() != "."):
             raise ValueError(f"文件与目录冲突: {name}")
 
 
@@ -131,7 +132,10 @@ def directory_files(root: Path) -> dict[str, bytes]:
         if path.is_file():
             if path.stat().st_size > MAX_FILE_BYTES:
                 raise ValueError("单文件超出限制")
-            files[path.relative_to(root).as_posix()] = path.read_bytes()
+            name = unicodedata.normalize("NFC", path.relative_to(root).as_posix())
+            if name in files:
+                raise ValueError(f"Unicode 等价冲突路径: {name}")
+            files[name] = path.read_bytes()
     validate_names(list(files))
     if len(files) > MAX_FILES or sum(map(len, files.values())) > MAX_TOTAL_BYTES:
         raise ValueError("发行包超出容量限制")
@@ -213,7 +217,7 @@ def build(payload: Path, output: Path, version: str, channel: str = "stable") ->
         raise ValueError("发行扫描未通过: " + json.dumps(findings, ensure_ascii=False))
     manifest = {"schema_version": 1, "identity": IDENTITY, "version": version, "channel": channel,
                 "created_at": datetime.now(timezone.utc).isoformat(),
-                "runtime": {"python": ">=3.11", "platforms": ["windows"], "data_schema_min": 2, "data_schema_max": 2},
+                "runtime": {"python": ">=3.11", "platforms": ["windows", "macos"], "data_schema_min": 2, "data_schema_max": 2},
                 "distribution": "source_and_optional_dependency_rights_recorded_in_module_manifest",
                 "files": [{"path": name, "sha256": sha256(raw), "size": len(raw)} for name, raw in sorted(files.items())]}
     for name in ("plugin/modules/manifest.json", "plugin/modules/modules-lock.json", "plugin/modules-lock.json"):

@@ -12,6 +12,7 @@ import math
 import os
 import shutil
 import subprocess
+import sys
 from fractions import Fraction
 from pathlib import Path
 
@@ -20,6 +21,7 @@ from .core import ConflictError, Registry, canonical, content_hash, now, require
 
 RENDERER_VERSION = "1.1.0"
 CLEARED_RIGHTS = {"owned", "licensed", "public_domain", "cleared"}
+MACOS_EXECUTABLE_DIRS = ("/opt/homebrew/bin", "/usr/local/bin")
 
 
 def _hash(path):
@@ -41,10 +43,25 @@ def _number(value, name, positive=False):
 
 
 def _exe(name, supplied=None):
-    path = Path(supplied).expanduser().resolve() if supplied else Path(shutil.which(name) or "")
-    if not path.is_file():
-        raise ValueError(f"本机未找到 {name}；请安装或显式传入可执行文件路径")
-    return str(path.resolve())
+    def usable(path):
+        return path.is_file() and os.access(path, os.X_OK)
+
+    if supplied:
+        path = Path(supplied).expanduser().resolve()
+        if usable(path):
+            return str(path)
+        # An explicit choice must not silently fall back to a different binary.
+        raise ValueError(f"指定的 {name} 不是可执行文件；请核对路径和执行权限")
+    found = shutil.which(name)
+    candidates = [Path(found)] if found else []
+    # Desktop apps on macOS do not necessarily inherit the interactive shell's
+    # Homebrew PATH. Check only its two standard locations; never alter PATH.
+    if sys.platform == "darwin" and name in {"ffmpeg", "ffprobe"}:
+        candidates.extend(Path(directory) / name for directory in MACOS_EXECUTABLE_DIRS)
+    for path in candidates:
+        if usable(path):
+            return str(path.resolve())
+    raise ValueError(f"本机未找到可执行的 {name}；请安装、加入 PATH 或显式传入可执行文件路径")
 
 
 def _run(args, cwd=None, timeout=600):

@@ -46,7 +46,7 @@ class InstallerTests(unittest.TestCase):
                  for p in sorted(package.rglob("*")) if p.is_file() and p.name != installer.MANIFEST]
         installer.write_json(package / installer.MANIFEST, {"schema_version": 1, "identity": installer.IDENTITY, "version": version,
                               "channel": "stable", "files": files,
-                              "runtime": {"python": ">=3.11", "platforms": ["windows"], "data_schema_min": schema, "data_schema_max": schema}})
+                              "runtime": {"python": ">=3.11", "platforms": ["windows", "macos"], "data_schema_min": schema, "data_schema_max": schema}})
 
     def first_install(self):
         return installer.install(self.package, self.app, self.data, self.config)

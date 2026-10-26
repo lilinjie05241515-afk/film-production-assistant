@@ -2,7 +2,7 @@
 name: film-production-agent
 description: 统筹明确影视项目的灵感、需求、编剧与分集制作，管理准确版本、导演反馈、美术风格、特效和 AI 视频提示词。直接剧本优先，兼容小说与改编路线；研究、美术和单项文本创作可独立进入。
 metadata:
-  version: "1.16.0"
+  version: "1.17.0"
 ---
 
 # 影视开发制作总控

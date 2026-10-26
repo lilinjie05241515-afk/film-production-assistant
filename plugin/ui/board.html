@@ -4,7 +4,7 @@
 </style></head><body><div class="app"><aside class="sidebar"><div class="brand">影视项目<small>创作 · 任务 · 素材</small></div><nav id="main-nav" class="nav" aria-label="主导航"></nav><div class="aux-nav"><div class="aside-label">常用工具</div><nav id="aux-nav" class="nav" aria-label="辅助导航"></nav></div></aside><main class="main"><header class="topbar"><select id="project-picker" aria-label="切换项目"><option value="">未选择项目</option></select><button id="project-manage" type="button" data-view="projects">管理项目</button><button id="refresh" type="button">刷新</button><span id="host-state" class="host">正在加载</span><select id="aux-mobile" class="aux-mobile" style="display:none" aria-label="辅助入口"><option value="">更多</option></select></header><div id="notice" class="notice" role="status"></div><div id="pending"></div><div id="content"></div></main></div><dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title"></h2><button id="dialog-close" type="button" aria-label="关闭窗口">关闭</button></div><div id="dialog-body" class="dialog-body"></div></dialog>
 <script>
 'use strict';
-const VERSION='1.16.0';
+const VERSION='1.17.0';
 const MAIN_NAV=[['overview','项目总览'],['tasks','创作任务'],['documents','文稿资料'],['media','素材库'],['reviews','审核记录']];
 const AUX_NAV=[['threads','工作对话'],['exports','导出资料'],['trash','回收站'],['projects','项目管理']];
 const READ_ACTIONS=new Set(['snapshot','artifact.get','artifact.history','document.export','board.reference','board.usage','projects.list','projects.outcome','media.choose','media.choose_image','media.choose_audio','media.preview','media.preview_image','media.preview_audio','media.original']);

@@ -12,7 +12,8 @@ from filmprod.board_gateway1150 import ALL_ACTIONS
 class CreatorTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(prefix='TEST-creator1180-')
-        self.root=Path(self.tmp.name)/'TEST-project'
+        # Match the catalog's canonical root on Windows RUNNER~1 and macOS /var aliases.
+        self.root=Path(self.tmp.name).resolve()/'TEST-project'
         self.r=Registry(self.root)
         self.call('project.init',project_id='TEST-1180',title='TEST creative',test_only=True)
         self.script=self.call('artifact.save',artifact_id='SCRIPT',kind='script',scope='episode/1',content='完整测试剧本',base_version=0)['artifact']
@@ -132,5 +133,3 @@ class CreatorTests(unittest.TestCase):
         finally:c.close()
 
 if __name__=='__main__':unittest.main()
-
-

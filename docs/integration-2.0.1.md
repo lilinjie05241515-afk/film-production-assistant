@@ -14,7 +14,7 @@ Mac 默认 catalog 和显式路径配置分开；Finder 启动可能缺少 Termi
 
 ## 验证与证据
 
-对应源提交由 [跨平台 CI](https://github.com/lilinjie05241515-afk/film-production-assistant/actions/workflows/compatibility.yml) 在 Windows、Apple Silicon Mac 与 Intel Mac 执行。检查后端工作流、安装/发行工具、全部当前看板交互，以及实际解压安装包的独立 stdio、合成项目写入读回和媒体运行。冻结 ZIP 还需与从源码重建的 payload 逐项匹配。
+对应源提交由 [跨平台 CI](https://github.com/lilinjie05241515-afk/film-production-assistant/actions/workflows/compatibility.yml) 在 Windows、Apple Silicon Mac 与 Intel Mac 执行。检查后端工作流、安装/发行工具、全部当前看板交互，以及实际解压安装包的独立 stdio、合成项目写入读回和媒体运行。两类 Mac 还实际执行包内 Blender 双视角预演、解码校验，并重新打开工程检查镜头切换和角色运动；为无 GPU 的测试环境显式选择 Cycles CPU，默认 Workbench 不变。冻结 ZIP 还需与从源码重建的 payload 逐项匹配。
 
 本文件说明验收方法，不提前声明当前检查成功。实际通过状态、所测提交和冻结 ZIP SHA-256 以本版 GitHub Release 的验证记录为准。测试只用独立 TEST/synthetic 数据；包内合成渲染成功不代表画面效果或真实作品获批。
 

@@ -73,3 +73,33 @@ test('2.0 list and board both preserve current next step and hide cancelled stal
 });
 
 test('2.0 refreshed video panel never restores disposed playback nodes',async()=>{const f=await uiFixture();f.ui.show('预演','<video id="pv-camera"></video>');f.ui.show('预演新状态','<video id="pv-camera"></video>');assert.equal(f.el('dialog-back').hidden,true);});
+
+function homeFilterSnap(){const s=creatorSnap();s.tasks=[['plan','planning'],['writer','screenplay'],['art','art'],['director','director'],['making','assets'],['review','review']].map(([stage,module])=>({task_id:stage,title:'TEST-FILTER-'+stage,module,status:'created'}));return s;}
+test('2.0.1 every home category filters in place without opening links or writing data',async()=>{
+ const f=await uiFixture({snapshot:homeFilterSnap()});await f.click({view:'overview'});const count=f.calls.length;
+ for(const stage of ['plan','writer','art','director','making','review']){
+  assert.match(f.el('content').innerHTML,new RegExp('data-overview-stage="'+stage+'"'));
+  await f.eventClick({overviewStage:stage});assert.equal(f.ui.view(),'overview');
+  const markup=f.el('content').innerHTML;assert.match(markup,new RegExp('TEST-FILTER-'+stage));
+  for(const other of ['plan','writer','art','director','making','review'].filter(x=>x!==stage))assert.ok(!markup.includes('TEST-FILTER-'+other));
+  assert.match(markup,new RegExp('data-overview-stage="'+stage+'" aria-pressed="true"'));assert.doesNotMatch(markup,/data-stage=/);
+ }
+ assert.equal(f.calls.length,count);assert.equal(f.opened.length,0);
+ await f.eventClick({overviewStage:'all'});assert.equal(f.ui.view(),'overview');assert.match(f.el('content').innerHTML,/data-overview-stage="all" aria-pressed="true"/);
+ assert.match(f.el('content').innerHTML,/TEST-FILTER-plan/);assert.match(f.el('content').innerHTML,/TEST-FILTER-writer/);
+});
+test('2.0.1 selected category survives refresh and resets on project switch',async()=>{
+ const f=await uiFixture({snapshot:homeFilterSnap()});await f.click({view:'overview'});await f.eventClick({overviewStage:'writer'});
+ await f.ui.refresh();assert.equal(f.ui.view(),'overview');assert.match(f.el('content').innerHTML,/data-overview-stage="writer" aria-pressed="true"/);
+ const next=homeFilterSnap();next.project.project_id='TEST-B';next.project_root='C:/TEST_ONLY/TEST-B';f.setSnapshot(next);
+ await f.ui.switchProject({project_id:'TEST-B',root:next.project_root});assert.equal(f.ui.view(),'overview');assert.match(f.el('content').innerHTML,/data-overview-stage="all" aria-pressed="true"/);
+});
+test('2.0.1 empty/completed categories stay on home; explicit tasks navigation still works',async()=>{
+ const s=homeFilterSnap();s.tasks=s.tasks.filter(t=>['writer','director'].includes(t.task_id));s.tasks.find(t=>t.task_id==='writer').status='completed';
+ const f=await uiFixture({snapshot:s});await f.click({view:'overview'});
+ for(const stage of ['art','writer']){await f.eventClick({overviewStage:stage});assert.equal(f.ui.view(),'overview');assert.match(f.el('content').innerHTML,/此分类当前没有需要推进的任务/);}
+ assert.match(f.el('content').innerHTML,/已完成 1 \/ 1/);
+ await f.eventClick({view:'tasks'});assert.equal(f.ui.view(),'tasks');await f.eventClick({stage:'director'});assert.equal(f.ui.view(),'tasks');assert.match(f.el('content').innerHTML,/TEST-FILTER-director/);
+ await f.eventClick({overviewStage:'writer'});assert.equal(f.ui.view(),'tasks');
+ await f.eventClick({view:'media'});await f.eventClick({objectType:'scene'});assert.equal(f.ui.view(),'media');
+});

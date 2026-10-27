@@ -2,7 +2,7 @@
 
 本页为安装入口。完整命令和恢复规则保存在**源码根或发行 ZIP 根的 `release/installer-guide.md`**。发行 ZIP 内本页位于 `plugin/docs/`，不要把它所在目录当成安装命令的工作目录。
 
-当前发行版本为 **2.0.1**。Mac 用户按 [Mac 安装步骤](MACOS.md) 使用 `release/bootstrap.sh`；Windows 使用 Python 入口或 `release/bootstrap.ps1`。两个系统使用同一份稳定 ZIP。
+当前发行版本为 **2.0.2**。Mac 用户按 [Mac 安装步骤](MACOS.md) 使用 `release/bootstrap.sh`；Windows 使用 Python 入口或 `release/bootstrap.ps1`。两个系统使用同一份稳定 ZIP。
 
 ## 安装顺序
 
@@ -10,7 +10,7 @@
 2. 核对下载摘要，完整解压发行 ZIP。运行环境为支持本地执行的 Windows 或 macOS 桌面宿主、Python 3.11+ 及 sqlite3；媒体预览和渲染按需使用 FFmpeg／ffprobe，白模预演另需 Blender。
 3. 在解压根目录运行 `release/installer.py env`、`verify` 和 `install`，明确应用、数据和配置目录。
 4. 运行 `release/installer.py host-plan`，取得本机 marketplace 路径，通过目标桌面的插件管理接入 `film-production-agent@film-production-local`。
-5. 新开工作会话，要求核实实际 `film_health.version=2.0.1`、运行隔离和八个内置模块，并打开看板查看结果。运行版本应与本次安装的准确发行版本一致。
+5. 新开工作会话，要求核实实际 `film_health.version=2.0.2`、运行隔离和八个内置模块，并打开看板查看结果。运行版本应与本次安装的准确发行版本一致。
 
 GitHub 自动生成的 `Source code (zip)` 是源码快照，与可直接安装的发行资产不同。下载安装包不会自动改变已打开的聊天。
 

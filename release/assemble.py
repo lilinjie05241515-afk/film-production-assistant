@@ -9,7 +9,7 @@ IGNORE=shutil.ignore_patterns('__pycache__','*.pyc','.DS_Store')
 DOCS=('integration-pages.md','integration-workflow-1.3.md','integration-brainstorm-1.4.md',
       'integration-video-prompt-1.5.md','integration-1.6.md','integration-1.7.md','integration-1.7.2.md','integration-1.7.3.md','integration-1.7.4.md','integration-1.8.0.md','integration-1.9.0.md','integration-1.9.1.md','integration-1.9.2.md','integration-1.9.3.md','integration-1.9.4.md','integration-1.10.0.md','integration-1.11.0.md','integration-workspace-1.11.0.md','integration-delivery-1.11.0.md','integration-workspace-ui1110.md','integration-1.12.0.md','integration-cloud-1.12.0.md','integration-cloud-ui1120.md','integration-1.13.0.md','integration-art-1.13.0.md','integration-director.md','integration-1.14.0.md','integration-screenwriter-overview-1.14.0.md','integration-screenwriter-1.13.0.md','integration-style-feedback-1.14.0.md','integration-1.15.0.md','integration-1.15.1.md','integration-1.15.2.md','integration-1.16.0.md','integration-1.16.1.md','integration-1.17.0.md','integration-1.18.0.md','integration-1.19.0.md','integration-1.19.2.md','current-rules.md','compatibility.md')
 
-DOCS = (*DOCS, 'integration-1.20.0.md', 'integration-2.0.0.md', 'integration-2.0.1.md', 'MACOS.md')
+DOCS = (*DOCS, 'integration-1.20.0.md', 'integration-2.0.0.md', 'integration-2.0.1.md', 'integration-2.0.2.md', 'MACOS.md')
 
 def assemble(source, output):
     source,output=Path(source).resolve(),Path(output).resolve()
@@ -37,7 +37,7 @@ def assemble(source, output):
     (plugin/'docs').mkdir()
     for name in DOCS:
         shutil.copy2(source/'docs'/name,plugin/'docs'/name)
-    shutil.copy2(source/'docs/integration-2.0.1.md',plugin/'docs/integration.md')
+    shutil.copy2(source/'docs/integration-2.0.2.md',plugin/'docs/integration.md')
     shutil.copy2(source/'docs/editing-portable.md',plugin/'docs/剪辑导出.md')
     shutil.copytree(source/'docs/history',plugin/'docs/history',ignore=IGNORE)
     for name in ('INSTALL.md','UPGRADE.md','FEATURES.md'):
@@ -60,6 +60,7 @@ def assemble(source, output):
 
 请先阅读 `release/installer-guide.md`，运行环境检查、校验和安装，再添加安装器生成的本机 marketplace。
 当前执行职责见 `plugin/docs/current-rules.md`，旧接口与任务恢复见 `plugin/docs/compatibility.md`；历史记录不作为当前操作指引。
+2.0.2 修复首页待推进任务的分类筛选，点击分类留在项目总览，点击“全部任务”进入任务页；同时保留 2.0.1 的 Mac 适配。说明见 `plugin/docs/integration-2.0.2.md`。
 本版新增黑金夜间与磨砂白日间主题、紧凑任务列表和文稿阅读抽屉，用法见 `plugin/docs/integration-2.0.0.md`。保留与编剧平级的独立导演入口 `$film-director`，复用包内导演方法、按需特效设计和既有白模预演；五个公开技能共用原有八个专业方法模块和项目登记。用法见 `plugin/docs/integration-1.20.0.md`。
 本包 `.mcp.json` 为可移植模板；兼容宿主必须经安装器生成本机配置，不能把模板成功解析当成实际启动。
 创作数据、catalog 和用户配置独立于版本目录。首次安装为空项目列表；按明确目录新建或关联。

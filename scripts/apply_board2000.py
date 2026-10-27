@@ -42,5 +42,9 @@ s=s.replace("const obj=objectsFor(state).find(o=>o.object_id===link.object_id),o
 s=s.replace('<h3>${esc(item.title)}</h3></div><p>只更新这个对象的对应用途。','<h3>${esc(item.title)}</h3><p>当前选用：${esc(oldItem?.title||(old?\'原素材记录待核对\':\'尚未选用\'))} → ${esc(item.title)}</p></div><p>只更新这个对象的对应用途。',1)
 s=s.replace('data-pv-mode="camera">','data-pv-mode="camera" aria-pressed="true">').replace('data-pv-mode="top">','data-pv-mode="top" aria-pressed="false">').replace('data-pv-mode="dual">','data-pv-mode="dual" aria-pressed="false">')
 s=s.replace("mode=node.dataset.pvMode;cam.hidden", "mode=node.dataset.pvMode;for(const b of el('dialog-body').querySelectorAll('[data-pv-mode]'))b.setAttribute('aria-pressed',String(b===node));cam.hidden")
+# Homepage filters are local state, distinct from task-page navigation.
+s=s.replace('overview:()=>renderOverview(state)','overview:()=>renderOverview(state,overviewStage2001)')
+s=s.replace("async function creatorAction(d){", "async function creatorAction(d){if(d.overviewStage){if(view!=='overview'||(d.overviewStage!=='all'&&!CREATIVE_STAGES.some(s=>s[0]===d.overviewStage)))return true;overviewStage2001=d.overviewStage==='all'?'':d.overviewStage;render();document.querySelector?.('[data-overview-stage=\"'+d.overviewStage+'\"]')?.focus({preventScroll:true});return true;}")
+s=s.replace("epoch++;objectId=null;creatorTaskScope='';", "epoch++;overviewStage2001='';objectId=null;creatorTaskScope='';")
 p.write_text(s,encoding='utf8',newline='\n')
 print('Built board',version)

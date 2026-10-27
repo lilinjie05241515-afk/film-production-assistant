@@ -1,8 +1,8 @@
-# 影视制作助手 2.0.1
+# 影视制作助手 2.0.2
 
-面向 AI 短剧及影视开发的本地工作插件，支持 Windows 与 macOS。2.0.1 在 2.0.0 双主题看板、独立导演和 Blender 白模预演基础上补齐跨平台安装、媒体运行与发行校验；新版本不覆盖已有作品、任务历史或个人规则。
+面向 AI 短剧及影视开发的本地工作插件，支持 Windows 与 macOS。2.0.2 修复首页待推进任务的分类筛选，并保留 2.0.1 的跨平台安装、媒体运行与发行校验；新版本不覆盖已有作品、任务历史或个人规则。
 
-从 [GitHub Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) 下载 `film-production-agent-2.0.1-stable.zip` 及同版 SHA-256、发行记录。请使用发行附件；GitHub 的 `Source code (zip)` 是维护源码，不能代替安装包。首次安装见 [安装说明](docs/INSTALL.md)，Mac 的完整步骤见 [Mac 安装](docs/MACOS.md)，升级和换电脑见 [更新说明](docs/UPGRADE.md)。
+从 [GitHub Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) 下载 `film-production-agent-2.0.2-stable.zip` 及同版 SHA-256、发行记录。请使用发行附件；GitHub 的 `Source code (zip)` 是维护源码，不能代替安装包。首次安装见 [安装说明](docs/INSTALL.md)，Mac 的完整步骤见 [Mac 安装](docs/MACOS.md)，升级和换电脑见 [更新说明](docs/UPGRADE.md)。
 
 ## 专业能力与入口
 
@@ -25,9 +25,9 @@
 
 [跨平台 CI](https://github.com/lilinjie05241515-afk/film-production-assistant/actions/workflows/compatibility.yml) 分别验证 Windows、Apple Silicon Mac 与 Intel Mac。具体成功状态、提交和冻结包摘要以对应发行记录为准；当前 Mac 原生客户端面板及真实用户工作对话仍需在目标客户端核验。运行层兼容不代表所有旧款 Mac 均可运行所选客户端。
 
-本版保留 26 个工具、8 个方法模块和 5 个公开技能入口。安装后在新工作对话核实 `film_health.version=2.0.1`、`runtime_isolated=true` 及模块校验，再打开看板。下载、安装副本、宿主加载与已有聊天实际运行版本分别核验。
+本版保留 26 个工具、8 个方法模块和 5 个公开技能入口。安装后在新工作对话核实 `film_health.version=2.0.2`、`runtime_isolated=true` 及模块校验，再打开看板。下载、安装副本、宿主加载与已有聊天实际运行版本分别核验。
 
-完整功能见 [功能说明](docs/FEATURES.md)，当前规则见 [现行执行规则](docs/current-rules.md)，兼容和测试范围见 [2.0.1 接入说明](docs/integration-2.0.1.md)。音乐创作技能及音乐/视频生成提供方尚未接入；外部头脑风暴提供方也未连接。
+完整功能见 [功能说明](docs/FEATURES.md)，当前规则见 [现行执行规则](docs/current-rules.md)，兼容和测试范围见 [2.0.2 接入说明](docs/integration-2.0.2.md)。音乐创作技能及音乐/视频生成提供方尚未接入；外部头脑风暴提供方也未连接。
 
 ## 维护与构建
 

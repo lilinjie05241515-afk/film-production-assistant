@@ -1,4 +1,4 @@
-# 影视制作助手 2.0.1 · Windows / macOS 安装、升级与恢复
+# 影视制作助手 2.0.2 · Windows / macOS 安装、升级与恢复
 
 本版支持 Windows 与 macOS 桌面本地执行。Python 3.11 或更新版本及其内置 sqlite3 为必要依赖；安装器只用标准库。FFmpeg 与 ffprobe 用于媒体探测、预览和本地渲染，文字创作、版本登记不依赖它们；Blender 白模预演另需可运行的 Blender。安装器检查缺项并用中文说明，不自动联网下载、不配置模型 API、不启动 HTTP 服务。
 
@@ -10,9 +10,9 @@ Mac 用户的逐步命令见源码 `docs/MACOS.md` 或发行包 `plugin/docs/MAC
 
 打开公开仓库的 [Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases)，下载并使用发布包，无需单独申请仓库访问。下载同一版本的三个资产：
 
-- `film-production-agent-2.0.1-stable.zip`
-- `film-production-agent-2.0.1-stable.zip.sha256`
-- `film-production-agent-2.0.1-stable.release.json`
+- `film-production-agent-2.0.2-stable.zip`
+- `film-production-agent-2.0.2-stable.zip.sha256`
+- `film-production-agent-2.0.2-stable.release.json`
 
 这里需要的是发行资产 ZIP，GitHub 自动提供的 `Source code (zip)` 是开发源码快照。将发行 ZIP 完整解压到自行选择的新文件夹，后续命令在该解压根目录运行；保留原 ZIP 用于安装与核验。
 
@@ -77,7 +77,7 @@ python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 
 `host-plan` 不操作宿主安装；`install`、`stage`、`switch` 也不会自行重载已有聊天。安装成功、工具子进程通过、原生面板显示、目标聊天实际 `film_health` 是四层不同证据。接入后在目标聊天核对实际版本、`runtime_isolated=true`、八模块解析，并打开面板验证。旧聊天可继续持有旧版本，其固定目录保持保留。
 
-新会话中可要求：“核验影视制作助手实际运行版本，确认八个内置模块并打开看板。”本版预期 `film_health.version=2.0.1`；读取结果与预期不符时先核对该会话加载的来源，不能仅凭下载文件名称声称已经更新。
+新会话中可要求：“核验影视制作助手实际运行版本，确认八个内置模块并打开看板。”本版预期 `film_health.version=2.0.2`；读取结果与预期不符时先核对该会话加载的来源，不能仅凭下载文件名称声称已经更新。
 
 ## 建立第一个项目
 
@@ -92,7 +92,7 @@ python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 ```powershell
 python -B -X utf8 release/installer.py check-update --app-root $filmApp --package '<新版 ZIP 绝对路径>'
 python -B -X utf8 release/installer.py stage --package '<新版 ZIP 绝对路径>' --app-root $filmApp --data-root $filmData --config-root $filmConfig
-python -B -X utf8 release/installer.py switch --app-root $filmApp --version '2.0.1' --quiescent
+python -B -X utf8 release/installer.py switch --app-root $filmApp --version '2.0.2' --quiescent
 python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 python -B -X utf8 release/installer.py status --app-root $filmApp
 ```

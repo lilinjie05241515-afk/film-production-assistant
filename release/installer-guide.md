@@ -1,20 +1,22 @@
-# 影视制作助手 1.17.0 · Windows / macOS 安装、升级与恢复
+# 影视制作助手 2.0.1 · Windows / macOS 安装、升级与恢复
 
-本版提供 Windows 与 macOS 桌面本地执行适配，两种系统使用同一发行 ZIP。Python 3.11 或更新版本及其内置 sqlite3 为必要依赖；安装器只用标准库。FFmpeg 与 ffprobe 用于媒体探测、预览和本地渲染，文字创作、版本登记不依赖它们。Mac 如需带水印的视频预览渲染，使用包含 drawtext 的完整 FFmpeg 构建（例如 Homebrew `ffmpeg-full`）；详细步骤见源码 `docs/MACOS.md`，发行包内对应 `plugin/docs/MACOS.md`。安装器检查缺项并用中文说明，不自动联网下载、不配置模型 API、不启动 HTTP 服务。
+本版支持 Windows 与 macOS 桌面本地执行。Python 3.11 或更新版本及其内置 sqlite3 为必要依赖；安装器只用标准库。FFmpeg 与 ffprobe 用于媒体探测、预览和本地渲染，文字创作、版本登记不依赖它们；Blender 白模预演另需可运行的 Blender。安装器检查缺项并用中文说明，不自动联网下载、不配置模型 API、不启动 HTTP 服务。
 
 程序发行 ZIP 与作品移交包分开。发行 ZIP 不应包含作品数据库、媒体、账号秘密、Pages 或聊天绑定。SHA-256 可以证明取得的字节与已知摘要一致；发布源身份仍须来自可信的 Git 地址或明确交付渠道。
+
+Mac 用户的逐步命令见源码 `docs/MACOS.md` 或发行包 `plugin/docs/MACOS.md`。以下 PowerShell 示例用于 Windows；Mac 使用 `bash release/bootstrap.sh <动作与参数>`，或已核实的 `python3 -B -X utf8 release/installer.py <动作与参数>`。`bootstrap.sh --python <绝对路径> <动作>` 可显式选择 Python，选择参数必须放在动作前。两个平台使用同一稳定 ZIP。
 
 ## 从 GitHub 下载
 
 打开公开仓库的 [Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases)，下载并使用发布包，无需单独申请仓库访问。下载同一版本的三个资产：
 
-- `film-production-agent-1.17.0-stable.zip`
-- `film-production-agent-1.17.0-stable.zip.sha256`
-- `film-production-agent-1.17.0-stable.release.json`
+- `film-production-agent-2.0.1-stable.zip`
+- `film-production-agent-2.0.1-stable.zip.sha256`
+- `film-production-agent-2.0.1-stable.release.json`
 
 这里需要的是发行资产 ZIP，GitHub 自动提供的 `Source code (zip)` 是开发源码快照。将发行 ZIP 完整解压到自行选择的新文件夹，后续命令在该解压根目录运行；保留原 ZIP 用于安装与核验。
 
-Windows 先核对发行资产摘要，再检查包内文件；Mac 命令见后面的“macOS 安装入口”：
+先核对发行资产摘要，再检查包内文件：
 
 ```powershell
 $filmPackage = (Resolve-Path '<已下载的发行 ZIP>').Path
@@ -26,7 +28,7 @@ python -B -X utf8 release/publisher.py verify $filmPackage --sha256 $filmExpecte
 
 Windows PowerShell 字符串比较默认不区分大小写，SHA-256 的大小写形式不影响上述比较。不要从未知来源的同名文件推定其可信。
 
-## Windows 目录与首次安装
+## 目录与首次安装
 
 完整解压发行 ZIP，在包根使用 `python -B -X utf8 release/installer.py`；同目录 `release/bootstrap.ps1` 可检测 `py -3` 或 `python`，也可传 `-Python`。安装器所有目录参数必须为绝对路径。
 
@@ -63,51 +65,6 @@ Python 路径可用 `--python <Python 可执行文件绝对路径>` 选择；升
 
 Windows 未启用长路径时，深层专业方法文件可能触及系统路径长度上限。安装器预先检查并提示选择较短的 `app-root`，不会要求移动作品；推荐使用上方应用数据目录示例，避免多层长名称目录。
 
-## macOS 安装入口
-
-在完整解压的发行 ZIP 根目录打开 Terminal。使用 `python3 -B -X utf8 release/installer.py`，或使用可检查 Python 3.11+ 与 sqlite3 的 `bash release/bootstrap.sh`。shell 入口不要求文件有可执行权限，不自动下载 Python。显式选择解释器时使用 `bash release/bootstrap.sh --python '<Python 绝对路径>' <动作> <参数>`，`--python` 放在动作之前。
-
-以下变量为可调整示例，路径必须加双引号以保留空格和中文；不需要 `sudo`：
-
-```sh
-film_package="$HOME/Downloads/film-production-agent-1.17.0-stable.zip"
-film_expected="$(awk '{print $1; exit}' "$film_package.sha256")"
-film_actual="$(shasum -a 256 "$film_package" | awk '{print $1}')"
-if [ "$film_actual" != "$film_expected" ]; then
-  printf '%s\n' '发行包 SHA-256 不匹配，请停止安装。' >&2
-  exit 1
-fi
-film_base="$HOME/Library/Application Support/FilmProduction"
-film_app="$film_base/application"
-film_data="$film_base/data"
-film_config="$film_base/config"
-bash release/bootstrap.sh env
-bash release/bootstrap.sh verify --package "$film_package"
-bash release/bootstrap.sh install --package "$film_package" \
-  --app-root "$film_app" --data-root "$film_data" --config-root "$film_config"
-bash release/bootstrap.sh host-plan --app-root "$film_app"
-```
-
-安装器记录实际 Python、操作系统和 CPU 架构，生成该 Mac 的绝对 MCP 配置。桌面从 Finder 启动时可能缺少 Terminal 的 PATH；本版媒体工具先接受显式路径，再查 PATH，并在 macOS 查 `/opt/homebrew/bin`、`/usr/local/bin` 中的 FFmpeg／ffprobe。显式路径错误时拒绝，不静默换用其他工具。此过程不改全局 PATH，不执行 shell 启动文件，也不自动安装 Homebrew、FFmpeg 或 Rosetta。
-
-Python、FFmpeg 和桌面客户端必须支持目标 Mac；不同机型与客户端的支持范围分别核实。随后按下节将 `host-plan` 返回的 marketplace 接入目标客户端，在新对话核对实际版本并打开看板。
-
-本指南后续操作同时适用于 Mac。把 Windows 命令前缀替换为 `bash release/bootstrap.sh`，使用本节的 shell 变量和双引号；例如已有安装升级：
-
-```sh
-bash release/bootstrap.sh check-update --app-root "$film_app" --package "$film_package"
-bash release/bootstrap.sh stage --package "$film_package" \
-  --app-root "$film_app" --data-root "$film_data" --config-root "$film_config"
-# 先保存工作并确认相关登记、配置及项目已停止写入。
-bash release/bootstrap.sh switch --app-root "$film_app" --version '1.17.0' --quiescent
-bash release/bootstrap.sh host-plan --app-root "$film_app"
-bash release/bootstrap.sh status --app-root "$film_app"
-```
-
-首次安装已选择本版时不需要再次切换。回退示例为 `bash release/bootstrap.sh rollback --app-root "$film_app" --quiescent`；恢复的具体范围和快照规则与下文一致。
-
-更多 Mac 说明位于源码的 `docs/MACOS.md`，或发行 ZIP 的 `plugin/docs/MACOS.md`。从 Windows 迁移时重新安装程序，按范围移交作品并重新关联路径；不把 Windows `.mcp.json`、Python 路径或运行状态文件直接作为 Mac 配置。
-
 ## 接入桌面宿主
 
 ```powershell
@@ -120,7 +77,7 @@ python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 
 `host-plan` 不操作宿主安装；`install`、`stage`、`switch` 也不会自行重载已有聊天。安装成功、工具子进程通过、原生面板显示、目标聊天实际 `film_health` 是四层不同证据。接入后在目标聊天核对实际版本、`runtime_isolated=true`、八模块解析，并打开面板验证。旧聊天可继续持有旧版本，其固定目录保持保留。
 
-新会话中可要求：“核验影视制作助手实际运行版本，确认八个内置模块并打开看板。”本版预期 `film_health.version=1.17.0`；读取结果与预期不符时先核对该会话加载的来源，不能仅凭下载文件名称声称已经更新。
+新会话中可要求：“核验影视制作助手实际运行版本，确认八个内置模块并打开看板。”本版预期 `film_health.version=2.0.1`；读取结果与预期不符时先核对该会话加载的来源，不能仅凭下载文件名称声称已经更新。
 
 ## 建立第一个项目
 
@@ -135,7 +92,7 @@ python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 ```powershell
 python -B -X utf8 release/installer.py check-update --app-root $filmApp --package '<新版 ZIP 绝对路径>'
 python -B -X utf8 release/installer.py stage --package '<新版 ZIP 绝对路径>' --app-root $filmApp --data-root $filmData --config-root $filmConfig
-python -B -X utf8 release/installer.py switch --app-root $filmApp --version '1.17.0' --quiescent
+python -B -X utf8 release/installer.py switch --app-root $filmApp --version '2.0.1' --quiescent
 python -B -X utf8 release/installer.py host-plan --app-root $filmApp
 python -B -X utf8 release/installer.py status --app-root $filmApp
 ```
@@ -193,4 +150,6 @@ python -B -X utf8 release/installer.py restore-entry --receipt '<上一步返回
 
 ## 验证边界
 
-`test_installer.py` 全部使用 synthetic 临时夹具，测试文件完整性、ZIP 路径安全、首次空安装、既有 catalog 保留、更新检查与切换分离、活动任务/schema 拒绝、失败恢复、手动全快照恢复、残缺安装、重复个人总控可逆迁移、宿主方案生成和 CLI。其小型 stdio 夹具只验证安装器事务行为；真实 filmprod 模块、工具、面板和 AI 视频提示词必须在整体发行验收另行核查。本机换目录模拟不等于另一台电脑或另一账户的真实验收。macOS 的平台分支、shell 启动及媒体工具查找另有针对性测试；本版实际 CI 与运行结果以发行记录为准。macOS CI 不运行用户桌面客户端，不能替代真实 Mac 上的插件加载、看板与媒体体验验收。
+`test_installer.py` 全部使用 synthetic 临时夹具，测试文件完整性、ZIP 路径安全、首次空安装、既有 catalog 保留、更新检查与切换分离、活动任务/schema 拒绝、失败恢复、手动全快照恢复、残缺安装、重复个人总控可逆迁移、宿主方案生成和 CLI。其小型 stdio 夹具只验证安装器事务行为；真实 filmprod 模块、工具、面板和 AI 视频提示词必须在整体发行验收另行核查。本机换目录模拟不等于另一台电脑或另一 Windows 账户的真实验收。
+
+跨平台回归、解压包安装及真实 stdio/媒体 smoke 由 `.github/workflows/compatibility.yml` 在 Windows、Apple Silicon Mac 和 Intel Mac 执行。每版发行记录保存准确提交、结果和包摘要。该记录不代表目标 Mac 原生客户端面板或真实用户项目已经验收。

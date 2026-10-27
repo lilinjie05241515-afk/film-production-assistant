@@ -81,6 +81,15 @@ ACTION_TO_TOOL = {"task.create": "film_task_create", "task.checkpoint": "film_dr
 
 
 def action_help(action):
+    if action.startswith("conversation."):
+        from .conversations1170 import action_schemas as conversation_schemas
+        schema = conversation_schemas().get(action)
+        if schema is None:
+            raise ValueError("Unsupported conversation action: " + str(action))
+        return {"action": action, "inputSchema": schema, "example_payload": None,
+                "preferred_tool": "film_conversations", "read_only": True, "executed": False,
+                "call_shape": "film_conversations takes root, action without prefix, payload. film_dispatch takes root, full action, payload.",
+                "host_execution": False, "note": "Authorization must come from the actual human request. Stored observations are caller-reported; the host performs creation, messaging and archiving separately."}
     if action.startswith("screenwriting."):
         from .screenwriting1130 import action_schemas as screenwriting_schemas
         schema = screenwriting_schemas().get(action)
@@ -115,6 +124,7 @@ def with_root(schema, root_schema):
 
 def tool_definitions(root_schema):
     from .screenwriting1130 import SCHEMAS as screenwriting_schemas
+    from .conversations1170 import ACTION_SCHEMAS as conversation_schemas
     context = obj({"root": root_schema, "expected_project_id": TEXT,
                    "mode": {"type": "string", "enum": ["summary", "resume", "artifact"], "description": "summary omits prose; resume returns latest checkpoint draft once; artifact reads one exact full version."},
                    "task_id": TEXT, "artifact_id": TEXT, "version": VERSION}, ("root", "expected_project_id", "mode"),
@@ -126,7 +136,7 @@ def tool_definitions(root_schema):
                             {"required": ["source_path", "expected_file_sha256"], "not": {"required": ["draft"]}}]), root_schema)
     entries = [
         ("film_context", "Read compact project context, latest task draft or one exact artifact. Choose only the needed mode. Read-only registry: never initializes or migrates a project.", context, True),
-        ("film_action_help", "Read the supported recommended parameter schema and a synthetic example for a common creative action. This executes nothing and needs no project; use instead of reading implementation code.", obj({"action": {"type": "string", "enum": list(ACTION_SCHEMAS) + list(screenwriting_schemas)}}, ("action",)), True),
+        ("film_action_help", "Read the supported recommended parameter schema and, when provided, a synthetic example for a creative or conversation action. This executes nothing and needs no project; use instead of reading implementation code.", obj({"action": {"type": "string", "enum": list(ACTION_SCHEMAS) + list(screenwriting_schemas) + list(conversation_schemas)}}, ("action",)), True),
         ("film_task_create", "Create a scoped creative task with exact inputs and an execution lock. Returns a compact receipt; does not create chats, approve or generate prose. Resolve module with film_modules first.", with_root(ACTION_SCHEMAS["task.create"], root_schema), False),
         ("film_draft_save", "Checkpoint a full draft once, either inline draft OR project-relative source_path plus expected_file_sha256. Returns checkpoint_id/draft_sha256 without echoing prose. Same request retries preserve op_id and all fields.", draft, False),
         ("film_draft_submit", "Submit the task's exact latest checkpoint as a new candidate without resending the draft. Requires checkpoint_id/hash and current base_version; all execution-lock, input and scope checks remain. Does not approve.", with_root(ACTION_SCHEMAS["task.submit_checkpoint"], root_schema), False),

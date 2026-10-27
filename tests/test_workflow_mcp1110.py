@@ -53,7 +53,7 @@ class WorkflowMCPTests(unittest.TestCase):
             {"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"film_workspace","arguments":self.args("read")}},
             {"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"film_delivery","arguments":self.args("read")}}]
         results=self.stdio(requests)
-        self.assertEqual(len(results[0]["result"]["tools"]),25)
+        self.assertEqual(len(results[0]["result"]["tools"]),26)
         for result in results[1:]:self.assertFalse(result["result"].get("isError"),result)
         ws=results[2]["result"]["structuredContent"]
         self.assertEqual(len(ws["slots"]),8);self.assertFalse(ws["host_execution"])

@@ -28,7 +28,7 @@ class ArtMCPTests(unittest.TestCase):
   requests=[{'jsonrpc':'2.0','id':1,'method':'tools/list'},{'jsonrpc':'2.0','id':2,'method':'tools/call','params':{'name':'film_art','arguments':self.args('read')}}]
   p=subprocess.run([sys.executable,'-B','-X','utf8',str(SOURCE/'plugin/mcp_server.py')],cwd=SOURCE,env=self.env,input=''.join(json.dumps(r)+'\n' for r in requests).encode(),capture_output=True,timeout=30)
   self.assertEqual(p.returncode,0,p.stderr);results=[json.loads(s) for s in p.stdout.splitlines()]
-  names=[x['name'] for x in results[0]['result']['tools']];self.assertEqual(len(names),25);self.assertEqual(names.count('film_art'),1)
+  names=[x['name'] for x in results[0]['result']['tools']];self.assertEqual(len(names),26);self.assertEqual(names.count('film_art'),1)
   state=results[1]['result']['structuredContent'];self.assertFalse(state['selection_is_approval']);self.assertEqual(state['comparisons'],[])
   self.assertEqual(self.db.read_bytes(),before)
  def test_both_read_entrypoints_use_readonly_registry(self):

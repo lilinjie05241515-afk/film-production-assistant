@@ -57,6 +57,9 @@ jobs:
           }
           ffmpeg -version
           ffprobe -version
+      - name: Prepare pinned Blender 4.5 LTS on macOS
+        if: runner.os == 'macOS'
+        run: python -X utf8 -B release/ci_setup_blender.py
       - name: Runtime and workflow tests
         run: python -X utf8 -B -m unittest discover -s tests -p "test_*.py"
       - name: Installer and release tests
@@ -64,7 +67,7 @@ jobs:
         run: python -X utf8 -B -m unittest discover -s release -p "test_*.py"
       - name: Board interaction tests
         if: ${{ !cancelled() }}
-        run: node --test tests/test_board1150.cjs tests/test_form_values.cjs
+        run: python -X utf8 -B release/ci_board_tests.py
       - name: Real package installation and media smoke
         if: ${{ !cancelled() }}
         run: python -X utf8 -B release/ci_smoke.py

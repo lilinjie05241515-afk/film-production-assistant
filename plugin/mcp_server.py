@@ -67,7 +67,7 @@ for definition in TOOLS:
     definition.setdefault("_meta", {}).setdefault("ui", {})["visibility"] = ["model"]
 TOOLS.append(tool("film_board_manage",
     "Board-only management gateway: read exact project state and manage registered files. "
-    "No creative tasks, edits, approvals, workflow execution, messages, chat creation or rendering.",
+    "Only explicit exact-version board.confirm, board.style.select and board.asset.select may record user decisions. No creative tasks, edits, workflow execution, messages, chat creation or rendering.",
     {"root": ROOT_SCHEMA, "action": {"type": "string"}, "payload": {"type": "object"}},
     ["action"], readonly=False))
 TOOLS[-1]["_meta"] = {"ui": {"visibility": ["app"]}}
@@ -184,6 +184,11 @@ def call_tool(name, arguments, default_root):
         from filmprod.modules import catalog, resolve
         result = resolve(arguments["module"], arguments.get("workflow_mode")) if arguments.get("module") else catalog()
         return {"content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False, sort_keys=True)}], "structuredContent": result}
+    if name == "film_dispatch" and arguments.get("action", "").startswith("conversation."):
+        # The legacy dispatcher must enforce the same contract before opening a
+        # writable Registry. It cannot bypass the typed conversation gateway.
+        from filmprod.conversations1170 import validate_conversation_payload
+        validate_conversation_payload(arguments["action"], arguments["payload"])
     catalog_state = None
     if name in ("film_projects", "film_board"):
         from filmprod.projects import ProjectCatalog
@@ -226,7 +231,7 @@ def call_tool(name, arguments, default_root):
             return {"content": [{"type": "text", "text": json.dumps(result, ensure_ascii=False, sort_keys=True)}], "structuredContent": result}
     is_init = name == "film_dispatch" and arguments.get("action") == "project.init"
     root = checked_project_root(root_text, arguments.get("payload", {}), allow_init=is_init)
-    registry_readonly = name in ("film_snapshot", "film_board", "film_history", "film_resume") or (name == "film_dispatch" and arguments.get("action") in ("planning.read", "document.export", "document.save", "context.read", *WORKFLOW_READ_ACTIONS)) or (name == "film_media" and arguments.get("action") in ("choose", "choose_image", "choose_audio", "preview", "preview_image", "preview_audio", "original"))
+    registry_readonly = name in ("film_snapshot", "film_board", "film_history", "film_resume") or (name == "film_dispatch" and arguments.get("action") in ("previs.read", "previs.chunk", "planning.read", "document.export", "document.save", "context.read", *WORKFLOW_READ_ACTIONS)) or (name == "film_media" and arguments.get("action") in ("choose", "choose_image", "choose_audio", "preview", "preview_image", "preview_audio", "original"))
     registry = Registry.open_readonly(root) if registry_readonly else Registry(root)
     try:
         if name in ("film_snapshot", "film_board"):
@@ -286,13 +291,13 @@ def handle(request, default_root):
             result = {"protocolVersion": version if version in supported else "2025-11-25",
                       "capabilities": {"tools": {}, "resources": {}, "extensions": {"io.modelcontextprotocol/ui": {}}},
                       "serverInfo": {"name": "film-production-agent", "version": VERSION},
-                      "instructions": "Read explicit project state, chosen workflow and exact approved global style before work. The board is for progress, documents, review queries and media management only. Creative tools are model-only and run in work chats; never treat a board refresh or file organization as execution authorization. Research is not automatic style adoption. AI video prompt text uses video_prompt; its three-section content is separate from project metadata. Actual video and music generation providers are not connected. Use host Pages tools for cloud drafts; this adapter has no private Pages access."}
+                      "instructions": "Read explicit project state, chosen workflow and exact approved global style before work. The board shows project overview, creative stages and object assets. Explicit confirmation and selection use its narrow board-only endpoints with exact identity, version, revision and op_id checks. Creative tools are model-only and run in work chats; never treat a board refresh or file organization as execution authorization. In an enabled hierarchical conversation workflow, controllers coordinate while topic chats discuss or execute; read film_conversations and reconcile pending host requests before creating or sending. This server never runs a background chat scheduler. Research is not automatic style adoption. AI video prompt text uses video_prompt; its three-section content is separate from project metadata. Actual video and music generation providers are not connected. Use host Pages tools for cloud drafts; this adapter has no private Pages access."}
         elif method == "ping":
             result = {}
         elif method == "tools/list":
             result = {"tools": TOOLS}
         elif method == "resources/list":
-            result = {"resources": [{"uri": UI_URI, "name": "影视开发制作看板", "mimeType": "text/html;profile=mcp-app"}]}
+            result = {"resources": [{"uri": UI_URI, "name": "影视创作看板", "mimeType": "text/html;profile=mcp-app"}]}
         elif method == "resources/templates/list":
             result = {"resourceTemplates": []}
         elif method == "resources/read":

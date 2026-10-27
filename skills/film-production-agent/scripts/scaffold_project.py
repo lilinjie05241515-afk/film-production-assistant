@@ -91,7 +91,7 @@ def load_source(root: Path, expected_id: str):
     with closing(sqlite3.connect(db_path.as_uri() + "?mode=ro", uri=True)) as db:
         db.execute("PRAGMA query_only=ON")
         db.execute("BEGIN")
-        values = dict(db.execute("SELECT key,value FROM settings WHERE key IN ('schema_version','project','workspace/v1')"))
+        values = dict(db.execute("SELECT key,value FROM settings WHERE key IN ('schema_version','project','workspace/v1','conversation/v1')"))
     if json.loads(values.get("schema_version", "null")) != 2:
         raise ValueError("只支持 schema_version=2；本助手不迁移登记库")
     project = json.loads(values.get("project", "null"))
@@ -118,7 +118,15 @@ def load_source(root: Path, expected_id: str):
         for key in ("thread_id", "client_thread_id", "client_project_id"):
             if slot.get(key) is not None and not isinstance(slot[key], str):
                 raise ValueError(f"工作区 {key} 格式未知")
-    return project, workspace
+    conversations = json.loads(values.get("conversation/v1", "null"))
+    if conversations is None:
+        conversations = {"revision": 0, "enabled": False, "parents": {}, "topics": [], "handoffs": [], "outbox": []}
+    if (not isinstance(conversations, dict) or type(conversations.get("revision")) is not int
+            or type(conversations.get("enabled")) is not bool
+            or not isinstance(conversations.get("parents"), dict)
+            or any(not isinstance(conversations.get(key, []), list) for key in ("topics", "handoffs", "outbox"))):
+        raise ValueError("conversation/v1 格式未知，保留原索引")
+    return project, workspace, conversations
 
 
 def compact_slots(workspace):
@@ -150,6 +158,24 @@ def compact_slots(workspace):
             "host_observed_at": host.get("observed_at"), "observations": observations,
         })
     return result
+
+
+def compact_conversations(state):
+    """Navigation only: exclude authorization quotes, prompts and creative prose."""
+    topics = []
+    for value in state.get("topics", []):
+        if not isinstance(value, dict):
+            raise ValueError("专题记录格式未知")
+        item = {key: value.get(key) for key in ("topic_id", "kind", "title", "scope", "parent_role", "parent_thread_id", "thread_id", "status", "task_id", "handoff_id", "planning_ref", "output_ref")}
+        thread = item["thread_id"]
+        item["chat_url"] = f"codex://threads/{thread}" if isinstance(thread, str) and thread and thread != value.get("client_thread_id") else None
+        topics.append(item)
+    return {"enabled": state["enabled"], "revision": state["revision"],
+            "parents": {role: {key: value.get(key) for key in ("thread_id", "title", "client_project_id")} for role, value in state.get("parents", {}).items() if isinstance(value, dict)},
+            "topics": topics,
+            "handoffs": [{key: value.get(key) for key in ("handoff_id", "source_topic_id", "source_ref", "target_role", "status", "execution_topic_id")} for value in state.get("handoffs", [])],
+            "pending_host_actions": [{key: value.get(key) for key in ("request_id", "topic_id", "tool", "status", "target_thread_id", "purpose")} for value in state.get("outbox", []) if value.get("status") not in ("host_accepted", "cancelled")],
+            "observations_are_live": False}
 
 
 def md(value):
@@ -184,7 +210,7 @@ def scaffold(root_value: str, expected_id: str):
         raise ValueError("--root 必须是显式绝对路径")
     check_path(raw, "directory")
     root = raw.resolve(strict=True)
-    project, workspace = load_source(root, expected_id)
+    project, workspace, conversations = load_source(root, expected_id)
     directories = list(FOLDERS)
     if project["workflow"]["mode"] in {"novel_to_screen", "novel_only"}:
         directories.append("01-故事与剧本/小说")
@@ -206,9 +232,10 @@ def scaffold(root_value: str, expected_id: str):
         "workflow_mode": project["workflow"]["mode"], "workspace_revision": workspace["revision"],
         "initialization_id": workspace.get("initialization_id"), "prepared": workspace.get("prepared", False),
         "read_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "source": ".project/registry.sqlite3 settings workspace/v1",
+        "source": ".project/registry.sqlite3 settings workspace/v1 and conversation/v1",
         "evidence_level": "derived_snapshot_of_caller_reported_observations", "observations_are_live": False,
         "slots": compact_slots(workspace),
+        "conversations": compact_conversations(conversations),
     }
     # Keep a byte-identical snapshot on an unchanged repeat; its original read time
     # remains explicit. The command result separately reports this run's read time.
@@ -231,6 +258,14 @@ def scaffold(root_value: str, expected_id: str):
         lines.append(f"| {md(slot['role_label'])} | {chat} | {md(slot['scope'])} | {md(slot['status'])} | {md(slot['catalog_binding_status'])} | {md(slot['client_project_status'])} / {md(slot['client_project_id'])} | {reason} |")
     if not snapshot["slots"]:
         lines.append("\n主要工作对话尚未登记；由主协调器核对本使用者的授权，再按包内项目搭建流程完成宿主搭建。")
+    hierarchy = snapshot["conversations"]
+    if hierarchy["enabled"]:
+        lines.extend(["", "## 专题与执行对话", "", f"会话管理修订：{hierarchy['revision']}。部门总控协调，专题对话讨论或制作；下表为已保存观察。", "",
+                      "| 专题 | 类型 | 上级职责 | 状态 | 工作对话 |", "| --- | --- | --- | --- | --- |"])
+        for item in hierarchy["topics"]:
+            link = f"[{md(item['title'])}]({item['chat_url']})" if item["chat_url"] else "等待宿主建立或核对"
+            lines.append(f"| {md(item['topic_id'])} | {md(item['kind'])} | {md(item['parent_role'])} | {md(item['status'])} | {link} |")
+        lines.extend(["", f"待处理的宿主请求：{len(hierarchy['pending_host_actions'])}；创建、发送或归档必须核对实际结果，未知请求不能重复执行。", "接续通过 film_conversations(read) 取得最新专题、交接与待办；本索引不会创建聊天、发送消息或修改任务。"])
     complete = {INDEX / "对话索引.json": encoded(snapshot), INDEX / "对话索引.md": ("\n".join(lines) + "\n").encode("utf-8")}
     for relative, content in complete.items():
         key = relative.as_posix()
@@ -244,8 +279,8 @@ def scaffold(root_value: str, expected_id: str):
 
 项目 ID：`{expected_id}`；授权作品根目录：`{root}`；创作路线以登记库当前记录为准。
 使用当前已核验的影视制作助手插件；读取其总控技能的 `references/project-bootstrap.md`，以及本目录 `09-任务与接续/工作对话/对话索引.md`。
-主协调器核对本使用者当前请求或个人默认，仅在已授权范围补齐主要工作区；专业聊天只核对本职关联、报告就绪并等待创作指令，不递归创建其他聊天。
-接续先通过 film_context(summary) / film_workspace(read) 取得该项目的最新状态，精确读取本轮所需成果版本；索引只是派生快照。
+主协调器核对本使用者当前请求或个人默认，仅在已授权范围补齐主要工作区；部门总控按已启用的分层机制与实际授权安排独立专题；专题／执行对话只处理本职任务，不递归搭建整套工作区或创建同类总控。
+接续先通过 film_context(summary) / film_workspace(read) / film_conversations(read) 取得该项目的最新状态，精确读取本轮所需成果版本；索引只是派生快照。
 用户文件、候选、已采用版本、云端手改分别保留；目录存在、聊天已建或文件已保存不代表创作或审核完成。
 """
     entry = f"""# {project['title']} · 项目入口

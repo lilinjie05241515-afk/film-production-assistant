@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # AI 视频提示词接入 1.5.0
 
 本版增加独立文字创作板块，不接入视频生成提供方。沿用 12 个 MCP 工具：创建任务、保存候选、审批和版本读取走 film_dispatch/film_snapshot/film_history，Pages 观察走 film_pages_import，云端实际读写由宿主完成。
@@ -36,4 +38,4 @@ artifact.save/task.submit 保存新候选与精确依赖；expected_project_id�
 
 1.5.0 构建复制新总控技能及其 video-prompts.md；独立脑暴接口技能仍为 1.4.0 内容版本。发行 runtime 随包冻结，源代码与安装缓存分开核对；专业技能保留原哈希。新增 MCP 回归验证独立提示词候选/批准总稿、风格冻结、旧 prompt 分类及 Pages 边界。
 
-构建和安装仅在源冻结后执行。独立 stdio 通过、插件安装成功、当前聊天实际 film_health、原生界面可见与点击各自报告，不把任一层代替另一层。安装旧缓存清理的防护见 [客户端接入](integration.md)。
+构建和安装仅在源冻结后执行。独立 stdio 通过、插件安装成功、当前聊天实际 film_health、原生界面可见与点击各自报告，不把任一层代替另一层。安装旧缓存清理的防护见 [旧环境与接入兼容](compatibility.md)。

@@ -9,22 +9,23 @@ from __future__ import annotations
 import json
 import sqlite3
 
-READ_ACTIONS = frozenset({
+READ_ACTIONS = frozenset({"previs.read", "previs.chunk",
     "artifact.get", "artifact.history", "master.history", "planning.read",
-    "context.read", "workspace.read", "workspace.resolve", "cloud.read",
+    "context.read", "conversation.read", "workspace.read", "workspace.resolve", "cloud.read",
     "art.read", "screenwriting.read", "delivery.read", "document.export",
     "document.save", "board.reference", "board.usage", "board.export",
 })
-WRITE_ACTIONS = frozenset({
+WRITE_ACTIONS = frozenset({"previs.feedback", "previs.select",
     "board.item.set", "board.categories.set", "board.items.batch",
+    "board.project.set", "board.confirm", "board.style.select", "board.object.set", "board.asset.link", "board.asset.select",
     "board.order.set", "presentation.set", "trash.set", "media.classify", "media.update",
 })
 MEDIA_ACTIONS = frozenset({
     "choose", "choose_image", "choose_audio", "import", "import_image", "import_audio",
     "preview", "preview_image", "preview_audio", "original",
 })
-PROJECT_ACTIONS = frozenset({"list", "resolve", "outcome", "register", "relink", "bind", "unbind", "forget"})
-ALL_ACTIONS = frozenset({"snapshot", *READ_ACTIONS, *WRITE_ACTIONS,
+PROJECT_ACTIONS = frozenset({"list", "resolve", "outcome", "register", "relink", "bind", "unbind", "forget", "visibility"})
+ALL_ACTIONS = frozenset({"snapshot", "board.poll", *READ_ACTIONS, *WRITE_ACTIONS,
     *("media." + action for action in MEDIA_ACTIONS),
     *("projects." + action for action in PROJECT_ACTIONS)})
 
@@ -86,9 +87,18 @@ def call_board(arguments, default_root, check_root):
         finally:
             catalog.close()
     context = {key: payload.get(key) for key in ("thread_id", "client_project_id")}
-    if action == "snapshot":
+    if action in ("snapshot", "board.poll"):
         if set(payload) - {"thread_id", "client_project_id", "expected_project_id"}:
             raise ValueError("刷新只接受项目身份和已知聊天关联")
+        from .freshness1192 import freshness
+        # Capture before reading, so a concurrent commit cannot be acknowledged
+        # by a snapshot that did not contain it. Next poll will catch it.
+        requested_root = arguments.get("root") or default_root
+        if requested_root:
+            check_root(requested_root, payload)
+        marker = freshness(requested_root)
+        if action == "board.poll":
+            return response(marker)
         catalog = catalog_read(context)
         root_text = arguments.get("root") or default_root
         if not root_text:
@@ -96,7 +106,7 @@ def call_board(arguments, default_root, check_root):
             root_text = selected.get("root") if selected and selected.get("available") else None
         if not root_text:
             return response({"project": None, "project_root": None, "empty_state": True,
-                "catalog": catalog, "host_context": context, "board_mode": "management_only"})
+                "catalog": catalog, "host_context": context, "board_mode": "creator_workspace", **marker})
         root = check_root(root_text, payload)
         registry = Registry.open_readonly(root)
         try:
@@ -104,7 +114,7 @@ def call_board(arguments, default_root, check_root):
         finally:
             registry.close()
         return response({**result, "project_root": str(root), "catalog": catalog,
-                         "host_context": context, "board_mode": "management_only"})
+                         "host_context": context, "board_mode": "creator_workspace", **marker})
     # A selected, stable project identity is mandatory on all board detail and
     # mutation calls, even where an old model tool allows the identity to be absent.
     if not isinstance(payload.get("expected_project_id"), str) or not payload["expected_project_id"]:

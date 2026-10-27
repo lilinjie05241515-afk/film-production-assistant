@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # 包内导演方法接入 1.6.0
 
 通过 `film_modules(module="director")` 解析 `modules/director-agent/SKILL.md`，再按当前任务读取完整的方法、模板和 schema。来源、逐文件原始与适配哈希、模块内容摘要见 `modules/manifest.json`。所有参考相对模块目录解析；专业源工程保持原样，包内不包含作品或数据库。

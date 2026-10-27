@@ -2,7 +2,7 @@
   "schema_version": 1,
   "module_format_version": 1,
   "adaptation_version": "filmprod.1",
-  "platform": "windows_desktop",
+  "platform": "windows_macos_desktop",
   "modules": [
     {
       "id": "screenwriter",
@@ -383,11 +383,11 @@
     {
       "id": "director-agent",
       "entrypoint": "director-agent/SKILL.md",
-      "content_version": "2.0.0+filmprod.1.8e426b6f4044",
+      "content_version": "2.1.1+filmprod.1.5f6f60c0a6df",
       "source_content_version": "2.0.0",
       "source_digest": "49c23f8be10085bc0fffadc2bf559b8e730926e778c7814863e82f61a9fda13e",
-      "sha256": "8e426b6f4044d74dad72aa50ccb80a9e38cef8e1ad5484942b2b3d4fe5065906",
-      "entrypoint_sha256": "61d1985e295bf3d554535a1a10ce2f8dfcacbf982baf57516ac0b1aa0c45ed65",
+      "sha256": "5f6f60c0a6dfd267a20b2a2bf50e29fb695567b006cbf0793a2ffc7e199b4e22",
+      "entrypoint_sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
       "stage_aliases": [
         "director"
       ],
@@ -417,15 +417,6 @@
           "source_ref": "skill:director-agent/agents/openai.yaml",
           "adapted": false,
           "adaptation": "unchanged"
-        },
-        {
-          "path": "director-agent/SKILL.md",
-          "sha256": "61d1985e295bf3d554535a1a10ce2f8dfcacbf982baf57516ac0b1aa0c45ed65",
-          "bytes": 1990,
-          "source_sha256": "c473fd620af313537a0ce6bcfbd1cc2552e168d63dc090550d211d8a39d05fd6",
-          "source_ref": "skill:director-agent/SKILL.md",
-          "adapted": true,
-          "adaptation": "portable paths and unified persistence"
         },
         {
           "path": "director-agent/method/docs/导演与提示词执行Agent交接.md",
@@ -928,6 +919,39 @@
           "bytes": 441,
           "source_sha256": null,
           "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/previs/blender_scene.py",
+          "sha256": "f1c32d9759a2ad2a70537ef21ff8fb8ae01c60acb944e2c4796171a933b1cd57",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/blender_scene.py",
+          "source_sha256": "f1c32d9759a2ad2a70537ef21ff8fb8ae01c60acb944e2c4796171a933b1cd57"
+        },
+        {
+          "path": "director-agent/previs/compose.py",
+          "sha256": "e52d3873db186ce2f529d2f80d08b32e9041e23d5ca778c701dcd64bfc233ed5",
+          "source_ref": "previs-v1-development:director-agent/previs/compose.py",
+          "source_sha256": "e52d3873db186ce2f529d2f80d08b32e9041e23d5ca778c701dcd64bfc233ed5"
+        },
+        {
+          "path": "director-agent/previs/execute.py",
+          "sha256": "5d5a84f55a4347585bd92e9c5bb2f61e846ac08487144ea36725fddd97710742",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/execute.py",
+          "source_sha256": "5d5a84f55a4347585bd92e9c5bb2f61e846ac08487144ea36725fddd97710742"
+        },
+        {
+          "path": "director-agent/previs/README.md",
+          "sha256": "72465b4540b62866f42bc2178919703fecbc7a7bd1420d1e616ed9392f4fefe6",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/README.md",
+          "source_sha256": "72465b4540b62866f42bc2178919703fecbc7a7bd1420d1e616ed9392f4fefe6"
+        },
+        {
+          "path": "director-agent/SKILL.md",
+          "sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
+          "bytes": 1990,
+          "source_sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
+          "source_ref": "previs-v1-development:director-agent/SKILL.md",
           "adapted": true,
           "adaptation": "portable paths and unified persistence"
         }

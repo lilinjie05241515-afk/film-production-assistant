@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # 1.4 头脑风暴接口接入
 
 本版交付可发现的 `$film-brainstorm-interface` 技能和可调用的 `film_brainstorm` 工具。它们完成真实的只读输入准备与开发交接，尚无生成提供方：`interface_only / not_connected / can_generate=false`。它不是付费模型入口，不执行创意生成，也不建立新聊天。

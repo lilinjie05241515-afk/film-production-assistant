@@ -32,7 +32,22 @@ def main():
         parser.error("作品登记库不存在；请先显式初始化")
     registry = None
     try:
-        registry = Registry.open_readonly(args.root) if args.command == "dispatch" and args.action in ("planning.read", "document.export", "document.save", "context.read", "workspace.read", "workspace.resolve", "delivery.read", "cloud.read", "art.read", "screenwriting.read") else Registry(args.root)
+        prepared_payload = None
+        if args.command == "dispatch" and args.action.startswith("conversation."):
+            from filmprod.conversations1170 import validate_conversation_payload
+            raw = sys.stdin.read() if args.file == "-" else Path(args.file).read_text(encoding="utf-8-sig")
+            prepared_payload = json.loads(raw)
+            if not isinstance(prepared_payload, dict):
+                raise ValueError("payload must be a JSON object")
+            validate_conversation_payload(args.action, prepared_payload)
+            # Existing project/schema and identity are checked without migration
+            # before a writable connection can be constructed.
+            check = Registry.open_readonly(args.root)
+            try:
+                check.check_project_identity(prepared_payload["expected_project_id"])
+            finally:
+                check.close()
+        registry = Registry.open_readonly(args.root) if args.command == "dispatch" and args.action in ("previs.read", "previs.chunk", "planning.read", "document.export", "document.save", "context.read", "workspace.read", "workspace.resolve", "delivery.read", "cloud.read", "art.read", "screenwriting.read", "conversation.read") else Registry(args.root)
         if args.command == "snapshot":
             result = registry.snapshot()
         elif args.command == "export":
@@ -46,10 +61,13 @@ def main():
             from filmprod.pages_bridge import import_observation
             result = import_observation(registry, json.loads(Path(args.file).read_text(encoding="utf-8-sig")), args.op_prefix)
         else:
-            raw = sys.stdin.read() if args.file == "-" else Path(args.file).read_text(encoding="utf-8-sig")
-            payload = json.loads(raw)
-            if not isinstance(payload, dict):
-                raise ValueError("payload must be a JSON object")
+            if prepared_payload is None:
+                raw = sys.stdin.read() if args.file == "-" else Path(args.file).read_text(encoding="utf-8-sig")
+                payload = json.loads(raw)
+                if not isinstance(payload, dict):
+                    raise ValueError("payload must be a JSON object")
+            else:
+                payload = prepared_payload
             result = registry.dispatch(args.action, payload)
         print(json.dumps(result, ensure_ascii=False, indent=2))
     except (ValueError, OSError, KeyError) as exc:

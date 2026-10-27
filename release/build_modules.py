@@ -493,7 +493,7 @@ def build(config_path: Path, destination: Path) -> dict:
         declared = version.group(1) if version else None
         source_digest = sha("".join(f"{x['source_ref']}\n{x['source_sha256']}\n" for x in sorted(files, key=lambda x: x['source_ref']) if x["source_sha256"]).encode())
         modules.append({"id": module_id, "entrypoint": module_id + "/SKILL.md", "content_version": (declared or "source-" + source_digest[:12]) + "+" + ADAPTATION_VERSION + "." + module_digest(files)[:12], "source_content_version": declared, "source_digest": source_digest, "sha256": module_digest(files), "entrypoint_sha256": next(x["sha256"] for x in files if x["path"] == module_id + "/SKILL.md"), "stage_aliases": ALIASES[module_id], "source": {"label": "user-provided professional skill and explicit method dependencies", "paths_in_lock": "logical source references; developer source mapping supplied separately"}, "distribution": {"scope": "user_authorized_private_installation", "upstream_license": "not_declared", "public_redistribution": "not_verified"}, "dependency_status": "required_method_files_bundled", "optional_dependencies": optional, "persistence": "unified_registry_in_projects; explicit_external_idea_store_only" if module_id in PLANNING_IDS else "unified_filmprod_registry_only", "files": files, "excluded": excluded})
-    manifest = {"schema_version": 1, "module_format_version": 1, "adaptation_version": ADAPTATION_VERSION, "platform": "windows_desktop", "modules": modules, "music_generation": "not_implemented", "brainstorm_provider": "not_connected"}
+    manifest = {"schema_version": 1, "module_format_version": 1, "adaptation_version": ADAPTATION_VERSION, "platform": "windows_macos_desktop", "modules": modules, "music_generation": "not_implemented", "brainstorm_provider": "not_connected"}
     json_write(destination / "manifest.json", manifest)
     verification = verify(destination)
     if not verification["ok"]:
@@ -537,7 +537,7 @@ def verify(root: Path) -> dict:
                     json.loads(text)
                 except ValueError:
                     errors.append("invalid JSON: " + item["path"])
-    extra = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()} - inspected - {"manifest.json"}
+    extra = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'} - inspected - {"manifest.json"}
     if extra:
         errors.append("unlocked files: " + ", ".join(sorted(extra)))
     return {"ok": not errors, "modules": len(manifest["modules"]), "files": len(inspected), "local_links_checked": local_links, "errors": errors, "evidence_level": "static package integrity and reference resolution; not semantic creative acceptance"}

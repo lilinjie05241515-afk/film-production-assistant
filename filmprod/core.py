@@ -413,6 +413,12 @@ class Registry:
     def _task_effective_inputs(self, task, target_id):
         self._check_style_binding(task)
         inputs = deepcopy(task["inputs"])
+        from .conversations1170 import task_frozen_source_ref
+        frozen_source = task_frozen_source_ref(self, task)
+        if frozen_source is not None:
+            # Selected ideas are immutable creative provenance, not a live
+            # dependency on every subsequent independent discussion update.
+            inputs.remove(frozen_source)
         binding = deepcopy(task.get("style_binding"))
         if not binding and task["module"] in STYLE_MODULES:
             current_style, style_status = self._global_style()
@@ -482,12 +488,37 @@ class Registry:
 
     def dispatch(self, action: str, payload: dict | None = None) -> dict:
         p = dict(payload or {})
+        from .previs1190 import READ_ACTIONS as PREVIS_READ, WRITE_ACTIONS as PREVIS_WRITE, read as previs_read, mutate as previs_mutate
+        if action in PREVIS_READ:
+            with self.lock:
+                self.db.execute("BEGIN")
+                try:
+                    result = previs_read(self, action, p)
+                    self.db.execute("COMMIT")
+                    return result
+                except Exception:
+                    self.db.execute("ROLLBACK")
+                    raise
         if action in ("board.reference", "board.usage", "board.export"):
             from .board1150 import export_selected, reference
             with self.lock:
                 self.db.execute("BEGIN")
                 try:
                     result = export_selected(self, p) if action == "board.export" else reference(self, p)
+                    self.db.execute("COMMIT")
+                    return result
+                except Exception:
+                    self.db.execute("ROLLBACK")
+                    raise
+        if action.startswith("conversation."):
+            from .conversations1170 import validate_conversation_payload
+            validate_conversation_payload(action, p)
+        if action == "conversation.read":
+            from .conversations1170 import read_conversations
+            with self.lock:
+                self.db.execute("BEGIN")
+                try:
+                    result = read_conversations(self, p)
                     self.db.execute("COMMIT")
                     return result
                 except Exception:
@@ -594,13 +625,16 @@ class Registry:
         from .art1130 import prepare_art, select_art, integrate_art, revise_art
         from .screenwriting1130 import record_screenwriting, resolve_screenwriting
         from .board1150 import batch_items, set_categories, set_item
-        if action in WRITE_ACTIONS or action in DELIVERY_WRITE_ACTIONS:
+        from .board1180 import WRITE_ACTIONS as CREATOR_ACTIONS, dispatch as creator_dispatch
+        if action in WRITE_ACTIONS or action in DELIVERY_WRITE_ACTIONS or action in CREATOR_ACTIONS or action in PREVIS_WRITE:
             required(p, "expected_project_id")
         request_hash = digest(canonical({"action": action, "payload": p}).encode("utf-8"))
         with self.lock:
             self.check_project_identity(p.get("expected_project_id"))
             cached = self._cached(p["op_id"], request_hash)
             if cached is not None:
+                if action == "conversation.claim":
+                    return {**cached, "dispatch_allowed": False, "replayed": True}
                 return cached
             if action in ("backup.create", "backup.restore"):
                 return self._backup_dispatch(action, p, request_hash)
@@ -649,6 +683,11 @@ class Registry:
                 "media.update": self._media_update,
                 "cue.save": self._cue,
             }
+            if action.startswith("conversation."):
+                from .conversations1170 import mutate_conversations
+                handlers[action] = lambda payload: mutate_conversations(self, action, payload)
+            handlers.update({name: (lambda payload, name=name: creator_dispatch(self, name, payload)) for name in CREATOR_ACTIONS})
+            handlers.update({name: (lambda payload, name=name: previs_mutate(self, name, payload)) for name in PREVIS_WRITE})
             if action not in handlers:
                 raise ValueError(f"不支持操作: {action}")
             self.db.execute("BEGIN IMMEDIATE")
@@ -658,6 +697,8 @@ class Registry:
                 cached = self._cached(p["op_id"], request_hash)
                 if cached is not None:
                     self.db.execute("COMMIT")
+                    if action == "conversation.claim":
+                        return {**cached, "dispatch_allowed": False, "replayed": True}
                     return cached
                 if action != "project.init" and not self._project():
                     raise ValueError("请先执行 project.init")
@@ -874,6 +915,17 @@ class Registry:
         if not isinstance(metadata, dict):
             raise ValueError("metadata 必须为对象")
         metadata = dict(metadata)
+        from .conversations1170 import check_frozen_source, task_frozen_source_ref
+        previous_source = previous["metadata"].get("conversation_source_reference") if previous else None
+        expected_source = previous_source
+        if trusted_task is not None:
+            task_frozen_source_ref(self, trusted_task)
+            expected_source = trusted_task.get("conversation_source_reference") or previous_source
+        if "conversation_source_reference" in metadata and metadata["conversation_source_reference"] != expected_source:
+            raise ConflictError("冻结创意来源只能由准确任务登记，普通保存不能伪造或改写")
+        if expected_source is not None:
+            check_frozen_source(self, expected_source, artifact_id=p["artifact_id"], scope=p["scope"])
+            metadata["conversation_source_reference"] = deepcopy(expected_source)
         prior_reference = previous["metadata"].get("style_reference") if previous else None
         if trusted_task is None:
             if "style_reference" in metadata and metadata["style_reference"] != prior_reference:
@@ -1014,6 +1066,8 @@ class Registry:
         return self._save(request)
 
     def _task_create(self, p):
+        from .conversations1170 import guard_task_create
+        guard_task_create(self, p)
         required(p, "task_id", "title", "module", "scope", "inputs", "must_keep", "allowed_changes", "requirements")
         identifier(p["task_id"], "task_id")
         identifier(p["module"], "module")
@@ -1053,11 +1107,16 @@ class Registry:
                     "dependency_path": path or [], "target_artifact_id": p.get("artifact_id"), "automatic": True}
                 if not path:
                     inputs.append(approved_style)
-        self._fresh(inputs)
         data = {key: p[key] for key in ("task_id", "title", "module", "scope", "must_keep", "allowed_changes", "requirements")}
         from .modules import execution_lock
         data["execution_lock"] = execution_lock(p["module"], (self._project().get("workflow") or {}).get("mode"))
         data.update(inputs=inputs, thread_id=p.get("thread_id"), artifact_id=p.get("artifact_id"), status="created", created_at=now(), checkpoints=[], bound_versions=inputs)
+        from .conversations1170 import frozen_source_for_task, task_frozen_source_ref
+        source = frozen_source_for_task(self, data)
+        if source is not None:
+            data.update(conversation_source_reference=source, conversation_source_binding_sha256=source["binding_sha256"])
+        frozen_source = task_frozen_source_ref(self, data)
+        self._fresh([ref for ref in inputs if ref != frozen_source])
         if style_binding:
             data["style_binding"] = style_binding
             data["style_execution_lock"] = self._style_binding_lock(data)
@@ -1082,6 +1141,8 @@ class Registry:
         from .modules import require_execution
         require_execution(task)
         self._check_style_binding(task)
+        from .conversations1170 import task_frozen_source_ref
+        task_frozen_source_ref(self, task)
         checkpoint = {key: p[key] for key in ("draft", "completed", "decisions", "unresolved", "next_step")}
         checkpoint.update(checkpoint_id=p["op_id"], saved_at=now(), draft_sha256=content_hash(p["draft"]), inputs=task["inputs"])
         if task.get("style_binding"):
@@ -1096,6 +1157,12 @@ class Registry:
         task = self._get("tasks", "task_id", task_id)
         from .modules import execution_status
         compatibility = execution_status(task)
+        from .conversations1170 import task_frozen_source_ref
+        frozen_source = None
+        try:
+            frozen_source = task_frozen_source_ref(self, task)
+        except (ConflictError, ValueError) as exc:
+            compatibility = dict(compatibility, compatible=False, reason="frozen_conversation_source_changed", message=str(exc))
         if compatibility["compatible"]:
             try:
                 self._check_style_binding(task)
@@ -1104,6 +1171,8 @@ class Registry:
         frozen = [self._artifact(r["artifact_id"], r["version"]) for r in task["inputs"]]
         stale = []
         for ref in task["inputs"]:
+            if ref == frozen_source:
+                continue
             current = self._current_dependency(ref)
             if self._dependency_stale(ref):
                 stale.append({"bound": ref, "current_version": current["version"], "status": current["status"]})
@@ -1648,6 +1717,9 @@ class Registry:
                 result["trash"] = trash_view(self)
                 result["capabilities"].update(board_ordering=True, trash_management=True)
                 result["workspace"] = workspace_view(self)
+                from .conversations1170 import conversation_view
+                result["conversations"] = conversation_view(self)
+                result["capabilities"].update(hierarchical_conversations=True, host_outbox=True, background_chat_scheduler=False)
                 result["capabilities"].update(conversation_workspace=True, host_chat_execution=False)
                 from .delivery1110 import delivery_summary
                 result["delivery"] = delivery_summary(self)
@@ -1666,7 +1738,12 @@ class Registry:
                 from .board1150 import filter_new_input_suggestions, library_view
                 filter_new_input_suggestions(self, result["workflow"])
                 result["board_library"] = library_view(self, result)
-                result["capabilities"].update(board_management_only=True, board_reference=True,
+                from .board1180 import view as creator_view
+                result["creator_board"] = creator_view(self, result)
+                from .previs1190 import view as previs_view
+                result["previs"] = previs_view(self)
+                result["capabilities"].update(board_explicit_decisions=True, board_object_assets=True)
+                result["capabilities"].update(board_management_only=False, board_reference=True,
                                                board_audio_library=True, board_business_execution=False)
                 self.db.execute("COMMIT")
                 return result

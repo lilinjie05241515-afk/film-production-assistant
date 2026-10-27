@@ -51,7 +51,7 @@ class ScreenwriterReleaseTest(unittest.TestCase):
         self.assertEqual(len(modules['modules']), 8)
         self.assertTrue({'screenwriter', 'film-art-director'} <= {m['id'] for m in modules['modules']})
         names = {tool['name'] for tool in replies[3]['result']['tools']}
-        self.assertEqual(len(names), 25)
+        self.assertEqual(len(names), 26)
         self.assertTrue({'film_art', 'film_screenwriting'} <= names)
         self.assertFalse((cwd / 'TEST-unused-catalog.sqlite3').exists())
 
@@ -122,7 +122,7 @@ class ScreenwriterReleaseTest(unittest.TestCase):
             self.assertTrue((payload / 'plugin/skills/film-screenwriter/SKILL.md').is_file())
             self.assertTrue((payload / 'plugin/skills/film-art-director/SKILL.md').is_file())
             self.assertEqual({path.parent.name for path in (payload / 'plugin/skills').glob('*/SKILL.md')},
-                             {'film-production-agent', 'film-screenwriter', 'film-art-director', 'film-brainstorm-interface'})
+                             {'film-production-agent', 'film-screenwriter', 'film-director', 'film-art-director', 'film-brainstorm-interface'})
             self.assertFalse((payload / 'plugin/modules/novel-master').exists())
             self.assertFalse((payload / 'plugin/modules/novel-to-screenplay').exists())
             for generated in ('README.md', 'install.py', 'plugin/.mcp.json',

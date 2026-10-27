@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # Windows 桌面接入与升级 1.6.0
 
 正式身份为 `film-production-agent@film-production-local`。入口是插件内的 `skills/film-production-agent/SKILL.md`，六项专业方法在插件 `modules/`；使用 `film_modules` 校验并解析，不再依赖原电脑技能目录或导演引擎。按阶段读取完整入口及相关参考，不把六模块全部预加载。专业内容版本和系统版本分别保存在模块清单与任务 execution_lock。

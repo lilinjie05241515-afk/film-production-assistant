@@ -5,8 +5,8 @@ are performed by the host and remain separate from registry observations.
 """
 from copy import deepcopy
 
-READ_ACTIONS = {"workspace.read", "workspace.resolve", "delivery.read", "cloud.read", "art.read", "screenwriting.read"}
-PREFIXES = {"film_workspace": "workspace", "film_delivery": "delivery", "film_cloud": "cloud", "film_art": "art", "film_screenwriting": "screenwriting"}
+READ_ACTIONS = {"workspace.read", "workspace.resolve", "delivery.read", "cloud.read", "art.read", "screenwriting.read", "conversation.read"}
+PREFIXES = {"film_workspace": "workspace", "film_delivery": "delivery", "film_cloud": "cloud", "film_art": "art", "film_screenwriting": "screenwriting", "film_conversations": "conversation"}
 
 
 def action_schemas():
@@ -15,12 +15,14 @@ def action_schemas():
     from .cloud1120 import action_schemas as cloud_schemas
     from .art1130 import action_schemas as art_schemas
     from .screenwriting1130 import action_schemas as screenwriting_schemas
-    return {**workspace_schemas(), **delivery_schemas(), **cloud_schemas(), **art_schemas(), **screenwriting_schemas()}
+    from .conversations1170 import action_schemas as conversation_schemas
+    return {**conversation_schemas(), **workspace_schemas(), **delivery_schemas(), **cloud_schemas(), **art_schemas(), **screenwriting_schemas()}
 
 
 def tool_definitions(root_schema):
     contracts = action_schemas()
     descriptions = {
+        "film_conversations": "Manage project-scoped department controllers, independent idea/execution chats, reversible idea decisions, exact-version writer handoffs and durable host action requests. Read never writes. Configure is explicit; legacy workspace bindings and old task locks remain intact. Prepare creates one topic, not a full role workspace. Claim only grants a first dispatch once; replayed or unknown requests must be reconciled, never resent. The host performs create_thread, send_message_to_thread and archive only under actual user authorization, then records observed results. Queued IDs are not real thread IDs. Host acceptance is not creative completion, user approval or authenticated receipt. No background chat scheduler.",
         "film_screenwriting": "Read, record and resolve exact-version script feedback from a director, user or reviewer. Locate issues with a scene ID and an exact source-text anchor. Expression, structure and major changes link to an already saved newer full script candidate; major story changes require the user choice with its original quote and scope. Preserve all feedback history. These records never write scripts, approve content, authenticate a user, execute chats or sync cloud Pages.",
         "film_art": "Read or register an exact main/alternate art-direction comparison, record the user's exact selection, integrate only the selected complete visual proposal, or revise exact local ranges within the adopted baseline. Preserve the complete working draft, stable style identity and current cloud binding. Selection, integration and revision never approve. Full source context, current working draft and approved baseline are checked separately. Host range classification and within_baseline judgment are not programmatic semantic proof.",
         "film_cloud": "Coordinate an exact artifact's editable cloud working draft after a full first draft or confirmed revision. Read is non-mutating; configuration, bindings, pending requests and complete host readbacks are persisted locally. The host performs actual Page creation and guarded editing. Unknown creation is reconciled without duplicate pages; a create receipt alone never proves sync. Preserve manual cloud edits and local candidate history. No background network synchronization or approval occurs in this tool.",
@@ -60,4 +62,7 @@ def dispatch_arguments(name, arguments):
     if action.startswith("screenwriting."):
         from .screenwriting1130 import validate_screenwriting_payload
         validate_screenwriting_payload(action, payload)
+    if action.startswith("conversation."):
+        from .conversations1170 import validate_conversation_payload
+        validate_conversation_payload(action, payload)
     return action, payload

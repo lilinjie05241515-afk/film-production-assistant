@@ -7,7 +7,9 @@ from pathlib import Path
 from unittest.mock import patch
 
 from filmprod.core import ConflictError, Registry
-from filmprod.projects import ProjectCatalog, project_identity, catalog_root_key
+from filmprod.projects import ProjectCatalog, project_identity
+from filmprod import projects as project_module
+catalog_root_key = getattr(project_module, "catalog_root_key", None)
 
 
 class ProjectRemoval192Test(unittest.TestCase):
@@ -112,6 +114,7 @@ class ProjectRemoval192Test(unittest.TestCase):
             result = self.catalog.dispatch("forget", {**self.request(a), "expected_root": equivalent})
         self.assertEqual(result["forgotten"], "A")
 
+    @unittest.skipUnless(catalog_root_key, "macOS extension absent from frozen Windows 1.17.0 baseline")
     def test_system_alias_comparison_is_lexical_and_does_not_accept_other_paths(self):
         with patch("filmprod.projects.sys.platform", "darwin"), \
              patch("filmprod.projects.Path.resolve", side_effect=AssertionError("no source lookup")):

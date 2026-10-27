@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # Pages 宿主协作协议 1.5.0
 
 云稿和原始批注以 Pages 为权威；MCP stdio 本身没有 Pages 凭据或私有 API。由当前宿主可用 Pages connector 操作，先读实际工具 schema；原生 Doc/Canvas 与普通 Page 的正文、区块和编辑工具不能混用。
@@ -14,7 +16,7 @@
 
 `master.bind_page` 建立 category/page_id 关联。`content.approve` 在本地事务中更新对应通过段、总稿版本与下游影响，保存真实批准证据。宿主随后用相同分类和总稿版本执行云同步，不能把“云端失败”当成本地审批失败或要求用户重批。
 
-`sync.intent` 必须同时传 master_category 与 master_version，intended_content 必须为该精确总稿正文，page_id 必须符合当前绑定；提交前读实时云稿和当前revision，保留工作稿差异。云端已有未通过修改时不能用本地总稿盲目覆盖：先保留完整工作稿快照/候选；冲突则标为审核已通过、云端待同步。对话批准与面板批准都走这一流程。
+`sync.intent` 必须同时传 master_category 与 master_version，intended_content 必须为该精确总稿正文，page_id 必须符合当前绑定；提交前读实时云稿和当前revision，保留工作稿差异。云端已有未通过修改时不能用本地总稿盲目覆盖：先保留完整工作稿快照/候选；冲突则标为审核已通过、云端待同步。当前在工作对话依据真实用户指令批准并走这一流程；历史面板批准记录仍保留原证据，当前看板不提供批准入口。
 
 宿主执行实际 Page 区块编辑一次，读回后 `sync.observe` 更新该总稿同步状态。failed/unknown/conflict 均保留已通过状态；unknown 先读回核查，不直接重发。恢复操作复用原请求/操作号，新的同步意图用新号，不能重新审批来“修复”同步。插件本身不具备 Pages 凭据，也不伪造宿主回执。
 

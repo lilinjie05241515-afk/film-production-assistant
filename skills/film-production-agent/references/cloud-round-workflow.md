@@ -4,7 +4,7 @@
 
 ## 触发时机与范围
 
-用户已接受的默认工作方式是“总控讨论 → 第一版完整初稿 → 在同一云稿中持续修改”。总控对话可直接讨论和整理大纲；专业工作对话沿用项目、成果与云稿身份，不另造文档。
+本流程适用于用户已选择或已授权的按轮云稿方式：“总控讨论 → 第一版完整初稿 → 在同一云稿中持续修改”。已有适用授权直接沿用；通用发行包不把某位用户的个人默认授权自动授予其他使用者。总控对话可直接讨论和整理大纲；专业工作对话沿用项目、成果与云稿身份，不另造文档。
 
 | 本轮内容 | 处理 |
 | --- | --- |
@@ -32,7 +32,7 @@
 
 正常完整初稿和明确修订，在 `film_artifact_save_file`、`film_draft_submit` 或旧保存动作允许的位置带 `cloud_update`，记录触发类型与本轮真实要求；使用当前工具定义的字段和枚举。用户要求仅本地时不加云触发并遵守已记录的本地模式。检查点本身不触发。
 
-`cloud_update` 的触发值为 `full_draft` 或 `confirmed_revision`，并带 `user_request={source,reference,quote}`：source 为 `conversation` 或 `panel`，reference 指向真实本轮请求，quote 保留用户实际要求，不代写不存在的授权。`local_only` 可明确记录仅本地的本次保存，不产生云写入。恢复到旧调用不应使本地模式失效。
+`cloud_update` 的触发值为 `full_draft` 或 `confirmed_revision`，并带 `user_request={source,reference,quote}`：当前工作对话请求使用 `source=conversation`；`panel` 仅保留为历史请求来源兼容，不开放当前看板云写入口。reference 指向真实请求，quote 保留用户实际要求，不代写不存在的授权。`local_only` 可明确记录仅本地的本次保存，不产生云写入。恢复到旧调用不应使本地模式失效。
 
 已将当前云稿作为修订底本时，带 `base_observation_id` 指向该准确成果最后一次完整观察。先用 `cloud.bind` 保存真实完整观察、取得该 ID；不得填另一个 Page、另一成果、旧观察或编造的 ID 来跳过云端差异。
 

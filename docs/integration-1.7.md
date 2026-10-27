@@ -1,3 +1,5 @@
+> 版本专题与兼容记录。接口细节按当前工具定义核对；旧版看板按钮、当时开发目录和执行安排只用于追溯。当前操作职责见 [现行规则](current-rules.md)，兼容边界见 [兼容说明](compatibility.md)。
+
 # 1.7.1 灵感与需求接入
 
 本版在原有六专业模块之外加入完整 `idea-explorer` 和 `requirements-planner`。`film_modules(module="idea")` 与 `film_modules(module="requirements")` 分别解析到实际模块，并返回用于任务的 `task_module`。总控读取模块完整入口及适用参考，不以路由表摘要代替专业方法。系统版本、模块内容版本与任务冻结锁仍独立核验。

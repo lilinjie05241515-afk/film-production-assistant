@@ -13,7 +13,7 @@
 | 人物小传／大纲 | 编剧按小说或剧本上下文整理，基于实际材料和授权创作；事实、推断与新创作候选分开，人物／大纲不能替代正文 |
 | 小说改编分场剧本 | 编剧的改编模式；完整读取指定底本与逐场差异方法，小说内心与原文功能不能因合并而丢失 |
 | 导演意见与剧本修订 | 编剧修订方法及[意见登记](screenwriter-workflow.md)；准确剧本和场次、影响判断、完整候选、处理结果和复核分别记录，重大剧情由用户决定 |
-| 导演 | `../../../modules/director-agent/SKILL.md`；读取包内完整导演方法。总控项目的任务、成果和依赖归本登记库；不改旧引擎、不调用其初始化/持久化流程来创建第二套状态。专业方法的实际入口见系统 `../../../docs/integration-director.md` |
+| 导演 | 独立入口为 [`$film-director`](../../film-director/SKILL.md)，通过 `film_modules(module="director")` 读取包内 `../../../modules/director-agent/SKILL.md` 完整方法。结合剧本判断镜头、调度、节奏和特效必要性，具体特效方法按需加载；项目外纯文本可直接完成。项目任务、成果和依赖统一登记，不调用旧引擎初始化或另建状态。剧情/对白修订意见交编剧；预演仅按用户制作/修订请求读取包内 previs 规范执行。新增入口不扩展现有自动分层会话后端。专业接入见 `../../../docs/integration-director.md` |
 | 特效 | `../../../modules/vfx-agent/SKILL.md`；剧情触发、形态空间时序、环境反馈、末态 |
 | 资产提示词 | `../../../modules/seedance-prompt/SKILL.md`；盘点、三方向设计和选型按请求区分，成果保留 asset 类别 |
 | AI 视频提示词 | 先读本技能[视频提示词创作与登记](video-prompts.md)，再加载上述 `seedance-prompt` 的视频模式及 `references/output-format.md`；生成独立完整三段式正文，登记 kind/category/stage=video_prompt，不生成实际视频 |

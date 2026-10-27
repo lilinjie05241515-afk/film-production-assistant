@@ -43,7 +43,7 @@ class CloudMCPTests(unittest.TestCase):
   p=subprocess.run([sys.executable,'-B','-X','utf8',str(SOURCE/'plugin/mcp_server.py')],cwd=SOURCE,env=self.env,input=''.join(json.dumps(r)+'\n' for r in requests).encode(),capture_output=True,timeout=30)
   self.assertEqual(p.returncode,0,p.stderr);results=[json.loads(line) for line in p.stdout.splitlines()]
   names=[t['name'] for t in results[0]['result']['tools']]
-  self.assertEqual(len(names),25);self.assertEqual(names.count('film_cloud'),1)
+  self.assertEqual(len(names),26);self.assertEqual(names.count('film_cloud'),1)
   value=results[1]['result'];self.assertFalse(value.get('isError'),value)
   self.assertEqual(value['structuredContent']['jobs'],[])
  def test_read_never_opens_writable_registry_and_preserves_bytes(self):

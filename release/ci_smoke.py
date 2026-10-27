@@ -14,6 +14,7 @@ SOURCE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SOURCE))
 from filmprod import __version__
 from release import assemble, installer, publisher
+from release.ci_previs_smoke import run_previs
 
 
 def run_json(command, *, env=None, cwd=None):
@@ -53,12 +54,16 @@ def main():
         health = install_result["smoke"]["health"]
         assert health["version"] == __version__ and health["runtime_isolated"]
         assert health["modules"]["verified"] and health["modules"]["count"] == 8
-        assert install_result["smoke"]["tool_count"] == 25
+        assert install_result["smoke"]["tool_count"] == 26
         assert install_result["host_registration_performed"] is False
         host = installer.host_plan(app)
         assert host["host_registration_performed"] is False
         server = installer.read_json(Path(host["plugin_root"]) / ".mcp.json")["mcpServers"]["film-production"]
         assert Path(server["command"]).is_absolute()
+        entries = sorted(p.name for p in (Path(host["plugin_root"]) / "skills").iterdir()
+                         if (p / "SKILL.md").is_file())
+        assert entries == ["film-art-director", "film-brainstorm-interface", "film-director",
+                           "film-production-agent", "film-screenwriter"]
         env = {k: v for k, v in os.environ.items()
                if not k.startswith("FILMPROD_") and k not in ("PYTHONPATH", "PYTHONHOME")}
         env.update(server["env"])
@@ -91,13 +96,18 @@ print(json.dumps({'project_write_read':True,'media_encode_probe':True,'ffmpeg':f
         if sys.platform == "darwin":
             bootstrap = run_json(["/bin/bash", str(unpacked / "release/bootstrap.sh"), "env"], env=env, cwd=root)
             assert bootstrap["platform_supported"] is True
+        blender = os.environ.get("FILMPROD_CI_BLENDER")
+        if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS") == "true" and not blender:
+            raise RuntimeError("macOS CI requires its pinned Blender for actual packaged rendering")
+        previs = (run_previs(host["plugin_root"], server["command"], root / "TEST 预演 空格", blender, env)
+                  if blender else {"status": "not_run", "reason": "No explicit CI Blender supplied"})
         receipt = {
             "version": __version__, "system": platform.system(), "architecture": platform.machine(),
             "python": platform.python_version(), "package_origin": package_origin,
             "archive_sha256": hashlib.sha256(package.read_bytes()).hexdigest(),
-            "modules": 8, "tools": 25, "runtime_isolated": True,
+            "modules": 8, "tools": 26, "skill_entries": entries, "runtime_isolated": True,
             "unicode_space_paths": True, "gui_path_tested": sys.platform == "darwin",
-            "packaged_runtime": packaged, "native_desktop_ui_verified": False,
+            "packaged_runtime": packaged, "previs": previs, "native_desktop_ui_verified": False,
             "source_commit": os.environ.get("GITHUB_SHA"),
         }
         target = SOURCE / "work/ci-compatibility.json"

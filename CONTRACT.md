@@ -1,10 +1,14 @@
-# 1.14.0 内部接口
+# 内部接口与兼容契约
+
+本文件按能力引入版本保留接口与字段说明，版本标题用于定位协议沿革，不是当前程序版本。执行时先查实际工具 schema 或 film_action_help；当前职责见[现行规则](docs/current-rules.md)，旧任务、来源枚举与历史记录见[兼容说明](docs/compatibility.md)。
+
+看板仅经 film_board_manage 允许列表查询业务状态、管理资料及打开已关联工作对话。创作、正文修订、云稿写入、渲染、真实聊天创建和任务发送只在工作对话按授权执行。旧按钮、旧 ui/message 路径和旧协议中的 panel 来源不恢复看板业务能力；真实历史记录及未决请求保留原身份，在有授权的工作对话核查和恢复。
 
 联合接续扩展：自动风格引用可在确认反向路径后保存为准确冻结参考，原显式依赖不静默删除；普通保存可选use_current_style策略。art.revise.rebase仅推进同身份已采用的剧本来源，完整候选仍独立批准。历史恢复保留真实历史来源及当前准确风格引用。详细字段、任务锁、云手改与旧回环限制以 docs/integration-style-feedback-1.14.0.md 为准；下文1.13历史接口说明由此增量扩展。
 
-1.14.0 在已发布美术总监1.13.0基础上合并编剧：`film_screenwriting(action=read/record/resolve)` 与 dispatch 同名 screenwriting 动作保存准确剧本意见及处理历史，不生成正文或自动采用。编剧统一小说、改编与原创剧本，直接剧本可以从动态分场正文开始，底稿可选；旧项目路线、分类和执行锁不自动迁移。完整小说与改编方法纳入screenwriter内部，原兼容名称解析到相应写作模式，美术的全部五动作及工作对话/云稿机制保留。当前八个专业模块、四个公开技能、二十四个MCP工具。准确契约见 docs/integration-screenwriter-1.13.0.md；合并总览见 docs/integration-1.14.0.md。
+1.14.0 在已发布美术总监1.13.0基础上合并编剧：`film_screenwriting(action=read/record/resolve)` 与 dispatch 同名 screenwriting 动作保存准确剧本意见及处理历史，不生成正文或自动采用。编剧统一小说、改编与原创剧本，直接剧本可以从动态分场正文开始，底稿可选；旧项目路线、分类和执行锁不自动迁移。完整小说与改编方法纳入screenwriter内部，原兼容名称解析到相应写作模式，美术的全部五动作及工作对话/云稿机制保留。当前专业模块与公开技能以发行清单为准，工具集合以实际 tools/list 为准。准确契约见 docs/integration-screenwriter-1.13.0.md；合并总览见 docs/integration-1.14.0.md。
 
-1.13.0 增加 `film_art(action=read/prepare/select/integrate/revise)`；严格字段与状态转换由 `filmprod/art1130.py` 统一提供，read 用只读连接。主备均为同一情境的独立准确研究版本，选择不等于批准；集成只替换经宿主核对的视觉区间，保留区间外全文。revise 接续基准内的局部修订，不必重开主备；其语义范围由宿主判断，程序只核验准确来源和完整保留。保留完整统一 style_bible、稳定成果与云稿身份。美术专业模块为独立新增第九模块，原八模块文件不改。影视路线工作对话增加 art，纯小说 prepare 可显式 include_art；旧总控兼容解析明确标记 requested/resolved_role。详见 docs/integration-1.13.0.md 和 docs/integration-art-1.13.0.md。
+1.13.0 增加 `film_art(action=read/prepare/select/integrate/revise)`；严格字段与状态转换由 `filmprod/art1130.py` 统一提供，read 用只读连接。主备均为同一情境的独立准确研究版本，选择不等于批准；集成只替换经宿主核对的视觉区间，保留区间外全文。revise 接续基准内的局部修订，不必重开主备；其语义范围由宿主判断，程序只核验准确来源和完整保留。保留完整统一 style_bible、稳定成果与云稿身份。1.13 当时增加的美术模块与原模块来源均保留；现行入口采用编剧合并后的清单，不沿用旧模块数量作为当前事实。影视路线工作对话增加 art，纯小说 prepare 可显式 include_art；旧总控兼容解析明确标记 requested/resolved_role。详见 docs/integration-1.13.0.md 和 docs/integration-art-1.13.0.md。
 
 1.12.0 增加 film_cloud(action=read/configure/bind/prepare/record)。字段与状态机由 filmprod/cloud1120.py 共享 schema 提供，cloud.read 及旧 dispatch 对应读动作均用只读连接。artifact.save、artifact.save_file、task.submit、task.submit_checkpoint 可附 cloud_update，保存候选与待同步记录同事务；紧凑回执保留该记录。检查点和未带字段的旧接口不自动触发云写入。详见 docs/integration-cloud-1.12.0.md；实际创建/编辑与读回由宿主完成，host_reported 记录不认证远端身份。snapshot.cloud 和 context summary 含无正文状态，显式 observation_id 才返回保存观察全文。
 
@@ -12,7 +16,7 @@
 
 action: project.init {project_id,title,test_only}; artifact.save {artifact_id,kind,scope,content,base_version,deps:[{artifact_id,version}],metadata}; task.create {task_id,title,module,scope,inputs:[{artifact_id,version}],must_keep,allowed_changes,requirements,thread_id?}; task.checkpoint {task_id,draft,completed,decisions,unresolved,next_step}; task.resume {task_id}; task.submit {task_id,artifact_id,kind,content,base_version,metadata?}; decision.record {artifact_id,version,scope,decision,evidence,actor,synthetic}; thread.register {thread_id,title,scope,task_id?,status,current_control?}; sync.intent {sync_id,page_id,base_revision,intended_content}; sync.observe {sync_id,status,receipt?,observed_content?,revision?,comments?}; media.register {media_id,kind,path,metadata}; cue.save {cue_id,content,base_version,deps,metadata}; backup.create {destination}; backup.restore {source,destination}。
 
-snapshot 返回 project, artifacts（每个含 artifact_id,kind,scope,version,content,sha256,status,metadata,deps）,tasks,threads,decisions,sync,media,events,capabilities；结果包容补充字段。错误 ValueError/ConflictError，HTTP 映射 409/400。base_version=0 表示首次创建。core 方法应实现上述操作并可扩展。
+snapshot 返回 project, artifacts（每个含 artifact_id,kind,scope,version,content,sha256,status,metadata,deps）,tasks,threads,decisions,sync,media,events,capabilities；结果包容补充字段。错误为 ValueError/ConflictError；409/400 是历史 HTTP 调试适配，不表示当前 stdio 插件监听 HTTP。base_version=0 表示首次创建。core 方法应实现上述操作并可扩展。
 
 源素材/时间线等媒体关联放 metadata 但验证 clip source/in/out，sequence clip refs，final exact timeline+tracks/subtitles/export specification。metadata 自由扩展不可取代关键不变量。
 
@@ -24,7 +28,7 @@ final.music/dialogue/shots 必须指向相应实际媒体的成果；未完成�
 
 ## 客户端插件与历史
 
-正式入口是 Codex 内的 stdio 插件，不需要 HTTP 服务或另配模型 API。当前共 24 个工具：原有 13 个兼容工具为 film_modules、film_board、film_snapshot、film_projects、film_brainstorm、film_media、film_resume、film_history、film_dispatch、film_health、film_export、film_pages_import、film_render；1.10.0 新增 film_context、film_action_help、film_task_create、film_draft_save、film_draft_submit、film_artifact_save_file；1.11.0 新增 film_workspace、film_delivery；1.12.0 新增 film_cloud；1.13.0 新增 film_art；1.14.0 新增 film_screenwriting。兼容清单位于 plugin/.codex-plugin/plugin.json，MCP 声明位于 plugin/.mcp.json；发行模板由安装器生成本机部署配置，不复用另一设备的绝对路径。
+正式入口是 Codex 内的 stdio 插件，不需要 HTTP 服务或另配模型 API。工作对话保留以下业务及兼容工具： film_modules、film_board、film_snapshot、film_projects、film_brainstorm、film_media、film_resume、film_history、film_dispatch、film_health、film_export、film_pages_import、film_render；1.10.0 新增 film_context、film_action_help、film_task_create、film_draft_save、film_draft_submit、film_artifact_save_file；1.11.0 新增 film_workspace、film_delivery；1.12.0 新增 film_cloud；1.13.0 新增 film_art；1.14.0 新增 film_screenwriting。当前看板使用单独的 film_board_manage 允许列表，不能直接调用上述业务工具。兼容清单位于 plugin/.codex-plugin/plugin.json，MCP 声明位于 plugin/.mcp.json；发行模板由安装器生成本机部署配置，不复用另一设备的绝对路径。
 
 artifact.history {artifact_id} 是只读 action，不需要 op_id，返回全部不可变正文版本，版本从小到大排列；不存在的 ID 拒绝。film_history 包装它；读取历史不能新增事件或版本。
 
@@ -32,9 +36,9 @@ artifact.history {artifact_id} 是只读 action，不需要 op_id，返回全部
 
 schema 2 首次打开旧 schema 1 时先生成 SQLite 一致备份，位置为项目 `.project/migrations/`。旧 decision 保留为历史证据，不自动推定为已通过总稿；需要精确映射后使用统一批准入口。返回 schema 1 必须恢复迁移前数据库并配套旧系统源码，不可仅切换插件缓存。版本正文、依赖、决定封存内容不覆盖。
 
-`content.approve {op_id,artifact_id,version,scope,evidence,actor,synthetic,user_authorization?,base_master_version?}` 是对话批准与面板“通过并更新总稿”的同一事务入口。scope 必须与目标分段完全一致。更窄范围先存独立候选段，不能根据文字猜切段；恢复旧稿使用 `artifact.restore {op_id,artifact_id,version,base_version,...}` 创建新候选。总稿按 metadata.order（章节/场/镜头数字数组）或 scope 自然序组装，只有本次批准段被替换。精确版本重复批准不生成重复总稿。`decision.record` 的精确全段 adopt 兼容进入相同流程。
+`content.approve {op_id,artifact_id,version,scope,evidence,actor,synthetic,user_authorization?,base_master_version?}` 是工作对话依据准确用户批准执行的事务入口；历史面板批准沿用此协议记录，当前看板不再提供批准按钮。scope 必须与目标分段完全一致。更窄范围先存独立候选段，不能根据文字猜切段；恢复旧稿使用 `artifact.restore {op_id,artifact_id,version,base_version,...}` 创建新候选。总稿按 metadata.order（章节/场/镜头数字数组）或 scope 自然序组装，只有本次批准段被替换。精确版本重复批准不生成重复总稿。`decision.record` 的精确全段 adopt 兼容进入相同流程。
 
-真人操作证据绑定版本与范围；面板操作来源 `source=panel-click` 记录操作，不伪造认证账号。账号未知保持 `real_user_id=null`。TEST 所有批准必须 synthetic=true。`snapshot` 保留 artifacts 最新候选，并补充 approved_artifacts、current_content、pending_candidates、masters。current_content 每段优先已通过版本，没有通过版时明确 initial_draft。`master.history {category}` 为只读总稿历史；分段历史仍用 artifact.history。
+真人操作证据绑定版本与范围；历史面板来源 `source=panel-click` 保留真实操作记录，当前工作对话使用实际对话证据，不伪造认证账号或面板点击。账号未知保持 `real_user_id=null`。TEST 所有批准必须 synthetic=true。`snapshot` 保留 artifacts 最新候选，并补充 approved_artifacts、current_content、pending_candidates、masters。current_content 每段优先已通过版本，没有通过版时明确 initial_draft。`master.history {category}` 为只读总稿历史；分段历史仍用 artifact.history。
 
 未批准候选不会使当前已通过依赖失效；批准上游新版本后根据精确依赖传播 needs_review。待审核与需复核分别展示，系统不自动重写或重新批准下游。旧版本状态不能证明当前业务准备状态。
 
@@ -50,13 +54,13 @@ schema 2 首次打开旧 schema 1 时先生成 SQLite 一致备份，位置为�
 
 1.3.0 安装包内置版本化 Python runtime/filmprod；发布前 build 后核验缓存，避免缓存随系统源目录开发漂移。Codex 原生、Work 本机访问、纯云端 Work 属于不同宿主能力，必须按实际联调报告说明。音乐生成仍未接入。
 
-原生面板保存每项待确认写入的 root、工具名、action、完整 payload 和 op_id，并在作品写入 payload 中冻结 expected_project_id。film_dispatch、film_media、film_render 在打开 Registry 前只读校验磁盘项目身份；已在 catalog 登记的 root 还必须与登记 project_id 一致，旧调用即使未提供 expected_project_id 也不能绕过该校验。核心 dispatch 在写入前、事务内及缓存重放前校验可选 expected_project_id。相同目录被替换为另一个项目时拒绝写入，不以路径相同推定身份相同。
+历史原生面板 journal 保存待确认写入的 root、工具名、action、完整 payload 和 op_id；当前管理请求仍冻结准确身份和请求，历史业务未决项只能在工作对话核查，不从看板重放。作品写入 payload 保留 expected_project_id。film_dispatch、film_media、film_render 在打开 Registry 前只读校验磁盘项目身份；已在 catalog 登记的 root 还必须与登记 project_id 一致，旧调用即使未提供 expected_project_id 也不能绕过该校验。核心 dispatch 在写入前、事务内及缓存重放前校验可选 expected_project_id。相同目录被替换为另一个项目时拒绝写入，不以路径相同推定身份相同。
 
 未决 journal v2 按真实 thread_id 隔离并保存 owner_context；未知真实聊天 ID 时只保留面板会话内状态，旧 v1 只读核查、不自动恢复或重放。超时表示结果未知；先读登记结果，同一写入只能以原请求重放，不能自动换号、换目标或换底本。身份冲突不证明之前的未知请求未提交，必须保留原未决记录。真人审批还需精确版本、范围及真实用户操作证据，普通登记点击不等于批准。
 
 ## 1.3.0 创作路线、人物小传与全剧风格
 
-`project.workflow.set {op_id,expected_project_id,base_revision,mode,outline_order?}` 保存 project.workflow。expected_project_id 与 base_revision 必填；mode 为 novel_only/novel_to_screen/screenplay，outline_order 为 before_novel/after_novel。snapshot.workflow 提供已保存路线及只读建议阶段，默认 unset，不根据既有成果推断。选路线或开始阶段不创建聊天、不批准内容；面板阶段请求只交给当前聊天。小说转影视的大纲为正式阶段并可前后调整；纯小说与直接剧本的大纲可选，纯小说可止步。用户可跳过阶段，缺失输入保持未知。
+`project.workflow.set {op_id,expected_project_id,base_revision,mode,outline_order?}` 保存 project.workflow。expected_project_id 与 base_revision 必填；mode 为 novel_only/novel_to_screen/screenplay，outline_order 为 before_novel/after_novel。snapshot.workflow 提供已保存路线及只读建议阶段，默认 unset，不根据既有成果推断。路线保存或阶段启动本身不创建聊天、不批准内容；工作区按用户本轮或有效持续授权独立搭建。当前看板不发送阶段请求，阶段创作在工作对话执行。小说转影视的大纲为正式阶段并可前后调整；纯小说与直接剧本的大纲可选，纯小说可止步。用户可跳过阶段，缺失输入保持未知。
 
 dependency_suggestions 按当前路线所需来源及实际存在的可选资料列出，不把不存在的可选小说/大纲报告为缺口。可含 optional、candidate_refs、review_refs；status=candidate 时 refs 仍为空，待审候选不能冒充正式精确输入。
 
@@ -138,7 +142,7 @@ planning.read只读读取record_id与可选version、since_version、limit(1..10
 
 AI视频提示词默认按已明确登记的集或章提供合集，展开后按场次与单元顺序连续阅读。没有登记章节时保留未分组身份，不从名称臆测。生成单元不再成为顶层分组。
 
-合集是只读阅读视图，从同一批准确的 `current_content` 版本组装：已有通过版时保留通过版，没有通过版时标为初稿。候选、待审和需复核状态继续分别显示；合集不创建新的正文副本，不生成批准总稿，不写审批。每个单元保留准确正文复制及编辑审核入口。
+合集是只读阅读视图，从同一批准确的 `current_content` 版本组装：已有通过版时保留通过版，没有通过版时标为初稿。候选、待审和需复核状态继续分别显示；合集不创建新的正文副本，不生成批准总稿，不写审批。每个单元保留准确正文复制及审核记录查询；正文编辑和批准在工作对话处理。
 
 打开阅读时使用所选精确版本快照。新候选不会静默改写已打开正文；重新读取当前合集后可看到新版本。旧画面呈现稿可作为历史参考显示于提示词栏目，但仍保持原业务身份。
 
@@ -244,7 +248,7 @@ snapshot.trash.entries 包含 target_type、target_id、sha256、title、kind、
 
 新增文字提示词以 kind=prompt 保存，metadata.category=asset。已有 prompt 与 asset 文字记录保持兼容；不因改变界面入口而修改旧记录类型、原文、审核或精确依赖。侧栏资产管理继续负责已有图片原件的导入、低清预览、分类、名称和回收站管理。已经存在的图片不会重新导入、搬移或删除。
 
-创作内容中的资产提示词分类使用创作内容分类排序；侧栏资产管理使用图片资产分类排序，二者不混用。默认文字表单明确标识资产提示词，实际保存仍沿用原候选和审批协议。
+创作内容中的资产提示词分类使用创作内容分类排序；侧栏资产管理使用图片资产分类排序，二者不混用。工作对话中的资产提示词保存沿用原候选和批准协议；当前看板只阅读和管理准确文字资料，不提供创作表单。
 
 ## 目录与阅读
 
@@ -268,9 +272,9 @@ snapshot.trash.entries 包含 target_type、target_id、sha256、title、kind、
 
 # 1.9.2 项目登记删除
 
-在「项目设置」加入「删除项目登记」。该操作仅移除所选影视项目在本机 catalog 中的登记及其本机保存的聊天、客户端项目关联。源目录、项目数据库、草稿、历史版本、图片、视频及实际客户端聊天保持不变；不调用文件物理删除或云端写入。
+项目登记移除操作（早期名为「删除项目登记」，当前见「管理项目」的删除入口）仅移除所选影视项目在本机 catalog 中的登记及其本机保存的聊天、客户端项目关联。源目录、项目数据库、草稿、历史版本、图片、视频及实际客户端聊天保持不变；不调用文件物理删除或云端写入。
 
-删除前显示准确的项目名称和源目录，用户确认后通过 film_projects 的 forget 动作提交。保留唯一 op_id、未决记录、只读结果核对和同请求重试机制。请求绑定 project_id、预期源目录和当前登记时间；目录关联更改或同 ID 重新登记后，拒绝过期确认。源目录当前不可用不妨碍移除其本机登记。
+删除前显示准确的项目名称和源目录，用户确认后由当前看板的 film_board_manage 项目管理路径提交；底层保留 film_projects 的 forget 协议。保留唯一 op_id、未决记录、只读结果核对和同请求重试机制。请求绑定 project_id、预期源目录和当前登记时间；目录关联更改或同 ID 重新登记后，拒绝过期确认。源目录当前不可用不妨碍移除其本机登记。
 
 成功后刷新登记列表，并清理被删除项目的旧阅读内容、预览和表单上下文，不自动改写其他项目的聊天绑定。删除当前登记后展示未选择项目状态，用户可自行选择剩余项目。晚到旧快照不能重新打开刚删除的项目。
 
@@ -312,6 +316,22 @@ film_workspace(action=read/resolve/prepare/record,root,payload) 与 film_deliver
 workspace.prepare 只准备职责槽位，宿主创建前领取并核对现状；重复或未知领取结果不授权再次外部创建。真实ID、排队ID、关联与打开观察分开，记录层不调用宿主或认证其回执。delivery允许保存不完整候选；交付完成须准确版本的覆盖与审查证据闭合，不能以字数、保存成功或作者自证代替审查。评审来自宿主报告，ready仅表示记录的条件满足，不改变批准总稿、旧任务锁或承诺艺术质量。
 
 
-# 1.15 看板调用边界（覆盖旧版本UI入口描述）
+# 1.15 看板管理接口
 
-看板仅经film_board_manage明确允许列表查询和管理；所有原业务工具为model-only。不存在看板业务执行、审批、任务发送或ui/message兼容通道。业务工具在工作对话正常使用。新管理action与snapshot.board_library见docs/integration-1.15.0.md；普通管理写settings并沿用事务、op_id和准确身份，正文/采用/依赖不改；导出与预览只写派生文件，schema仍为2。
+看板仅经film_board_manage明确允许列表查询和管理；所有原业务工具为model-only。看板不提供泛业务执行、任务发送或 ui/message 兼容通道。1.18.0 仅开放用户明确点击后的准确文稿确认、已登记美术方案选择及对象用途素材选用专用接口。业务工具在工作对话正常使用。新管理action与snapshot.board_library见docs/integration-1.15.0.md；普通管理写settings并沿用事务、op_id和准确身份，正文/采用/依赖不改；导出与预览只写派生文件，schema仍为2。
+
+# 1.17.0 分层会话与持久宿主待办
+
+`film_conversations(action,root,payload)` 使用显式作品 root，提供 conversation.read/configure/prepare/decide/accept/bind_task/start/continue/complete/claim/observe。准确 schema、授权结构、观察字段与当前支持范围见[1.17.0 接入](docs/integration-1.17.0.md)；实际宿主执行链见[分层会话管理](skills/film-production-agent/references/conversation-management.md)。
+
+状态位于同一 Registry 的 settings `conversation/v1`，沿用 schema 2，不建立第二份灵感库。只读未启用项目不初始化或迁移；新项目已有按本机制搭建授权时直接 configure。旧项目接续采用须核对原任务并记录一次适用授权，保留真实标题、历史、路线及 execution_lock。通用包不携带个人持续授权。
+
+本版完整登记闭环为本项目灵感话题→准确选中版本交编剧→独立剧本/小说执行→真实输出回报，另支持直接编剧需求；其他部门继续原业务。项目/部门总控仅作方向、必要澄清、派发和汇总，长讨论和具体制作进入准确话题；同灵感/任务复用，新范围独立。侧栏平级不影响登记逻辑层级。
+
+develop 选定的 planning_record 准确版本与分支作为冻结创意来源，保留在任务 inputs 供阅读，成果来源元数据记录准确引用、分支和摘要；不因后续灵感讨论产生新版而自动失效或替换。剧本、风格等其余业务依赖仍遵守原新鲜度规则，旧任务执行锁保持不变。
+
+prepare、start 和 complete 只创建稳定待办，不能证明真实聊天、消息或归档已发生。新建提示只自核就绪，取得真实 ID 与目录绑定后，执行话题先创建并绑定唯一任务，再 start 派发；observe/bind 不自动发送。continue 在同话题同聊天保留历史并进入明确新轮，不重建聊天或绕过旧任务。领取、排队、未知、宿主接受和实际业务处理分别保存；未知先查原请求，不换号重建或重发。实际创建、发送、有限等待及归档由当前宿主工作轮次执行并记录观察；持久待办不等于后台常驻调度或保证离线唤醒。观察与 actor 来自调用者报告，不能冒称宿主认证。completed 的准确任务输出仍是候选，不替代审查、云稿同步、用户采用或发布。
+
+
+## 1.18.0 创作看板
+主导航和精确决定接口以 [1.18.0 接入](docs/integration-1.18.0.md) 为准，取代历史版本中看板禁止所有采用的界面能力描述。所有普通管理动作继续不修改正文和采用。

@@ -1,6 +1,8 @@
 # 更新与换电脑
 
-完整操作命令在**源码根或发行 ZIP 根的 `release/installer-guide.md`**。当前稳定发行目标为 `1.17.0`，插件技术身份继续是 `film-production-agent@film-production-local`。
+完整操作命令在**源码根或发行 ZIP 根的 `release/installer-guide.md`**。目标版本以所选已校验发行包及其清单为准，插件技术身份继续是 `film-production-agent@film-production-local`。
+
+2.0.1 延续 2.0.0 的双主题看板、独立导演、预演审看和分层会话，并补齐 Mac 运行及发行校验。Windows 与 Mac 使用同一版本 ZIP，各自在目标机器运行安装器生成本机绝对路径配置。Mac 命令见 [Mac 安装与更新](MACOS.md)。
 
 ## 更新现有安装
 
@@ -10,11 +12,7 @@
 
 `git pull`、下载 ZIP、安装副本存在及活动版本指针改变，都不证明正在运行的聊天已升级。不要删除旧版本目录来强制切换；它可能仍被既有任务使用。
 
-## Windows 与 Mac 之间迁移
-
-1.17.0 的同一发行包提供两种系统的安装入口。Mac 使用 `python3` 或 `bash release/bootstrap.sh`；目录示例见 [Mac 安装指南](MACOS.md)。在 Mac 上重新安装以生成本机 Python 与 MCP 路径，不复制 Windows 的 `state.json`、部署 `.mcp.json` 或带盘符的 catalog 路径作为可直接运行的配置。
-
-安装器显式设置的 catalog 路径始终优先。未配置路径的 Mac 运行时使用 `~/Library/Application Support/FilmProduction/projects.sqlite3`；旧版可能位于 `~/AppData/Local/FilmProduction/projects.sqlite3`。如果此前在 Mac 手工试用过旧版，先备份并显式传 `--catalog-path` 沿用已核实的旧库，不通过文件名猜测或自动合并登记。
+2.0.0 开发包与 2.0.1 稳定包是独立不可变版本。不要用新文件覆盖旧缓存或旧源码；完成新部署和宿主接入后，在新对话核对 `film_health.version=2.0.1`。
 
 ## 换一台电脑
 

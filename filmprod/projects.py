@@ -4,8 +4,8 @@ from __future__ import annotations
 import json
 import os
 import posixpath
-import sqlite3
 import sys
+import sqlite3
 from pathlib import Path
 
 from .core import ConflictError, Registry, canonical, content_hash, identifier, now, required
@@ -90,7 +90,9 @@ class ProjectCatalog:
             reason = None if available else "目录项目ID不符，请重新关联"
         except (OSError, ValueError, sqlite3.Error) as exc:
             available, reason = False, str(exc)
-        return {**project, "available": available, "unavailable_reason": reason}
+        if available:
+            project.update(title=actual["title"], intro=actual.get("intro", ""))
+        return {**project, "status": project.get("status", "active"), "revision": project.get("revision", 0), "available": available, "unavailable_reason": reason}
 
     def snapshot(self, p=None):
         p = p or {}
@@ -102,7 +104,7 @@ class ProjectCatalog:
             return by_id.get(match["project_id"]) if match else None
         thread = bound("thread", "thread_id")
         client = bound("client_project", "client_project_id")
-        resolved = thread or client
+        resolved = next((item for item in (thread, client) if item and item.get("status", "active") == "active"), None)
         operations = [{**dict(row), "result": json.loads(row["result"])} for row in self.db.execute("SELECT op_id,action,result,created_at FROM operations ORDER BY rowid DESC LIMIT 100")]
         return {"projects": projects, "bindings": bindings, "resolved_project": resolved,
                 "current_thread_project": thread, "client_project": client,
@@ -140,7 +142,7 @@ class ProjectCatalog:
             required(p, "op_id")
             row = self.db.execute("SELECT op_id,action,result,created_at FROM operations WHERE op_id=?", (p["op_id"],)).fetchone()
             return {"found": bool(row), "operation": {**dict(row), "result": json.loads(row["result"])} if row else None}
-        if action not in ("register", "create", "relink", "bind", "unbind", "forget"):
+        if action not in ("register", "create", "relink", "bind", "unbind", "forget", "visibility"):
             raise ValueError("不支持的项目登记操作")
         required(p, "op_id")
         identifier(p["op_id"], "op_id")
@@ -215,7 +217,9 @@ class ProjectCatalog:
                     raise ConflictError("重新关联目录的项目 ID 不匹配")
             elif existing and Path(existing[0]).resolve() != root:
                 raise ConflictError("项目 ID 已登记在另一目录；搬家请使用重新关联")
+            previous = self._project(project_id) if existing else {}
             project = {"project_id": project_id, "title": identity["title"], "root": str(root), "test_only": identity.get("test_only", False), "registered_at": now()}
+            project.update(status=previous.get("status", "active"), revision=previous.get("revision", 0))
             self.db.execute("INSERT INTO projects VALUES(?,?,?) ON CONFLICT(project_id) DO UPDATE SET root=excluded.root,data=excluded.data", (project_id, str(root), canonical(project)))
             # Context identifies the caller; browsing/registration must not rebind
             # an already associated chat. Explicit bind is the replacement action.
@@ -235,6 +239,21 @@ class ProjectCatalog:
                 raise ConflictError("绑定已变化或不存在")
             self.db.execute("DELETE FROM bindings WHERE kind=? AND binding_id=?", (p["kind"], p["binding_id"]))
             result["unbound"] = True
+        elif action == "visibility":
+            required(p, "project_id", "expected_root", "base_revision", "status")
+            if set(p) - {"op_id", "project_id", "expected_root", "base_revision", "status"}:
+                raise ValueError("归档只接受项目身份、状态和基础修订。")
+            project = self._project(p["project_id"])
+            normalize = catalog_root_key
+            if not isinstance(p["expected_root"], str) or not Path(p["expected_root"]).is_absolute() or normalize(p["expected_root"]) != normalize(project["root"]):
+                raise ConflictError("项目位置已变化，请刷新。")
+            if type(p["base_revision"]) is not int or p["base_revision"] != project.get("revision", 0):
+                raise ConflictError("项目状态已变化，请刷新。")
+            if p["status"] not in {"active", "archived"}:
+                raise ValueError("项目状态必须为 active 或 archived。")
+            project.update(status=p["status"], revision=project.get("revision", 0)+1, visibility_updated_at=now())
+            self.db.execute("UPDATE projects SET data=? WHERE project_id=?", (canonical(project), p["project_id"]))
+            result = {"project": project, "files_changed": False, "chats_changed": False}
         elif action == "forget":
             required(p, "project_id")
             project = self._project(p["project_id"])
@@ -244,7 +263,8 @@ class ProjectCatalog:
                 expected_root = p["expected_root"]
                 if not isinstance(expected_root, str) or not expected_root.strip() or not Path(expected_root).is_absolute():
                     raise ValueError("expected_root 必须为登记项目的绝对目录")
-                if catalog_root_key(expected_root) != catalog_root_key(project["root"]):
+                normalize = catalog_root_key
+                if normalize(expected_root) != normalize(project["root"]):
                     raise ConflictError("项目源文件夹登记已变化，请重新打开项目设置后再删除登记")
             if "expected_registered_at" in p:
                 expected_time = p["expected_registered_at"]

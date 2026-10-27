@@ -36,7 +36,7 @@
 
 `select` 传 `comparison_id,choice,user_request,synthetic`；choice 仅为 main、alternate 或 fusion。选 fusion 时必须另传融合成果的准确 `fusion` 引用；其他选择禁止带 fusion。融合稿先独立保存完整 research，具有同一 context，并在 deps 中保留主备双方的准确版本；不能以“两个都选”直接拼入基准。
 
-`user_request={source:"conversation"|"panel",reference:真实消息或点击标识,quote:实际原话}`。选择和局部修订都保留真实来源；不能把推测的用户偏好、AI 建议或自检结果填成用户原话。test_only 项目使用 synthetic=true；生产选择使用真实证据，字段记录本身不是用户身份认证。原请求已明确授权基准内细化时，局部修订记录该持续有效授权与本轮原因，不反复向用户索取相同许可。
+`user_request={source:"conversation"|"panel",reference:真实消息或历史点击标识,quote:实际原话}`。当前选择和修订在工作对话依据真实请求执行；`panel` 保留为历史来源兼容字段，不提供当前看板选择或修订入口。选择和局部修订都保留真实来源；不能把推测的用户偏好、AI 建议或自检结果填成用户原话。test_only 项目使用 synthetic=true；生产选择使用真实证据，字段记录本身不是用户身份认证。原请求已明确授权基准内细化时，局部修订记录该持续有效授权与本轮原因，不反复向用户索取相同许可。
 
 ## 整合为唯一基准
 
@@ -76,7 +76,7 @@ reason 写明剧本差异、核对到的影响和仍在原基准内的依据；u
 
 integrate 的任务 inputs 必须恰好等于 read 中该 comparison.required_inputs：当前工作稿原 deps 与 context 的完整版本并集，不多不少。普通 revise 的任务 inputs 须等于 source_ref 完整稿的 deps；带 rebase 时则等于 rebase.inputs 对应的全部 artifact_id/version，不用旧 inputs 提交新来源候选。引用同一来源的不同版本时先核对实际底本；不把未选方案、被修订基准自身旧版混入 inputs。主备选择通过准确选择记录冻结，不用自引用制造依赖。需要任务接续时据此创建或恢复实际 art_director 任务，不能改已存在任务的冻结输入来适配新调用。旧任务锁或输入不适用时保留原检查点，按[任务与采用规则](registry-rules.md)处理真实接续。
 
-只有用户明确采用准确完整版本与范围时，使用原 content.approve 流程；film_art 不新增批准捷径。用户只是“选 B 看看”“先融合试试”时继续候选；明确完整采用的证据可以按其实际范围接续，不要求再点面板。纳入美术流程的目标须为当前选择或旧基准窄兼容链对应的完整 integrate/revise 候选，普通 artifact.save 的纯视觉稿、任意回灌稿或已过时集成不能冒充可直接采用的完整基准。批准后下游引用唯一正式风格的准确版本，未选方案留在历史中。
+只有用户明确采用准确完整版本与范围时，使用原 content.approve 流程；film_art 不新增批准捷径。用户只是“选 B 看看”“先融合试试”时继续候选；明确完整采用的证据可以按其实际范围接续，不要求重复批准。纳入美术流程的目标须为当前选择或旧基准窄兼容链对应的完整 integrate/revise 候选，普通 artifact.save 的纯视觉稿、任意回灌稿或已过时集成不能冒充可直接采用的完整基准。批准后下游引用唯一正式风格的准确版本，未选方案留在历史中。
 
 ## 工作稿、对话与下游
 

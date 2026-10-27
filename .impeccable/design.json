@@ -1,0 +1,716 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T10:58:14.917589+00:00",
+  "title": "Design System: 影视创作工作台 2.0.0",
+  "extensions": {
+    "colorMeta": {
+      "dark-bg": {
+        "role": "neutral",
+        "displayName": "dark bg",
+        "tonalRamp": [
+          "oklch(15% 0.0011 229.03)",
+          "oklch(27% 0.0025 229.03)",
+          "oklch(39% 0.0034 229.03)",
+          "oklch(51% 0.0038 229.03)",
+          "oklch(63% 0.0038 229.03)",
+          "oklch(75% 0.0032 229.03)",
+          "oklch(87% 0.0019 229.03)",
+          "oklch(95% 0.0008 229.03)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "dark surface",
+        "tonalRamp": [
+          "oklch(15% 0.0018 236.81)",
+          "oklch(27% 0.0039 236.81)",
+          "oklch(39% 0.0053 236.81)",
+          "oklch(51% 0.0059 236.81)",
+          "oklch(63% 0.0059 236.81)",
+          "oklch(75% 0.0050 236.81)",
+          "oklch(87% 0.0030 236.81)",
+          "oklch(95% 0.0012 236.81)"
+        ]
+      },
+      "dark-subtle": {
+        "role": "neutral",
+        "displayName": "dark subtle",
+        "tonalRamp": [
+          "oklch(15% 0.0018 236.85)",
+          "oklch(27% 0.0039 236.85)",
+          "oklch(39% 0.0054 236.85)",
+          "oklch(51% 0.0060 236.85)",
+          "oklch(63% 0.0060 236.85)",
+          "oklch(75% 0.0051 236.85)",
+          "oklch(87% 0.0030 236.85)",
+          "oklch(95% 0.0012 236.85)"
+        ]
+      },
+      "dark-side": {
+        "role": "neutral",
+        "displayName": "dark side",
+        "tonalRamp": [
+          "oklch(15% 0.0011 229.00)",
+          "oklch(27% 0.0024 229.00)",
+          "oklch(39% 0.0033 229.00)",
+          "oklch(51% 0.0037 229.00)",
+          "oklch(63% 0.0037 229.00)",
+          "oklch(75% 0.0031 229.00)",
+          "oklch(87% 0.0019 229.00)",
+          "oklch(95% 0.0007 229.00)"
+        ]
+      },
+      "dark-hover": {
+        "role": "neutral",
+        "displayName": "dark hover",
+        "tonalRamp": [
+          "oklch(15% 0.0021 229.10)",
+          "oklch(27% 0.0045 229.10)",
+          "oklch(39% 0.0062 229.10)",
+          "oklch(51% 0.0069 229.10)",
+          "oklch(63% 0.0069 229.10)",
+          "oklch(75% 0.0058 229.10)",
+          "oklch(87% 0.0034 229.10)",
+          "oklch(95% 0.0014 229.10)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "dark ink",
+        "tonalRamp": [
+          "oklch(15% 0.0020 97.35)",
+          "oklch(27% 0.0044 97.35)",
+          "oklch(39% 0.0061 97.35)",
+          "oklch(51% 0.0067 97.35)",
+          "oklch(63% 0.0067 97.35)",
+          "oklch(75% 0.0057 97.35)",
+          "oklch(87% 0.0034 97.35)",
+          "oklch(95% 0.0013 97.35)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "dark muted",
+        "tonalRamp": [
+          "oklch(15% 0.0016 228.85)",
+          "oklch(27% 0.0035 228.85)",
+          "oklch(39% 0.0049 228.85)",
+          "oklch(51% 0.0054 228.85)",
+          "oklch(63% 0.0054 228.85)",
+          "oklch(75% 0.0046 228.85)",
+          "oklch(87% 0.0027 228.85)",
+          "oklch(95% 0.0011 228.85)"
+        ]
+      },
+      "dark-line": {
+        "role": "neutral",
+        "displayName": "dark line",
+        "tonalRamp": [
+          "oklch(15% 0.0023 240.07)",
+          "oklch(27% 0.0050 240.07)",
+          "oklch(39% 0.0069 240.07)",
+          "oklch(51% 0.0077 240.07)",
+          "oklch(63% 0.0077 240.07)",
+          "oklch(75% 0.0065 240.07)",
+          "oklch(87% 0.0038 240.07)",
+          "oklch(95% 0.0015 240.07)"
+        ]
+      },
+      "dark-accent": {
+        "role": "primary",
+        "displayName": "dark accent",
+        "tonalRamp": [
+          "oklch(15% 0.0237 83.75)",
+          "oklch(27% 0.0513 83.75)",
+          "oklch(39% 0.0710 83.75)",
+          "oklch(51% 0.0789 83.75)",
+          "oklch(63% 0.0789 83.75)",
+          "oklch(75% 0.0671 83.75)",
+          "oklch(87% 0.0395 83.75)",
+          "oklch(95% 0.0158 83.75)"
+        ]
+      },
+      "dark-soft": {
+        "role": "neutral",
+        "displayName": "dark soft",
+        "tonalRamp": [
+          "oklch(15% 0.0056 84.50)",
+          "oklch(27% 0.0122 84.50)",
+          "oklch(39% 0.0169 84.50)",
+          "oklch(51% 0.0188 84.50)",
+          "oklch(63% 0.0188 84.50)",
+          "oklch(75% 0.0160 84.50)",
+          "oklch(87% 0.0094 84.50)",
+          "oklch(95% 0.0038 84.50)"
+        ]
+      },
+      "dark-accent-ink": {
+        "role": "neutral",
+        "displayName": "dark accent ink",
+        "tonalRamp": [
+          "oklch(15% 0.0023 107.07)",
+          "oklch(27% 0.0050 107.07)",
+          "oklch(39% 0.0070 107.07)",
+          "oklch(51% 0.0077 107.07)",
+          "oklch(63% 0.0077 107.07)",
+          "oklch(75% 0.0066 107.07)",
+          "oklch(87% 0.0039 107.07)",
+          "oklch(95% 0.0015 107.07)"
+        ]
+      },
+      "dark-good": {
+        "role": "secondary",
+        "displayName": "dark good",
+        "tonalRamp": [
+          "oklch(15% 0.0121 162.95)",
+          "oklch(27% 0.0261 162.95)",
+          "oklch(39% 0.0362 162.95)",
+          "oklch(51% 0.0402 162.95)",
+          "oklch(63% 0.0402 162.95)",
+          "oklch(75% 0.0342 162.95)",
+          "oklch(87% 0.0201 162.95)",
+          "oklch(95% 0.0080 162.95)"
+        ]
+      },
+      "dark-good-bg": {
+        "role": "secondary",
+        "displayName": "dark good bg",
+        "tonalRamp": [
+          "oklch(15% 0.0092 164.74)",
+          "oklch(27% 0.0198 164.74)",
+          "oklch(39% 0.0275 164.74)",
+          "oklch(51% 0.0305 164.74)",
+          "oklch(63% 0.0305 164.74)",
+          "oklch(75% 0.0259 164.74)",
+          "oklch(87% 0.0153 164.74)",
+          "oklch(95% 0.0061 164.74)"
+        ]
+      },
+      "dark-danger": {
+        "role": "secondary",
+        "displayName": "dark danger",
+        "tonalRamp": [
+          "oklch(15% 0.0218 31.48)",
+          "oklch(27% 0.0471 31.48)",
+          "oklch(39% 0.0653 31.48)",
+          "oklch(51% 0.0725 31.48)",
+          "oklch(63% 0.0725 31.48)",
+          "oklch(75% 0.0616 31.48)",
+          "oklch(87% 0.0363 31.48)",
+          "oklch(95% 0.0145 31.48)"
+        ]
+      },
+      "dark-danger-bg": {
+        "role": "secondary",
+        "displayName": "dark danger bg",
+        "tonalRamp": [
+          "oklch(15% 0.0104 30.67)",
+          "oklch(27% 0.0225 30.67)",
+          "oklch(39% 0.0311 30.67)",
+          "oklch(51% 0.0346 30.67)",
+          "oklch(63% 0.0346 30.67)",
+          "oklch(75% 0.0294 30.67)",
+          "oklch(87% 0.0173 30.67)",
+          "oklch(95% 0.0069 30.67)"
+        ]
+      },
+      "dark-warning": {
+        "role": "secondary",
+        "displayName": "dark warning",
+        "tonalRamp": [
+          "oklch(15% 0.0227 86.71)",
+          "oklch(27% 0.0491 86.71)",
+          "oklch(39% 0.0680 86.71)",
+          "oklch(51% 0.0755 86.71)",
+          "oklch(63% 0.0755 86.71)",
+          "oklch(75% 0.0642 86.71)",
+          "oklch(87% 0.0378 86.71)",
+          "oklch(95% 0.0151 86.71)"
+        ]
+      },
+      "dark-warning-bg": {
+        "role": "secondary",
+        "displayName": "dark warning bg",
+        "tonalRamp": [
+          "oklch(15% 0.0073 82.75)",
+          "oklch(27% 0.0159 82.75)",
+          "oklch(39% 0.0219 82.75)",
+          "oklch(51% 0.0244 82.75)",
+          "oklch(63% 0.0244 82.75)",
+          "oklch(75% 0.0207 82.75)",
+          "oklch(87% 0.0122 82.75)",
+          "oklch(95% 0.0049 82.75)"
+        ]
+      },
+      "dark-overlay": {
+        "role": "neutral",
+        "displayName": "dark overlay",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.00)",
+          "oklch(27% 0.0000 0.00)",
+          "oklch(39% 0.0000 0.00)",
+          "oklch(51% 0.0000 0.00)",
+          "oklch(63% 0.0000 0.00)",
+          "oklch(75% 0.0000 0.00)",
+          "oklch(87% 0.0000 0.00)",
+          "oklch(95% 0.0000 0.00)"
+        ]
+      },
+      "light-bg": {
+        "role": "neutral",
+        "displayName": "light bg",
+        "tonalRamp": [
+          "oklch(15% 0.0016 106.50)",
+          "oklch(27% 0.0034 106.50)",
+          "oklch(39% 0.0048 106.50)",
+          "oklch(51% 0.0053 106.50)",
+          "oklch(63% 0.0053 106.50)",
+          "oklch(75% 0.0045 106.50)",
+          "oklch(87% 0.0026 106.50)",
+          "oklch(95% 0.0011 106.50)"
+        ]
+      },
+      "light-surface": {
+        "role": "neutral",
+        "displayName": "light surface",
+        "tonalRamp": [
+          "oklch(15% 0.0012 106.47)",
+          "oklch(27% 0.0026 106.47)",
+          "oklch(39% 0.0036 106.47)",
+          "oklch(51% 0.0039 106.47)",
+          "oklch(63% 0.0039 106.47)",
+          "oklch(75% 0.0034 106.47)",
+          "oklch(87% 0.0020 106.47)",
+          "oklch(95% 0.0008 106.47)"
+        ]
+      },
+      "light-subtle": {
+        "role": "neutral",
+        "displayName": "light subtle",
+        "tonalRamp": [
+          "oklch(15% 0.0020 115.71)",
+          "oklch(27% 0.0044 115.71)",
+          "oklch(39% 0.0060 115.71)",
+          "oklch(51% 0.0067 115.71)",
+          "oklch(63% 0.0067 115.71)",
+          "oklch(75% 0.0057 115.71)",
+          "oklch(87% 0.0034 115.71)",
+          "oklch(95% 0.0013 115.71)"
+        ]
+      },
+      "light-side": {
+        "role": "neutral",
+        "displayName": "light side",
+        "tonalRamp": [
+          "oklch(15% 0.0012 106.47)",
+          "oklch(27% 0.0026 106.47)",
+          "oklch(39% 0.0036 106.47)",
+          "oklch(51% 0.0040 106.47)",
+          "oklch(63% 0.0040 106.47)",
+          "oklch(75% 0.0034 106.47)",
+          "oklch(87% 0.0020 106.47)",
+          "oklch(95% 0.0008 106.47)"
+        ]
+      },
+      "light-hover": {
+        "role": "neutral",
+        "displayName": "light hover",
+        "tonalRamp": [
+          "oklch(15% 0.0021 124.45)",
+          "oklch(27% 0.0045 124.45)",
+          "oklch(39% 0.0063 124.45)",
+          "oklch(51% 0.0070 124.45)",
+          "oklch(63% 0.0070 124.45)",
+          "oklch(75% 0.0059 124.45)",
+          "oklch(87% 0.0035 124.45)",
+          "oklch(95% 0.0014 124.45)"
+        ]
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "light ink",
+        "tonalRamp": [
+          "oklch(15% 0.0025 196.69)",
+          "oklch(27% 0.0055 196.69)",
+          "oklch(39% 0.0076 196.69)",
+          "oklch(51% 0.0085 196.69)",
+          "oklch(63% 0.0085 196.69)",
+          "oklch(75% 0.0072 196.69)",
+          "oklch(87% 0.0042 196.69)",
+          "oklch(95% 0.0017 196.69)"
+        ]
+      },
+      "light-muted": {
+        "role": "neutral",
+        "displayName": "light muted",
+        "tonalRamp": [
+          "oklch(15% 0.0033 204.84)",
+          "oklch(27% 0.0072 204.84)",
+          "oklch(39% 0.0100 204.84)",
+          "oklch(51% 0.0111 204.84)",
+          "oklch(63% 0.0111 204.84)",
+          "oklch(75% 0.0095 204.84)",
+          "oklch(87% 0.0056 204.84)",
+          "oklch(95% 0.0022 204.84)"
+        ]
+      },
+      "light-line": {
+        "role": "neutral",
+        "displayName": "light line",
+        "tonalRamp": [
+          "oklch(15% 0.0030 125.69)",
+          "oklch(27% 0.0065 125.69)",
+          "oklch(39% 0.0090 125.69)",
+          "oklch(51% 0.0100 125.69)",
+          "oklch(63% 0.0100 125.69)",
+          "oklch(75% 0.0085 125.69)",
+          "oklch(87% 0.0050 125.69)",
+          "oklch(95% 0.0020 125.69)"
+        ]
+      },
+      "light-accent": {
+        "role": "primary",
+        "displayName": "light accent",
+        "tonalRamp": [
+          "oklch(15% 0.0246 78.12)",
+          "oklch(27% 0.0534 78.12)",
+          "oklch(39% 0.0739 78.12)",
+          "oklch(51% 0.0822 78.12)",
+          "oklch(63% 0.0822 78.12)",
+          "oklch(75% 0.0698 78.12)",
+          "oklch(87% 0.0411 78.12)",
+          "oklch(95% 0.0164 78.12)"
+        ]
+      },
+      "light-soft": {
+        "role": "neutral",
+        "displayName": "light soft",
+        "tonalRamp": [
+          "oklch(15% 0.0061 84.59)",
+          "oklch(27% 0.0131 84.59)",
+          "oklch(39% 0.0182 84.59)",
+          "oklch(51% 0.0202 84.59)",
+          "oklch(63% 0.0202 84.59)",
+          "oklch(75% 0.0172 84.59)",
+          "oklch(87% 0.0101 84.59)",
+          "oklch(95% 0.0040 84.59)"
+        ]
+      },
+      "light-accent-ink": {
+        "role": "neutral",
+        "displayName": "light accent ink",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(27% 0.0000 89.88)",
+          "oklch(39% 0.0000 89.88)",
+          "oklch(51% 0.0000 89.88)",
+          "oklch(63% 0.0000 89.88)",
+          "oklch(75% 0.0000 89.88)",
+          "oklch(87% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "light-good": {
+        "role": "secondary",
+        "displayName": "light good",
+        "tonalRamp": [
+          "oklch(15% 0.0181 162.11)",
+          "oklch(27% 0.0392 162.11)",
+          "oklch(39% 0.0543 162.11)",
+          "oklch(51% 0.0603 162.11)",
+          "oklch(63% 0.0603 162.11)",
+          "oklch(75% 0.0513 162.11)",
+          "oklch(87% 0.0301 162.11)",
+          "oklch(95% 0.0121 162.11)"
+        ]
+      },
+      "light-good-bg": {
+        "role": "secondary",
+        "displayName": "light good bg",
+        "tonalRamp": [
+          "oklch(15% 0.0038 149.24)",
+          "oklch(27% 0.0082 149.24)",
+          "oklch(39% 0.0113 149.24)",
+          "oklch(51% 0.0126 149.24)",
+          "oklch(63% 0.0126 149.24)",
+          "oklch(75% 0.0107 149.24)",
+          "oklch(87% 0.0063 149.24)",
+          "oklch(95% 0.0025 149.24)"
+        ]
+      },
+      "light-danger": {
+        "role": "secondary",
+        "displayName": "light danger",
+        "tonalRamp": [
+          "oklch(15% 0.0367 32.19)",
+          "oklch(27% 0.0794 32.19)",
+          "oklch(39% 0.1100 32.19)",
+          "oklch(51% 0.1222 32.19)",
+          "oklch(63% 0.1222 32.19)",
+          "oklch(75% 0.1039 32.19)",
+          "oklch(87% 0.0611 32.19)",
+          "oklch(95% 0.0244 32.19)"
+        ]
+      },
+      "light-danger-bg": {
+        "role": "secondary",
+        "displayName": "light danger bg",
+        "tonalRamp": [
+          "oklch(15% 0.0059 37.03)",
+          "oklch(27% 0.0129 37.03)",
+          "oklch(39% 0.0178 37.03)",
+          "oklch(51% 0.0198 37.03)",
+          "oklch(63% 0.0198 37.03)",
+          "oklch(75% 0.0168 37.03)",
+          "oklch(87% 0.0099 37.03)",
+          "oklch(95% 0.0040 37.03)"
+        ]
+      },
+      "light-warning": {
+        "role": "secondary",
+        "displayName": "light warning",
+        "tonalRamp": [
+          "oklch(15% 0.0252 78.45)",
+          "oklch(27% 0.0546 78.45)",
+          "oklch(39% 0.0755 78.45)",
+          "oklch(51% 0.0839 78.45)",
+          "oklch(63% 0.0839 78.45)",
+          "oklch(75% 0.0714 78.45)",
+          "oklch(87% 0.0420 78.45)",
+          "oklch(95% 0.0168 78.45)"
+        ]
+      },
+      "light-warning-bg": {
+        "role": "secondary",
+        "displayName": "light warning bg",
+        "tonalRamp": [
+          "oklch(15% 0.0085 86.65)",
+          "oklch(27% 0.0184 86.65)",
+          "oklch(39% 0.0254 86.65)",
+          "oklch(51% 0.0282 86.65)",
+          "oklch(63% 0.0282 86.65)",
+          "oklch(75% 0.0240 86.65)",
+          "oklch(87% 0.0141 86.65)",
+          "oklch(95% 0.0056 86.65)"
+        ]
+      },
+      "light-overlay": {
+        "role": "neutral",
+        "displayName": "light overlay",
+        "tonalRamp": [
+          "oklch(15% 0.0043 166.72)",
+          "oklch(27% 0.0093 166.72)",
+          "oklch(39% 0.0129 166.72)",
+          "oklch(51% 0.0143 166.72)",
+          "oklch(63% 0.0143 166.72)",
+          "oklch(75% 0.0122 166.72)",
+          "oklch(87% 0.0072 166.72)",
+          "oklch(95% 0.0029 166.72)"
+        ]
+      },
+      "video-stage": {
+        "role": "neutral",
+        "displayName": "video stage",
+        "tonalRamp": [
+          "oklch(15% 0.0025 247.26)",
+          "oklch(27% 0.0054 247.26)",
+          "oklch(39% 0.0075 247.26)",
+          "oklch(51% 0.0083 247.26)",
+          "oklch(63% 0.0083 247.26)",
+          "oklch(75% 0.0071 247.26)",
+          "oklch(87% 0.0042 247.26)",
+          "oklch(95% 0.0017 247.26)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "页面标题",
+        "purpose": "桌面30px，620px及以下27px。"
+      },
+      "prose": {
+        "displayName": "阅读正文",
+        "purpose": "准确文稿，最大72ch。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "dark-dialog",
+        "value": "0 20px 70px #0005",
+        "purpose": "夜间弹窗。"
+      },
+      {
+        "name": "light-dialog",
+        "value": "0 20px 70px #35403625",
+        "purpose": "日间弹窗。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "theme",
+        "value": "180ms ease",
+        "purpose": "主题颜色，保留输入与视频DOM。"
+      },
+      {
+        "name": "dialog-enter",
+        "value": "180ms cubic-bezier(.22,1,.36,1)",
+        "purpose": "7px纵移与.99缩放进入。"
+      },
+      {
+        "name": "drawer-enter",
+        "value": "220ms cubic-bezier(.22,1,.36,1)",
+        "purpose": "26px横移进入。"
+      },
+      {
+        "name": "dialog-close",
+        "value": "140ms ease-out",
+        "purpose": "仅淡出；键盘与减少动态效果跳过。"
+      },
+      {
+        "name": "cover-hover",
+        "value": "180ms ease",
+        "purpose": "图像opacity变为.9。"
+      },
+      {
+        "name": "keyboard",
+        "value": "0s",
+        "purpose": "CSS动画和过渡时长归零；静态:active缩放仍保留。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "none",
+        "purpose": "关闭CSS动画与过渡，滚动auto。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1550px"
+      },
+      {
+        "name": "grid-two",
+        "value": "1250px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "legacy-reader",
+        "value": "1000px"
+      },
+      {
+        "name": "previs-single",
+        "value": "950px"
+      },
+      {
+        "name": "top-nav",
+        "value": "850px"
+      },
+      {
+        "name": "legacy-small-reader",
+        "value": "720px"
+      },
+      {
+        "name": "single-task-assets",
+        "value": "650px"
+      },
+      {
+        "name": "phone",
+        "value": "620px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "主操作",
+      "kind": "button",
+      "refersTo": "button-primary-dark",
+      "description": "主操作；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<button class=\"ds-primary\">主操作</button>",
+      "css": ".ds-primary{font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif;font-size:13px;line-height:1.5;border-radius:7px;padding:8px 13px;cursor:pointer;background:var(--accent,#d0b47d);color:var(--accent-ink,#171713);border:1px solid transparent;padding:8px 13px}.ds-primary:hover{filter:brightness(1.08)}.ds-primary:active{transform:scale(.985)}.ds-primary:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}.ds-primary:disabled{opacity:.5;cursor:default}"
+    },
+    {
+      "name": "次操作",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "次操作；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<button class=\"ds-secondary\">次操作</button>",
+      "css": ".ds-secondary{font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif;font-size:13px;line-height:1.5;border-radius:7px;padding:8px 13px;cursor:pointer;background:var(--surface,#1b1e20);color:var(--ink,#eeede8);border:1px solid var(--line,#303437);padding:8px 13px}.ds-secondary:hover{background:var(--hover,#24282a)}.ds-secondary:active{transform:scale(.985)}.ds-secondary:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}.ds-secondary:disabled{opacity:.5;cursor:default}"
+    },
+    {
+      "name": "文字操作",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "文字操作；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<button class=\"ds-text\">文字操作</button>",
+      "css": ".ds-text{font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif;font-size:13px;line-height:1.5;border-radius:7px;padding:8px 13px;cursor:pointer;background:transparent;color:var(--accent,#d0b47d);border:1px solid transparent;padding:5px}.ds-text:hover{background:transparent}.ds-text:active{transform:scale(.985)}.ds-text:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}.ds-text:disabled{opacity:.5;cursor:default}"
+    },
+    {
+      "name": "输入框",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "输入框；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<label class=\"ds-field\">具体用途<input class=\"ds-input\" placeholder=\"例如：基础形象\" /></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:6px;color:var(--muted,#a2a6a8);font:12px \"Segoe UI\",\"Microsoft YaHei\",sans-serif}.ds-input{border:1px solid var(--line,#303437);border-radius:7px;padding:8px 10px;background:var(--surface,#1b1e20);color:var(--ink,#eeede8);font:14px \"Segoe UI\",\"Microsoft YaHei\",sans-serif;caret-color:var(--accent,#d0b47d)}.ds-input::placeholder{color:var(--muted,#a2a6a8);opacity:1}.ds-input:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}"
+    },
+    {
+      "name": "当前导航",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "当前导航；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><button aria-current=\"page\">项目总览</button><button>创作任务</button></nav>",
+      "css": ".ds-nav{display:grid;gap:7px}.ds-nav button{font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif;font-size:13px;line-height:1.5;border-radius:7px;padding:8px 13px;cursor:pointer;text-align:left;padding:11px 12px;border:1px solid transparent;background:transparent;color:var(--muted,#a2a6a8)}.ds-nav button[aria-current=page]{background:var(--soft,#302b21);color:var(--accent,#d0b47d);font-weight:650}.ds-nav button:hover{background:var(--hover,#24282a);border-color:var(--line,#303437)}.ds-nav button:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}.ds-nav button:active{transform:scale(.985)}"
+    },
+    {
+      "name": "语义徽标",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "语义徽标；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<span class=\"ds-badge\">候选</span> <span class=\"ds-badge ds-good\">当前采用</span> <span class=\"ds-badge ds-warn\">待核对</span>",
+      "css": ".ds-badge{display:inline-block;border-radius:5px;padding:3px 8px;font:11px/1.65 \"Segoe UI\",\"Microsoft YaHei\",sans-serif;background:var(--hover,#24282a);color:var(--muted,#a2a6a8)}.ds-good{background:var(--good-bg,#22362d);color:var(--good,#a8c7b7)}.ds-warn{background:var(--warning-bg,#332c1f);color:var(--warning,#dbc38d)}"
+    },
+    {
+      "name": "资料面板",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "资料面板；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<section class=\"ds-panel\"><h2>资料设置</h2><p>核对当前项目和准确版本。</p></section>",
+      "css": ".ds-panel{background:var(--surface,#1b1e20);color:var(--ink,#eeede8);border:1px solid var(--line,#303437);border-radius:12px;padding:22px;font:14px/1.65 \"Segoe UI\",\"Microsoft YaHei\",sans-serif}.ds-panel h2{margin:0 0 15px;font-size:17px;font-weight:600;line-height:1.45}.ds-panel p{margin:0;color:var(--muted,#a2a6a8)}"
+    },
+    {
+      "name": "准确版本阅读抽屉",
+      "kind": "custom",
+      "refersTo": "reader-drawer",
+      "description": "准确版本阅读抽屉；使用宿主主题语义变量，缺省回退为夜间。",
+      "html": "<section class=\"ds-reader\" aria-label=\"阅读抽屉外观示意\"><header><strong>准确版本阅读</strong><button class=\"ds-close\">关闭</button></header><article><p>阅读当前选择的文稿。版本、摘要与项目身份须来自真实读取结果。</p></article></section>",
+      "css": ".ds-reader{width:650px;max-width:100%;background:var(--surface,#1b1e20);color:var(--ink,#eeede8);border:1px solid var(--line,#303437);border-radius:14px 0 0 14px;box-shadow:var(--shadow,0 20px 70px #0005);font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif}.ds-reader header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line,#303437)}.ds-reader article{padding:24px 28px;font-size:15px;line-height:1.95;max-width:72ch}.ds-close{font-family:\"Segoe UI\",\"Microsoft YaHei\",sans-serif;font-size:13px;line-height:1.5;border-radius:7px;padding:8px 13px;cursor:pointer;background:var(--surface,#1b1e20);color:var(--ink,#eeede8);border:1px solid var(--line,#303437)}.ds-close:hover{background:var(--hover,#24282a)}.ds-close:focus-visible{outline:2px solid var(--accent,#d0b47d);outline-offset:3px}.ds-close:active{transform:scale(.985)}@media(max-width:620px){.ds-reader{width:100%;border-radius:0}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "安静的影视创作工作台",
+    "overview": "沿用用户已选的黑金夜间、磨砂白日间和画面优先审看方向。紧凑导航、薄边界与克制的圆角为文稿、项目画面和下一项明确决定让出空间；两种外观共享同一信息层级。\n\n这是当前开发副本的实现记录，依据 `plugin/ui/board.html` 的最终级联以及 `scripts/board2000.css`、`scripts/board2000-runtime.js`。生成入口为 `scripts/build_creator_ui.py`。设计记录不表示正式安装、发布或作品审批完成。",
+    "keyCharacteristics": [
+      "黑金与磨砂白共享布局和语义。",
+      "真实项目画面、准确文稿版本与明确确认入口。",
+      "短暂状态动效，键盘与减少动态效果优先。"
+    ],
+    "rules": [
+      {
+        "name": "The Placeholder Rule",
+        "body": "输入提示使用当前主题 `--muted`，且 `opacity:1`；不要叠加浏览器默认透明度。",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "**Do** 使用当前主题语义变量，让两种外观保持同一信息层级。",
+      "**Do** 显示真实项目素材或明确空态，并保留准确文稿身份。",
+      "**Do** 保留焦点轮廓、状态文字、返回上下文和减少动态效果支持。"
+    ],
+    "donts": [
+      "**Don't** 将金色、阅读完成或候选展示解释为正式采用。",
+      "**Don't** 用参考照片或虚构作品填充真实项目的空态。",
+      "**Don't** 把开发副本、设计文档或本地验证表述为生产安装完成。"
+    ]
+  }
+}

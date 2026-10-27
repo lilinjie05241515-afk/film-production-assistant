@@ -1,0 +1,10 @@
+{
+  "archive": "releases/stable/2.0.1/film-production-agent-2.0.1-stable.zip",
+  "archive_sha256": "8a0fbff6aed021cec30e63ceeff0dcd30e06cbaeeb3a1069f46f350883680381",
+  "channel": "stable",
+  "identity": "film-production-agent@film-production-local",
+  "manifest_sha256": "26192e54d135f9db22e1c5ec5bbf254b94b30cbd32589aebdb5f0f7b5de810e1",
+  "schema_version": 1,
+  "size": 1013332,
+  "version": "2.0.1"
+}

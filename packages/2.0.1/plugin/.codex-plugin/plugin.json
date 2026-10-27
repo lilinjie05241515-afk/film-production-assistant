@@ -1,0 +1,17 @@
+{
+  "name": "film-production-agent",
+  "version": "2.0.1",
+  "description": "影视创作助手：灵感、剧本、导演、美术、任务与素材管理",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "影视制作助手",
+    "shortDescription": "创作任务与对象素材管理",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ]
+  }
+}

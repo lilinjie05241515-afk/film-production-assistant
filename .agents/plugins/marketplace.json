@@ -12,7 +12,7 @@
         "installation": "AVAILABLE"
       },
       "source": {
-        "path": "./packages/1.17.0/plugin",
+        "path": "./packages/2.0.1/plugin",
         "source": "local"
       }
     }

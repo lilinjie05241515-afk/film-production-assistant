@@ -1,0 +1,4 @@
+interface:
+  display_name: "特效 Agent"
+  short_description: "根据小说、剧本、大纲及导演建议设计画面特效，安排 AI 视频制作"
+  default_prompt: "使用 $vfx-agent 根据我提供的小说、剧本、大纲或导演拍摄建议，逐场或逐镜提出特效建议，说明剧情依据、画面表现、触发时机与 AI 视频制作安排。"

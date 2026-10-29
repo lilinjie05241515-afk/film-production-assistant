@@ -1,0 +1,1794 @@
+{
+  "schema_version": 1,
+  "module_format_version": 1,
+  "adaptation_version": "filmprod.1",
+  "platform": "windows_macos_desktop",
+  "modules": [
+    {
+      "id": "screenwriter",
+      "entrypoint": "screenwriter/SKILL.md",
+      "content_version": "1.0.0+filmprod.1.dd9d5a98dec4",
+      "source_content_version": "1.0.0",
+      "source_digest": "be7a38a750b694f0fac4d1b41ff6e1ecff193f111918be266f3ab9a4f92aded8",
+      "sha256": "dd9d5a98dec4cff9622979fd4b789409b61a6513a6329956832eaddb827fae94",
+      "entrypoint_sha256": "e1dbb42efebc57717e98470ce293442c7c8ed8e2abcf82da17c6feca0b298629",
+      "stage_aliases": [
+        "screenwriter",
+        "story",
+        "novel",
+        "outline",
+        "character_bio",
+        "adaptation",
+        "screenplay",
+        "source_script",
+        "script",
+        "dynamic_script",
+        "novel-master",
+        "novel-to-screenplay"
+      ],
+      "source": {
+        "label": "user-authorized unified screenwriting methods with complete bundled novel and adaptation sources",
+        "paths_in_lock": "logical source references"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "screenwriter/agents/openai.yaml",
+          "sha256": "87b518269bdef12c18fe5fbe0a83155225b2990e685ce6d9aa950891d099677f",
+          "bytes": 309,
+          "source_sha256": "87b518269bdef12c18fe5fbe0a83155225b2990e685ce6d9aa950891d099677f",
+          "source_ref": "skill:screenwriter/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/agents/openai.yaml",
+          "sha256": "8f347a777252cd070f16845ab098e51878ad5e8b99b5a784a55d7d8395e45978",
+          "bytes": 325,
+          "source_sha256": "8f347a777252cd070f16845ab098e51878ad5e8b99b5a784a55d7d8395e45978",
+          "source_ref": "skill:screenwriter/methods/adaptation/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "source_ref": "skill:screenwriter/methods/adaptation/MODULE_INTEGRATION.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "ca6aa07cae8e5f9f87f3a8e36357328cbef5b714e7f6c46d5eca695e5e543647",
+          "bytes": 547,
+          "source_sha256": "ca6aa07cae8e5f9f87f3a8e36357328cbef5b714e7f6c46d5eca695e5e543647",
+          "source_ref": "skill:screenwriter/methods/adaptation/OPTIONAL_DEPENDENCIES.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/references/script-and-audit.md",
+          "sha256": "11ed7db53dbbc06eff54bcbbba76bdb882553b90c531d26b8472d6ff824d5c1a",
+          "bytes": 4669,
+          "source_sha256": "11ed7db53dbbc06eff54bcbbba76bdb882553b90c531d26b8472d6ff824d5c1a",
+          "source_ref": "skill:screenwriter/methods/adaptation/references/script-and-audit.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/references/source-and-scope.md",
+          "sha256": "3aea242ea2d1d3202f3456cb961a6d7a526dbf4bf03ca4b6deb47fea0fabec9b",
+          "bytes": 3068,
+          "source_sha256": "3aea242ea2d1d3202f3456cb961a6d7a526dbf4bf03ca4b6deb47fea0fabec9b",
+          "source_ref": "skill:screenwriter/methods/adaptation/references/source-and-scope.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/references/video-conversion.md",
+          "sha256": "249dd57974a48f35cd37b122d646db50983818edf0a35681919e29f88ebae283",
+          "bytes": 1787,
+          "source_sha256": "249dd57974a48f35cd37b122d646db50983818edf0a35681919e29f88ebae283",
+          "source_ref": "skill:screenwriter/methods/adaptation/references/video-conversion.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/adaptation/SKILL.md",
+          "sha256": "b2adeb41b10dc11fb2c67246b7d23f3481e9f096e479cc08a070224d4df82b58",
+          "bytes": 5217,
+          "source_sha256": "b2adeb41b10dc11fb2c67246b7d23f3481e9f096e479cc08a070224d4df82b58",
+          "source_ref": "skill:screenwriter/methods/adaptation/SKILL.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/agents/openai.yaml",
+          "sha256": "122fba1419b81b1c0b64e08d96ebdb4173a82b9af0b162c65d8aa52d1d7f617f",
+          "bytes": 349,
+          "source_sha256": "122fba1419b81b1c0b64e08d96ebdb4173a82b9af0b162c65d8aa52d1d7f617f",
+          "source_ref": "skill:screenwriter/methods/novel/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/project/BIBLE.md",
+          "sha256": "b4e1f81671e958fff4e8a0e64cd8faf1e73242b098fb6ae3c8ccd9912d456282",
+          "bytes": 664,
+          "source_sha256": "b4e1f81671e958fff4e8a0e64cd8faf1e73242b098fb6ae3c8ccd9912d456282",
+          "source_ref": "skill:screenwriter/methods/novel/assets/project/BIBLE.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/project/OUTLINE.md",
+          "sha256": "b95e46836ab814c370b2ec80df12fc3865f096f44989133090b77f21f5cb43e7",
+          "bytes": 663,
+          "source_sha256": "b95e46836ab814c370b2ec80df12fc3865f096f44989133090b77f21f5cb43e7",
+          "source_ref": "skill:screenwriter/methods/novel/assets/project/OUTLINE.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/project/PROJECT.md",
+          "sha256": "b1895efe3a69eebb035621e3123bdda6350239db90daddb3208a176a9b142f9e",
+          "bytes": 791,
+          "source_sha256": "b1895efe3a69eebb035621e3123bdda6350239db90daddb3208a176a9b142f9e",
+          "source_ref": "skill:screenwriter/methods/novel/assets/project/PROJECT.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/project/STATE.md",
+          "sha256": "88013655c7571684b3b7658bcfbd1c811a7b28e1dd7dbcda7c6e82d8b620b85c",
+          "bytes": 1009,
+          "source_sha256": "88013655c7571684b3b7658bcfbd1c811a7b28e1dd7dbcda7c6e82d8b620b85c",
+          "source_ref": "skill:screenwriter/methods/novel/assets/project/STATE.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/project/VOICE.md",
+          "sha256": "bb3a7ef8720507b7fbc8062355ebc3bd620a32b68060aa1a3dc535174383c3f8",
+          "bytes": 1728,
+          "source_sha256": "bb3a7ef8720507b7fbc8062355ebc3bd620a32b68060aa1a3dc535174383c3f8",
+          "source_ref": "skill:screenwriter/methods/novel/assets/project/VOICE.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/assets/system-ledger.example.json",
+          "sha256": "2e01a53d26f54f2adc3c95da5124c42109b5d0733975714eacf7ddad27e63b40",
+          "bytes": 290,
+          "source_sha256": "2e01a53d26f54f2adc3c95da5124c42109b5d0733975714eacf7ddad27e63b40",
+          "source_ref": "skill:screenwriter/methods/novel/assets/system-ledger.example.json",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "source_ref": "skill:screenwriter/methods/novel/MODULE_INTEGRATION.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+          "bytes": 441,
+          "source_sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+          "source_ref": "skill:screenwriter/methods/novel/OPTIONAL_DEPENDENCIES.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/agent-workflow.md",
+          "sha256": "d342cb01f48577fb3a107df08c351b39e59269cdb4ba135ece758894696a896d",
+          "bytes": 4519,
+          "source_sha256": "d342cb01f48577fb3a107df08c351b39e59269cdb4ba135ece758894696a896d",
+          "source_ref": "skill:screenwriter/methods/novel/references/agent-workflow.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/continuity.md",
+          "sha256": "d534b4a812848e490e261bacbd8416b86090f04d676660d1578d0a51215040c5",
+          "bytes": 2299,
+          "source_sha256": "d534b4a812848e490e261bacbd8416b86090f04d676660d1578d0a51215040c5",
+          "source_ref": "skill:screenwriter/methods/novel/references/continuity.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/controls.md",
+          "sha256": "cf643ffc81782b92a83e9f97c8b736759b7de11d41a812e3220bc666fafa5a80",
+          "bytes": 2735,
+          "source_sha256": "cf643ffc81782b92a83e9f97c8b736759b7de11d41a812e3220bc666fafa5a80",
+          "source_ref": "skill:screenwriter/methods/novel/references/controls.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/dialogue-scene.md",
+          "sha256": "5377f4d0fbc75d79cbcb5f594746ad6db454ee079aeace00ba626d9bd29556f0",
+          "bytes": 12629,
+          "source_sha256": "5377f4d0fbc75d79cbcb5f594746ad6db454ee079aeace00ba626d9bd29556f0",
+          "source_ref": "skill:screenwriter/methods/novel/references/dialogue-scene.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/form-and-style.md",
+          "sha256": "a875d545352f5026229f13fe56bdb968379157d2cd4a90c2bea43eb33b3f256c",
+          "bytes": 3747,
+          "source_sha256": "a875d545352f5026229f13fe56bdb968379157d2cd4a90c2bea43eb33b3f256c",
+          "source_ref": "skill:screenwriter/methods/novel/references/form-and-style.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/genres.md",
+          "sha256": "2442d04563199e81ae1ef0c74fd666382627413f2bd15327d6c4d130b3df4616",
+          "bytes": 2308,
+          "source_sha256": "2442d04563199e81ae1ef0c74fd666382627413f2bd15327d6c4d130b3df4616",
+          "source_ref": "skill:screenwriter/methods/novel/references/genres.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/manuscript-voice.md",
+          "sha256": "ad4aa7c236bc10bb5ee6ad7d83b289d6ff51d7f497c05cbddabb61cc92a426cf",
+          "bytes": 2162,
+          "source_sha256": "ad4aa7c236bc10bb5ee6ad7d83b289d6ff51d7f497c05cbddabb61cc92a426cf",
+          "source_ref": "skill:screenwriter/methods/novel/references/manuscript-voice.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/planning.md",
+          "sha256": "51058dacf03120c9cf5a23ed53a5254b3c0b66bc88c504fbfd832d3fd3e0e268",
+          "bytes": 3824,
+          "source_sha256": "51058dacf03120c9cf5a23ed53a5254b3c0b66bc88c504fbfd832d3fd3e0e268",
+          "source_ref": "skill:screenwriter/methods/novel/references/planning.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/review.md",
+          "sha256": "4f377686ff6874b23a6c595047a9792c261cdc820fbe2719b80ccf9f57e147b9",
+          "bytes": 4866,
+          "source_sha256": "4f377686ff6874b23a6c595047a9792c261cdc820fbe2719b80ccf9f57e147b9",
+          "source_ref": "skill:screenwriter/methods/novel/references/review.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/validation.md",
+          "sha256": "506bfc4bafb28d11102d60b41c753c5c4a5448a139a8dde4a76edd9783429643",
+          "bytes": 3264,
+          "source_sha256": "506bfc4bafb28d11102d60b41c753c5c4a5448a139a8dde4a76edd9783429643",
+          "source_ref": "skill:screenwriter/methods/novel/references/validation.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/references/web-serial-writing.md",
+          "sha256": "2ee4ff3cb4e58927d1350523931ef256fc360bcbc8551a419c6c6c5de0b267fe",
+          "bytes": 4961,
+          "source_sha256": "2ee4ff3cb4e58927d1350523931ef256fc360bcbc8551a419c6c6c5de0b267fe",
+          "source_ref": "skill:screenwriter/methods/novel/references/web-serial-writing.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/scripts/novel_tool.py",
+          "sha256": "25d681a9e2d159579383512fed80e1182dd05a41b7e8f9903c5edd9e798b5326",
+          "bytes": 9247,
+          "source_sha256": "25d681a9e2d159579383512fed80e1182dd05a41b7e8f9903c5edd9e798b5326",
+          "source_ref": "skill:screenwriter/methods/novel/scripts/novel_tool.py",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/methods/novel/SKILL.md",
+          "sha256": "97070c89eb64a60bfb64d4de3d56ed4be13a272988f59e75254dfddc3b4ff274",
+          "bytes": 7731,
+          "source_sha256": "97070c89eb64a60bfb64d4de3d56ed4be13a272988f59e75254dfddc3b4ff274",
+          "source_ref": "skill:screenwriter/methods/novel/SKILL.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/MODULE_INTEGRATION.md",
+          "sha256": "0e2a4faf46c0e19cc3cc11acd3073169a076e820d97f207d94f9c02d5e58db6d",
+          "bytes": 2343,
+          "source_sha256": "0e2a4faf46c0e19cc3cc11acd3073169a076e820d97f207d94f9c02d5e58db6d",
+          "source_ref": "skill:screenwriter/MODULE_INTEGRATION.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "42c917de32236ad9306868dc852de88397c714e3fab001df930f13c46936c8b1",
+          "bytes": 335,
+          "source_sha256": "42c917de32236ad9306868dc852de88397c714e3fab001df930f13c46936c8b1",
+          "source_ref": "skill:screenwriter/OPTIONAL_DEPENDENCIES.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/references/ai-short-drama.md",
+          "sha256": "22629c08dfadef2e52ddd97efc248505eb3534a66ad2ec2d9271b5bceef4d46b",
+          "bytes": 2978,
+          "source_sha256": "22629c08dfadef2e52ddd97efc248505eb3534a66ad2ec2d9271b5bceef4d46b",
+          "source_ref": "skill:screenwriter/references/ai-short-drama.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/references/continuity-review.md",
+          "sha256": "db26ca2a494a1e21136f02c5d0cf8ead93c3fe340d9b2cbee1217d8205a7052f",
+          "bytes": 2491,
+          "source_sha256": "db26ca2a494a1e21136f02c5d0cf8ead93c3fe340d9b2cbee1217d8205a7052f",
+          "source_ref": "skill:screenwriter/references/continuity-review.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/references/revision-and-director.md",
+          "sha256": "171af16dc73d664afbe166566386c011076b64a0ee341528e43779150b74b367",
+          "bytes": 3933,
+          "source_sha256": "171af16dc73d664afbe166566386c011076b64a0ee341528e43779150b74b367",
+          "source_ref": "skill:screenwriter/references/revision-and-director.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/references/screenplay-craft.md",
+          "sha256": "deda450f11abbf75bb673b73d58f13e5d359921ab7f43e47db681dcdbddd528a",
+          "bytes": 3607,
+          "source_sha256": "deda450f11abbf75bb673b73d58f13e5d359921ab7f43e47db681dcdbddd528a",
+          "source_ref": "skill:screenwriter/references/screenplay-craft.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        },
+        {
+          "path": "screenwriter/SKILL.md",
+          "sha256": "e1dbb42efebc57717e98470ce293442c7c8ed8e2abcf82da17c6feca0b298629",
+          "bytes": 4468,
+          "source_sha256": "e1dbb42efebc57717e98470ce293442c7c8ed8e2abcf82da17c6feca0b298629",
+          "source_ref": "skill:screenwriter/SKILL.md",
+          "adapted": false,
+          "adaptation": "unified writing module and preserved specialized methods"
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "id": "director-agent",
+      "entrypoint": "director-agent/SKILL.md",
+      "content_version": "2.1.1+filmprod.1.5f6f60c0a6df",
+      "source_content_version": "2.0.0",
+      "source_digest": "49c23f8be10085bc0fffadc2bf559b8e730926e778c7814863e82f61a9fda13e",
+      "sha256": "5f6f60c0a6dfd267a20b2a2bf50e29fb695567b006cbf0793a2ffc7e199b4e22",
+      "entrypoint_sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
+      "stage_aliases": [
+        "director"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "director-agent/agents/openai.yaml",
+          "sha256": "c02072b28cbd58bc08599c80ba4b0a37cd42816d58395865185c91eed89ce1c4",
+          "bytes": 355,
+          "source_sha256": "c02072b28cbd58bc08599c80ba4b0a37cd42816d58395865185c91eed89ce1c4",
+          "source_ref": "skill:director-agent/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/docs/导演与提示词执行Agent交接.md",
+          "sha256": "db7f683d09712f6c895e32ce98227772f838c06fbf3d52e8c3885f325268d4f4",
+          "bytes": 5469,
+          "source_sha256": "cd96bfa12d8e976400a807a1068fa959127a79ce2cf54eea6a01d3dc7ef23097",
+          "source_ref": "director-methods:docs/导演与提示词执行Agent交接.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/schemas/artifact.schema.json",
+          "sha256": "ecfdfc288df9cfeb71ab81034454d987f0389e37dc636d21a3d411e53d4f9a8e",
+          "bytes": 1474,
+          "source_sha256": "ecfdfc288df9cfeb71ab81034454d987f0389e37dc636d21a3d411e53d4f9a8e",
+          "source_ref": "director-methods:schemas/artifact.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/checkpoint.schema.json",
+          "sha256": "e589e22dc231de59f0d4982d28cabc6238e8cf55a3919a1a1739df82205d4c39",
+          "bytes": 1686,
+          "source_sha256": "e589e22dc231de59f0d4982d28cabc6238e8cf55a3919a1a1739df82205d4c39",
+          "source_ref": "director-methods:schemas/checkpoint.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/decision.schema.json",
+          "sha256": "b49793f87fb91ba6fcd1ff4800a4d8f40e9e85e8041688ba70c560f8fcc52e44",
+          "bytes": 1632,
+          "source_sha256": "b49793f87fb91ba6fcd1ff4800a4d8f40e9e85e8041688ba70c560f8fcc52e44",
+          "source_ref": "director-methods:schemas/decision.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/direction.schema.json",
+          "sha256": "c030c381c8bec750bb9064fb282bc6f4043ac1e3e6a66173c4edefb7173c8e1a",
+          "bytes": 27120,
+          "source_sha256": "c030c381c8bec750bb9064fb282bc6f4043ac1e3e6a66173c4edefb7173c8e1a",
+          "source_ref": "director-methods:schemas/direction.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/project.schema.json",
+          "sha256": "b4e62fcb2c6ef151e90f4f4ea46a91a417048ebb248bbc86e99c8c4fd3adb4f7",
+          "bytes": 572,
+          "source_sha256": "b4e62fcb2c6ef151e90f4f4ea46a91a417048ebb248bbc86e99c8c4fd3adb4f7",
+          "source_ref": "director-methods:schemas/project.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/recovery.schema.json",
+          "sha256": "878691df81ab324c185b85efb7e76624b718b17ad3c451342362ead14e4910c0",
+          "bytes": 1590,
+          "source_sha256": "878691df81ab324c185b85efb7e76624b718b17ad3c451342362ead14e4910c0",
+          "source_ref": "director-methods:schemas/recovery.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/review.schema.json",
+          "sha256": "b3608b9472ac2cacda87d4dae0a1c69d8f5e1e106c9ef08eb8bc609e68c586d2",
+          "bytes": 4247,
+          "source_sha256": "b3608b9472ac2cacda87d4dae0a1c69d8f5e1e106c9ef08eb8bc609e68c586d2",
+          "source_ref": "director-methods:schemas/review.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/shot.schema.json",
+          "sha256": "6a15ef1a6a96f36f672c1dada8a9f93b98275a461be3c922dbdb45f8f5c412e3",
+          "bytes": 4183,
+          "source_sha256": "6a15ef1a6a96f36f672c1dada8a9f93b98275a461be3c922dbdb45f8f5c412e3",
+          "source_ref": "director-methods:schemas/shot.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/submission.schema.json",
+          "sha256": "f72bbe0b2105a059c60928a25957076802adc4dc37150efe96e5606dc449303c",
+          "bytes": 1832,
+          "source_sha256": "f72bbe0b2105a059c60928a25957076802adc4dc37150efe96e5606dc449303c",
+          "source_ref": "director-methods:schemas/submission.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/sync-receipt.schema.json",
+          "sha256": "cdf4b8be950be89c8ad9dc991f721d8ee5847065fd5badb008e7ea85d7b305d4",
+          "bytes": 1011,
+          "source_sha256": "cdf4b8be950be89c8ad9dc991f721d8ee5847065fd5badb008e7ea85d7b305d4",
+          "source_ref": "director-methods:schemas/sync-receipt.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/schemas/task.schema.json",
+          "sha256": "1830c90db073571694f14fd87312440f175af5f34d04d5672bff5218415164a5",
+          "bytes": 2289,
+          "source_sha256": "1830c90db073571694f14fd87312440f175af5f34d04d5672bff5218415164a5",
+          "source_ref": "director-methods:schemas/task.schema.json",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/action-environment.md",
+          "sha256": "1cedebbfac0876c2b797f5e27f02c814b8d73c5bafe627f504b212803c59fe5f",
+          "bytes": 11832,
+          "source_sha256": "1cedebbfac0876c2b797f5e27f02c814b8d73c5bafe627f504b212803c59fe5f",
+          "source_ref": "director-methods:skills/director-orchestrator/references/action-environment.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/action-evaluation.md",
+          "sha256": "e5edbed8eba68e7f9dcf72fd429f05715ba22be21652850bcc79b059b7972719",
+          "bytes": 3320,
+          "source_sha256": "e5edbed8eba68e7f9dcf72fd429f05715ba22be21652850bcc79b059b7972719",
+          "source_ref": "director-methods:skills/director-orchestrator/references/action-evaluation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/action-impact.md",
+          "sha256": "e9f0c8b448a36e6b75e2dda6b6862a443d4c344a063ca3f9c1776bbba4a85ad9",
+          "bytes": 11458,
+          "source_sha256": "e9f0c8b448a36e6b75e2dda6b6862a443d4c344a063ca3f9c1776bbba4a85ad9",
+          "source_ref": "director-methods:skills/director-orchestrator/references/action-impact.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/action.md",
+          "sha256": "31c571df960737fb768bd76ad6f594e83f0eb1946a9f148faad339027e11d2f3",
+          "bytes": 8603,
+          "source_sha256": "31c571df960737fb768bd76ad6f594e83f0eb1946a9f148faad339027e11d2f3",
+          "source_ref": "director-methods:skills/director-orchestrator/references/action.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/clear-directing-output.md",
+          "sha256": "9ac36a929e19326e7a170eab9d88f3d27c60a415ce17c663f6b47d77842628ca",
+          "bytes": 6764,
+          "source_sha256": "9ac36a929e19326e7a170eab9d88f3d27c60a415ce17c663f6b47d77842628ca",
+          "source_ref": "director-methods:skills/director-orchestrator/references/clear-directing-output.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/comedy.md",
+          "sha256": "2927dc1937030f2df1ac2647c99f61bd3bff446f503968e1cd8492fa178b2e2a",
+          "bytes": 10660,
+          "source_sha256": "2927dc1937030f2df1ac2647c99f61bd3bff446f503968e1cd8492fa178b2e2a",
+          "source_ref": "director-methods:skills/director-orchestrator/references/comedy.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/continuity.md",
+          "sha256": "58855fc4886db3e612c6a2fd2136e3a33096d69efecb7fa38d85d4069199e60c",
+          "bytes": 1498,
+          "source_sha256": "58855fc4886db3e612c6a2fd2136e3a33096d69efecb7fa38d85d4069199e60c",
+          "source_ref": "director-methods:skills/director-orchestrator/references/continuity.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/delivery-and-routing.md",
+          "sha256": "ca967a244af5cf60243d57171b276ca7cd3396d6ac87388763a714cba8306225",
+          "bytes": 3936,
+          "source_sha256": "ca967a244af5cf60243d57171b276ca7cd3396d6ac87388763a714cba8306225",
+          "source_ref": "director-methods:skills/director-orchestrator/references/delivery-and-routing.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/directing-craft.md",
+          "sha256": "41ad6a4f91f1e4d706a31b74e5e42ce9ecb530592e5a6b2a9dd418ef665d9a8d",
+          "bytes": 8215,
+          "source_sha256": "41ad6a4f91f1e4d706a31b74e5e42ce9ecb530592e5a6b2a9dd418ef665d9a8d",
+          "source_ref": "director-methods:skills/director-orchestrator/references/directing-craft.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/family-direction.md",
+          "sha256": "ff88222b3dd2478fab4e39ea018047b27eb84d042edfb916d3a3fc857af485cf",
+          "bytes": 8722,
+          "source_sha256": "688a6dec14bc1168e7792a79cee75b13ecdebbbd565948585a0d5f4eee31f4af",
+          "source_ref": "director-methods:skills/director-orchestrator/references/family-direction.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/family-evaluation.md",
+          "sha256": "33f0c84320fe91d53d2ba9c8fcefb52f21a2d0161434bf83b7bc20c2a80cd11d",
+          "bytes": 4089,
+          "source_sha256": "33f0c84320fe91d53d2ba9c8fcefb52f21a2d0161434bf83b7bc20c2a80cd11d",
+          "source_ref": "director-methods:skills/director-orchestrator/references/family-evaluation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/family-method-cases.md",
+          "sha256": "f45b60d96700e4f8fc8adce1b4edc77c90d3f093756c922574b318cf5a947784",
+          "bytes": 18167,
+          "source_sha256": "f45b60d96700e4f8fc8adce1b4edc77c90d3f093756c922574b318cf5a947784",
+          "source_ref": "director-methods:skills/director-orchestrator/references/family-method-cases.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/film-case-method.md",
+          "sha256": "15c73dd44e6cb498204531ff3465a78fb7f29a0a06a78cf408d5a7bec209f020",
+          "bytes": 14300,
+          "source_sha256": "15c73dd44e6cb498204531ff3465a78fb7f29a0a06a78cf408d5a7bec209f020",
+          "source_ref": "director-methods:skills/director-orchestrator/references/film-case-method.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/format-adaptation.md",
+          "sha256": "253ac16d684ff468303011d3247aef6e25f6367b389688319169af66333b8edc",
+          "bytes": 11919,
+          "source_sha256": "253ac16d684ff468303011d3247aef6e25f6367b389688319169af66333b8edc",
+          "source_ref": "director-methods:skills/director-orchestrator/references/format-adaptation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/genre-routing.md",
+          "sha256": "8d9bf767f47d21fe927dbd9c51423a533a2eed20b5182520a286ea7f8427de97",
+          "bytes": 6853,
+          "source_sha256": "8d9bf767f47d21fe927dbd9c51423a533a2eed20b5182520a286ea7f8427de97",
+          "source_ref": "director-methods:skills/director-orchestrator/references/genre-routing.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/horror.md",
+          "sha256": "4a1acf00babbc4047a5a0e6a3ea98f1fcc5be8825a31c8bc36ef8c646de1b1db",
+          "bytes": 11431,
+          "source_sha256": "4a1acf00babbc4047a5a0e6a3ea98f1fcc5be8825a31c8bc36ef8c646de1b1db",
+          "source_ref": "director-methods:skills/director-orchestrator/references/horror.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/production-interface.md",
+          "sha256": "6b498017bd38984f1612b45def990952e897a5b771cd6e627945ef2e6388745a",
+          "bytes": 3666,
+          "source_sha256": "6b498017bd38984f1612b45def990952e897a5b771cd6e627945ef2e6388745a",
+          "source_ref": "director-methods:skills/director-orchestrator/references/production-interface.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/relationship.md",
+          "sha256": "4a78b97bb0902d63e91d3fb447d9d678be5f5cfc52426c480b771c81c1bd31be",
+          "bytes": 1495,
+          "source_sha256": "4a78b97bb0902d63e91d3fb447d9d678be5f5cfc52426c480b771c81c1bd31be",
+          "source_ref": "director-methods:skills/director-orchestrator/references/relationship.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/review-protocol.md",
+          "sha256": "5970685de4c05c330ebd6d7dce2ab4e6e94a27ce932e39a00af61369fbf9051c",
+          "bytes": 5900,
+          "source_sha256": "5970685de4c05c330ebd6d7dce2ab4e6e94a27ce932e39a00af61369fbf9051c",
+          "source_ref": "director-methods:skills/director-orchestrator/references/review-protocol.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/scene-forms.md",
+          "sha256": "569d54516baceeadfead0fc09df4fca3f7d67275350a656ec84766265f1aaa51",
+          "bytes": 11645,
+          "source_sha256": "569d54516baceeadfead0fc09df4fca3f7d67275350a656ec84766265f1aaa51",
+          "source_ref": "director-methods:skills/director-orchestrator/references/scene-forms.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/shot-choice-evaluation.md",
+          "sha256": "9c7e42e5e23273f0d43f8166304f9aee1f7b734311a23828b6caa06af2d544a7",
+          "bytes": 4651,
+          "source_sha256": "9c7e42e5e23273f0d43f8166304f9aee1f7b734311a23828b6caa06af2d544a7",
+          "source_ref": "director-methods:skills/director-orchestrator/references/shot-choice-evaluation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/shot-choice.md",
+          "sha256": "96c4f921b701f794582f16d24e1086a12196bccfd567cfbbed55442441abec2e",
+          "bytes": 7452,
+          "source_sha256": "a3050e7e85fae84451970e28fe45b4197696883a8a776c25c6bc252885c6b114",
+          "source_ref": "director-methods:skills/director-orchestrator/references/shot-choice.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/shot-techniques.md",
+          "sha256": "b42029f6f7911654b1045e28eb6e963545d73ef5c3a596408e881d366e48aca8",
+          "bytes": 23071,
+          "source_sha256": "b42029f6f7911654b1045e28eb6e963545d73ef5c3a596408e881d366e48aca8",
+          "source_ref": "director-methods:skills/director-orchestrator/references/shot-techniques.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/simple-start.md",
+          "sha256": "e42056c3d0ceebb05ab0e52abdba3e8fa5a08cf68f2fe392300be7c783037ffe",
+          "bytes": 1991,
+          "source_sha256": "689803bd2ba5b66eccc129d457974892c404cff6e2e28c19aada769cb9a27907",
+          "source_ref": "director-methods:skills/director-orchestrator/references/simple-start.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/state-and-recovery.md",
+          "sha256": "5c86d1d1be48aff89443714ad9c38c70b5c38414f79e29e7ee81a420a0c6c2c9",
+          "bytes": 3285,
+          "source_sha256": "3196bec24922d0b272581ccc34a386252b46e0671c0434bf5404c16478f1dd84",
+          "source_ref": "director-methods:skills/director-orchestrator/references/state-and-recovery.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/suspense.md",
+          "sha256": "ff4a624640b4d62f32a9d60192be3e77b6de06cbe4e5390cf62d5bc3e4195e54",
+          "bytes": 8076,
+          "source_sha256": "ff4a624640b4d62f32a9d60192be3e77b6de06cbe4e5390cf62d5bc3e4195e54",
+          "source_ref": "director-methods:skills/director-orchestrator/references/suspense.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/references/world-and-period.md",
+          "sha256": "3bfe981b25f847bc184cd84d51508a1e46426c5ba809a80a3802057f96e100d9",
+          "bytes": 8925,
+          "source_sha256": "3bfe981b25f847bc184cd84d51508a1e46426c5ba809a80a3802057f96e100d9",
+          "source_ref": "director-methods:skills/director-orchestrator/references/world-and-period.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/skills/director-orchestrator/SKILL.md",
+          "sha256": "ab96fcaee5cd96a92186a26d4594dbf852278aee029ee015674dd856fca1f5d6",
+          "bytes": 12395,
+          "source_sha256": "000eb8e4cfdc9c0fd083f8f87525f90a66c6bdecc8a3b24902546d1de92a5ca2",
+          "source_ref": "director-methods:skills/director-orchestrator/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/method/templates/01-treatment.md",
+          "sha256": "b361d94d278a05db09ecf67a90a21f9403782815c1c083cf4a29d7adbffd2fce",
+          "bytes": 1692,
+          "source_sha256": "b361d94d278a05db09ecf67a90a21f9403782815c1c083cf4a29d7adbffd2fce",
+          "source_ref": "director-methods:templates/01-treatment.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/02-scene-direction.md",
+          "sha256": "a6d5245505cbf86926c3ac920f118c7fef5dbbe713553c79e88fca0489d66ef9",
+          "bytes": 3438,
+          "source_sha256": "a6d5245505cbf86926c3ac920f118c7fef5dbbe713553c79e88fca0489d66ef9",
+          "source_ref": "director-methods:templates/02-scene-direction.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/03-shot-plan.md",
+          "sha256": "71ee4107303f6966b00741630418701d05844f52ea9dd075bb6ef3beb13c2441",
+          "bytes": 4048,
+          "source_sha256": "71ee4107303f6966b00741630418701d05844f52ea9dd075bb6ef3beb13c2441",
+          "source_ref": "director-methods:templates/03-shot-plan.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/04-editing-sound.md",
+          "sha256": "3c0af9b03ec1ff84cdaee7a4c4b79c9e413dec7fdabe53c48c46cfd226dac1d2",
+          "bytes": 1290,
+          "source_sha256": "3c0af9b03ec1ff84cdaee7a4c4b79c9e413dec7fdabe53c48c46cfd226dac1d2",
+          "source_ref": "director-methods:templates/04-editing-sound.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/05-production-handoff.md",
+          "sha256": "2b1f365b38224d8af7cc44c623dfd06d40574e9dee08465310c6486c45a9b78a",
+          "bytes": 2186,
+          "source_sha256": "2b1f365b38224d8af7cc44c623dfd06d40574e9dee08465310c6486c45a9b78a",
+          "source_ref": "director-methods:templates/05-production-handoff.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/06-review-revision.md",
+          "sha256": "641adee6e42ed6dfe9c6cbc03d04011d5200f6b50df9542e94d69060e6d935c9",
+          "bytes": 2078,
+          "source_sha256": "641adee6e42ed6dfe9c6cbc03d04011d5200f6b50df9542e94d69060e6d935c9",
+          "source_ref": "director-methods:templates/06-review-revision.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/action-beat-card.md",
+          "sha256": "3b9f6213b5d777dafe6254dbdceccbed4480bfceb03a931eb9460a6084218ae8",
+          "bytes": 2425,
+          "source_sha256": "3b9f6213b5d777dafe6254dbdceccbed4480bfceb03a931eb9460a6084218ae8",
+          "source_ref": "director-methods:templates/action-beat-card.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/film-case-card.md",
+          "sha256": "fb4c8cd9586746aff699774c8a6eb0166ecd55d655bda0c613f4fe6f4b3f76c4",
+          "bytes": 6027,
+          "source_sha256": "fb4c8cd9586746aff699774c8a6eb0166ecd55d655bda0c613f4fe6f4b3f76c4",
+          "source_ref": "director-methods:templates/film-case-card.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/INDEX.md",
+          "sha256": "5c1c89c08086796ce20cd6e624de27cbb5e01a3876ecbacd08379fde3a181460",
+          "bytes": 1742,
+          "source_sha256": "5c1c89c08086796ce20cd6e624de27cbb5e01a3876ecbacd08379fde3a181460",
+          "source_ref": "director-methods:templates/INDEX.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/recovery-packet.md",
+          "sha256": "4ae3d1006de0a55e94ab397af093c90f34639bb55ab4aaa98b87d9d53390d9d2",
+          "bytes": 1486,
+          "source_sha256": "4ae3d1006de0a55e94ab397af093c90f34639bb55ab4aaa98b87d9d53390d9d2",
+          "source_ref": "director-methods:templates/recovery-packet.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/reviewer-task.md",
+          "sha256": "c3b3c61b8a63948d029b8848f8623727e331ba12ddadd56646544f708d9f37e1",
+          "bytes": 1372,
+          "source_sha256": "c3b3c61b8a63948d029b8848f8623727e331ba12ddadd56646544f708d9f37e1",
+          "source_ref": "director-methods:templates/reviewer-task.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/shot-choice-note.md",
+          "sha256": "2c6f62f330e225623735cd3731fa975f931284a6e09e7a97a940fdca7475c9d8",
+          "bytes": 1352,
+          "source_sha256": "2c6f62f330e225623735cd3731fa975f931284a6e09e7a97a940fdca7475c9d8",
+          "source_ref": "director-methods:templates/shot-choice-note.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/specialist-call.md",
+          "sha256": "006652d7b124625d34e30e1642f3dd1f51af07cdce604c5f971b8826000970bb",
+          "bytes": 726,
+          "source_sha256": "006652d7b124625d34e30e1642f3dd1f51af07cdce604c5f971b8826000970bb",
+          "source_ref": "director-methods:templates/specialist-call.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/method/templates/task-packet.md",
+          "sha256": "d4a62cd4f8d3b9bf438fa4382d2b2beb20bdf5e9398d284d06885381f556261d",
+          "bytes": 1422,
+          "source_sha256": "d4a62cd4f8d3b9bf438fa4382d2b2beb20bdf5e9398d284d06885381f556261d",
+          "source_ref": "director-methods:templates/task-packet.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "director-agent/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+          "bytes": 441,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "director-agent/previs/blender_scene.py",
+          "sha256": "f1c32d9759a2ad2a70537ef21ff8fb8ae01c60acb944e2c4796171a933b1cd57",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/blender_scene.py",
+          "source_sha256": "f1c32d9759a2ad2a70537ef21ff8fb8ae01c60acb944e2c4796171a933b1cd57"
+        },
+        {
+          "path": "director-agent/previs/compose.py",
+          "sha256": "e52d3873db186ce2f529d2f80d08b32e9041e23d5ca778c701dcd64bfc233ed5",
+          "source_ref": "previs-v1-development:director-agent/previs/compose.py",
+          "source_sha256": "e52d3873db186ce2f529d2f80d08b32e9041e23d5ca778c701dcd64bfc233ed5"
+        },
+        {
+          "path": "director-agent/previs/execute.py",
+          "sha256": "5d5a84f55a4347585bd92e9c5bb2f61e846ac08487144ea36725fddd97710742",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/execute.py",
+          "source_sha256": "5d5a84f55a4347585bd92e9c5bb2f61e846ac08487144ea36725fddd97710742"
+        },
+        {
+          "path": "director-agent/previs/README.md",
+          "sha256": "72465b4540b62866f42bc2178919703fecbc7a7bd1420d1e616ed9392f4fefe6",
+          "source_ref": "macos-compatibility-2.0.1:director-agent/previs/README.md",
+          "source_sha256": "72465b4540b62866f42bc2178919703fecbc7a7bd1420d1e616ed9392f4fefe6"
+        },
+        {
+          "path": "director-agent/SKILL.md",
+          "sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
+          "bytes": 1990,
+          "source_sha256": "484414a8671888a72677b2da39a92f312c822d2126e9ff9ddce766c2ac2847e9",
+          "source_ref": "previs-v1-development:director-agent/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "id": "vfx-agent",
+      "entrypoint": "vfx-agent/SKILL.md",
+      "content_version": "1.1.0+filmprod.1.0a616f43453b",
+      "source_content_version": "1.1.0",
+      "source_digest": "2d01ac81d71b56865644dee412652487bc15c72a47e7f18147e5ee083d8a43ed",
+      "sha256": "0a616f43453b50e1ed67a7ed4478311ccc2ed47b768252e0e2c2cb089b287135",
+      "entrypoint_sha256": "46292ff577754aea904569103fe2b69a82cdd34c0e6512cee8884d4ba5ee429e",
+      "stage_aliases": [
+        "vfx"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [
+        {
+          "id": "user-local-reference-library",
+          "status": "not_bundled",
+          "required": false,
+          "license": "unknown_user_must_authorize",
+          "configuration": "explicit user-selected library entry only; no scanning"
+        }
+      ],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "vfx-agent/agents/openai.yaml",
+          "sha256": "4281ea61ed48b95e627b2fffe840a9efbd9b74e5398f82d73d824feeaa8f13ec",
+          "bytes": 375,
+          "source_sha256": "4281ea61ed48b95e627b2fffe840a9efbd9b74e5398f82d73d824feeaa8f13ec",
+          "source_ref": "skill:vfx-agent/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/references/analysis-design.md",
+          "sha256": "5f5afac5ef10de75408836cb863da2005c674392daa029182c36b74897d161de",
+          "bytes": 5061,
+          "source_sha256": "5f5afac5ef10de75408836cb863da2005c674392daa029182c36b74897d161de",
+          "source_ref": "skill:vfx-agent/references/analysis-design.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/references/image25.md",
+          "sha256": "7dd4acbd268cd47472244e58bce89faee7c956d6d4e0977e575aa60abdced607",
+          "bytes": 4868,
+          "source_sha256": "7dd4acbd268cd47472244e58bce89faee7c956d6d4e0977e575aa60abdced607",
+          "source_ref": "skill:vfx-agent/references/image25.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/references/review.md",
+          "sha256": "5b0a33dcde9e6f42c0d0bcf45d32cad162aae45f4cdf0afd848a582a016dd6e2",
+          "bytes": 3179,
+          "source_sha256": "5b0a33dcde9e6f42c0d0bcf45d32cad162aae45f4cdf0afd848a582a016dd6e2",
+          "source_ref": "skill:vfx-agent/references/review.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/references/seedance25.md",
+          "sha256": "fd93e2e11e71a68540ba62b9c0a50c4badabc399daf0d00446a0b7badf0b7c80",
+          "bytes": 5109,
+          "source_sha256": "fd93e2e11e71a68540ba62b9c0a50c4badabc399daf0d00446a0b7badf0b7c80",
+          "source_ref": "skill:vfx-agent/references/seedance25.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/references/story-to-vfx.md",
+          "sha256": "8c70097cb96010b25ed1cf250b229bd9753915b3fc5906e9d7f80333389b1c91",
+          "bytes": 6765,
+          "source_sha256": "8c70097cb96010b25ed1cf250b229bd9753915b3fc5906e9d7f80333389b1c91",
+          "source_ref": "skill:vfx-agent/references/story-to-vfx.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "vfx-agent/SKILL.md",
+          "sha256": "46292ff577754aea904569103fe2b69a82cdd34c0e6512cee8884d4ba5ee429e",
+          "bytes": 8357,
+          "source_sha256": "086e73fc574ee0c18a38995ee7b19a9cd7d91d291a83c97c308a90773ad94ddb",
+          "source_ref": "skill:vfx-agent/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "vfx-agent/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "vfx-agent/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "ca6aa07cae8e5f9f87f3a8e36357328cbef5b714e7f6c46d5eca695e5e543647",
+          "bytes": 547,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "id": "seedance-prompt",
+      "entrypoint": "seedance-prompt/SKILL.md",
+      "content_version": "3.0.0+filmprod.1.af6ee782d408",
+      "source_content_version": "3.0.0",
+      "source_digest": "0c71987f742ada2752128143790c89326e0189eb1b4e0720bc6f34d003a95433",
+      "sha256": "af6ee782d408e642e5fe9f626bc77e22b3591b9d72279d154b0c26a5b0a37ec1",
+      "entrypoint_sha256": "961249053169aeae95aaab3f9b4cd3a9ac94397e102114482f8e2562e8126ed5",
+      "stage_aliases": [
+        "asset_prompt",
+        "assets",
+        "video_prompt"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "seedance-prompt/agents/openai.yaml",
+          "sha256": "772af4409dba4d86753ccb08afc64d8c5024f2b0c9bb2a646a9a5431c29f43b6",
+          "bytes": 456,
+          "source_sha256": "772af4409dba4d86753ccb08afc64d8c5024f2b0c9bb2a646a9a5431c29f43b6",
+          "source_ref": "skill:seedance-prompt/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "seedance-prompt/references/asset-design.md",
+          "sha256": "f2f4441002b00813cf218c0cf59d003c61cf04aca4bd0b8e1366e9f7abe92773",
+          "bytes": 9069,
+          "source_sha256": "f2f4441002b00813cf218c0cf59d003c61cf04aca4bd0b8e1366e9f7abe92773",
+          "source_ref": "skill:seedance-prompt/references/asset-design.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "seedance-prompt/references/jimeng.md",
+          "sha256": "122dfc445ac2f06709456d6c030b06aceba9d3619f04157b421ab288608201b9",
+          "bytes": 5177,
+          "source_sha256": "122dfc445ac2f06709456d6c030b06aceba9d3619f04157b421ab288608201b9",
+          "source_ref": "skill:seedance-prompt/references/jimeng.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "seedance-prompt/references/output-format.md",
+          "sha256": "ec8b5812992fdff7ce9a357db1355a271bbbaa292bf4e4ce73cf7fa52d905f44",
+          "bytes": 7394,
+          "source_sha256": "ec8b5812992fdff7ce9a357db1355a271bbbaa292bf4e4ce73cf7fa52d905f44",
+          "source_ref": "skill:seedance-prompt/references/output-format.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "seedance-prompt/references/project-state.md",
+          "sha256": "56db7ad1ef4b7aa6ec2c5cd86f520c4bc00586aa114369ded95182963ae5ea82",
+          "bytes": 5633,
+          "source_sha256": "21dbbef1efe6f20bc702b59e663e0162f2770c1c6e6a68aecc0d3585099b9014",
+          "source_ref": "skill:seedance-prompt/references/project-state.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "seedance-prompt/references/prompt-methods.md",
+          "sha256": "a92939532f00869af67f9514d95b34b9a8db64f5d12e78363e7e19a616ea5f92",
+          "bytes": 11365,
+          "source_sha256": "a92939532f00869af67f9514d95b34b9a8db64f5d12e78363e7e19a616ea5f92",
+          "source_ref": "skill:seedance-prompt/references/prompt-methods.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "seedance-prompt/references/source-notes.md",
+          "sha256": "effae29d31b497414f7441f1167f59c639a155a59ff28438433d0b2f0a94a41d",
+          "bytes": 7368,
+          "source_sha256": "a7acd9e855c5e376a9473f7650b2046c3214e0405392371ad2246f25c0e27af2",
+          "source_ref": "skill:seedance-prompt/references/source-notes.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "seedance-prompt/SKILL.md",
+          "sha256": "961249053169aeae95aaab3f9b4cd3a9ac94397e102114482f8e2562e8126ed5",
+          "bytes": 12938,
+          "source_sha256": "fe8bf41bf0823d6795a03798bfa4f7d0c883cd6a21f6d86a6b93c2d0a2cd9ac1",
+          "source_ref": "skill:seedance-prompt/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "seedance-prompt/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "seedance-prompt/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "d869507c8e1cef051f54811d062b7f2c3d6c7893aa7ee50d7f1a71416d46b2a2",
+          "bytes": 441,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "id": "film-analysis",
+      "entrypoint": "film-analysis/SKILL.md",
+      "content_version": "source-24e80977d3ba+filmprod.1.c7fd77e5749d",
+      "source_content_version": null,
+      "source_digest": "24e80977d3ba80419b2b96b6c342862dac23c9908f14588973d2e510981f6252",
+      "sha256": "c7fd77e5749dccbff0e2ec80a28bedb8959afc352dabb1e811b980c6804665d6",
+      "entrypoint_sha256": "58d4cbb1854548befcd4ee8f0719400b353a3642fba355af4c78eb4325c24afd",
+      "stage_aliases": [
+        "research",
+        "style_research"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [
+        {
+          "id": "user-local-reference-library",
+          "status": "not_bundled",
+          "required": false,
+          "license": "unknown_user_must_authorize",
+          "configuration": "explicit user-selected library entry only; no scanning"
+        },
+        {
+          "id": "feng-guo-da-ze-perspective",
+          "status": "not_bundled",
+          "required": false,
+          "license": "redistribution_not_verified",
+          "fallback": "complete native evidence, report and prompt methods remain available"
+        },
+        {
+          "id": "libretv-compatible-site",
+          "status": "adapter_bundled_not_configured",
+          "required": false,
+          "license": "site_and_media_rights_unknown",
+          "runtime": [
+            "Node.js",
+            "Playwright",
+            "Microsoft Edge",
+            "Windows DPAPI"
+          ],
+          "configuration": {
+            "origin": null,
+            "credential_path": null,
+            "profile_directory": null,
+            "node_modules_directory": null
+          },
+          "fallback": "host browser tools or authorized user-provided local video"
+        }
+      ],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "film-analysis/agents/openai.yaml",
+          "sha256": "e9820f0b2cc1fd4411d7ca28f581eafaf0626ec1784246fe7e3c2c71893b59d9",
+          "bytes": 368,
+          "source_sha256": "e9820f0b2cc1fd4411d7ca28f581eafaf0626ec1784246fe7e3c2c71893b59d9",
+          "source_ref": "skill:film-analysis/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "film-analysis/references/close-reading.md",
+          "sha256": "6c44080f4ab7ee32548a9821f76553d87c766fe375c8e5395a66e670849e6606",
+          "bytes": 3895,
+          "source_sha256": "6c44080f4ab7ee32548a9821f76553d87c766fe375c8e5395a66e670849e6606",
+          "source_ref": "skill:film-analysis/references/close-reading.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "film-analysis/references/evidence.md",
+          "sha256": "ec1d83144e896c76b8b4c8a0c966e6f339b0526e13be4540d77a3d8a3f455c34",
+          "bytes": 7769,
+          "source_sha256": "ec1d83144e896c76b8b4c8a0c966e6f339b0526e13be4540d77a3d8a3f455c34",
+          "source_ref": "skill:film-analysis/references/evidence.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "film-analysis/references/library.md",
+          "sha256": "eba13b821d0976711a2dc136188631f033bfaa18eaa4e31fb8abe2b29e1435dd",
+          "bytes": 3185,
+          "source_sha256": "19ff677f652376ce41d6f13d039337862a557466d3dabbbd5a6c7db0963034a7",
+          "source_ref": "skill:film-analysis/references/library.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "film-analysis/references/luoxiaoji-tv.md",
+          "sha256": "5e2d33bb042d59deb764b54e575deeda9a81285247659fe1c1dd02945d8e2c3b",
+          "bytes": 1783,
+          "source_sha256": "2c2e2b2f5565cfe405805bbcdbe3fa32b973f3746c796b111ad7977c16c45535",
+          "source_ref": "skill:film-analysis/references/luoxiaoji-tv.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "film-analysis/references/prompts.md",
+          "sha256": "fc0557fff275bfe7c94b1514874d3f9c0eae36137e1a428f62ec93ae587973e5",
+          "bytes": 6516,
+          "source_sha256": "fc0557fff275bfe7c94b1514874d3f9c0eae36137e1a428f62ec93ae587973e5",
+          "source_ref": "skill:film-analysis/references/prompts.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "film-analysis/references/report.md",
+          "sha256": "63abdca635c6cc4890782372d55b4f00565c933714ad81dee0c8f1a8983f4efc",
+          "bytes": 6164,
+          "source_sha256": "63abdca635c6cc4890782372d55b4f00565c933714ad81dee0c8f1a8983f4efc",
+          "source_ref": "skill:film-analysis/references/report.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "film-analysis/scripts/site_browser.cjs",
+          "sha256": "2308866ab931883354a2530bf7a41ffaa0ea3d53ead8ee4f105e01429eab95b9",
+          "bytes": 3819,
+          "source_sha256": "c2271e99f44f97ba8e75781db24e089ca85839fa405bb5a47d9dfce2466cf880",
+          "source_ref": "skill:film-analysis/scripts/luoxiaoji_browser.cjs",
+          "adapted": true,
+          "adaptation": "explicit origin/profile/dependency configuration; existing browser verification retained"
+        },
+        {
+          "path": "film-analysis/scripts/open_site.ps1",
+          "sha256": "dab6fe574927ed32a9aeb8012fa6d0403de554818c782c616c0733e68bc9d902",
+          "bytes": 1186,
+          "source_sha256": "a4d209b49d49dc5371f787df39882ac378cfeba09f1fdf8e1c6ec6b4a708c8ba",
+          "source_ref": "skill:film-analysis/scripts/open_luoxiaoji.ps1",
+          "adapted": true,
+          "adaptation": "explicit user config; no author origin, credential or profile; UTF-8 BOM for Windows PowerShell 5.1"
+        },
+        {
+          "path": "film-analysis/scripts/save_site_credential.ps1",
+          "sha256": "11bb6600a88be673341f80028685193bb28f579b9850a71974c4fecb9cbe1b0b",
+          "bytes": 1447,
+          "source_sha256": "6a7018ce708d9da518bf6a791d87eae824cabf2ff7ff8f9226a94e96d5d7464a",
+          "source_ref": "skill:film-analysis/scripts/save_luoxiaoji_credential.ps1",
+          "adapted": true,
+          "adaptation": "parameterized origin, explicit username and separate credential location; UTF-8 BOM for Windows PowerShell 5.1"
+        },
+        {
+          "path": "film-analysis/SKILL.md",
+          "sha256": "58d4cbb1854548befcd4ee8f0719400b353a3642fba355af4c78eb4325c24afd",
+          "bytes": 8192,
+          "source_sha256": "fd68f7ecde52df3cf3665fa50c8c0de04d4271182fda6e46dcdefb8b8083d2a7",
+          "source_ref": "skill:film-analysis/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "film-analysis/MODULE_INTEGRATION.md",
+          "sha256": "1f0de0e4c830e332c1d7dacd80fb421ac78afff6d3e3713cfcef841ce20e4e7d",
+          "bytes": 2666,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "film-analysis/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "d4541ccb8bdbf404ecdcced77eed45339e701d41f4ec292d8befb7512e1fe0bc",
+          "bytes": 775,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "id": "idea-explorer",
+      "entrypoint": "idea-explorer/SKILL.md",
+      "content_version": "source-2e7cc8a035fa+filmprod.1.90f5052fe567",
+      "source_content_version": null,
+      "source_digest": "2e7cc8a035fad131be3c21e8cb40b14cdd306418eea3fcbd26ca153d1bcf9123",
+      "sha256": "90f5052fe567db5bec310dfa7d8c06d16d06ec9a89fd4059aa49ea25579cf252",
+      "entrypoint_sha256": "7221dff7348dca0755164d1d959bf212980492812ec0d6a3c236c8e5d10987c6",
+      "stage_aliases": [
+        "idea",
+        "ideation"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [
+        {
+          "id": "explicit-external-idea-store",
+          "status": "tool_bundled_no_default_store",
+          "required": false,
+          "license": "user_data_permission_required",
+          "configuration": "explicit absolute --root only; never a managed Registry project or installed source",
+          "fallback": "pure chat exploration without persistence; planning.record/read inside explicit managed project",
+          "disabled_operations": [
+            "implicit_config",
+            "create_project_record",
+            "promote_to_second_project_store"
+          ]
+        }
+      ],
+      "persistence": "unified_registry_in_projects; explicit_external_idea_store_only",
+      "files": [
+        {
+          "path": "idea-explorer/agents/openai.yaml",
+          "sha256": "4c157071cd30976b432bfadc22bf8f2a23c0b7f6b882a033eef141479b317e64",
+          "bytes": 287,
+          "source_sha256": "4c157071cd30976b432bfadc22bf8f2a23c0b7f6b882a033eef141479b317e64",
+          "source_ref": "skill:idea-explorer/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "idea-explorer/assets/validation-card.md",
+          "sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+          "bytes": 702,
+          "source_sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+          "source_ref": "skill:idea-explorer/assets/validation-card.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "idea-explorer/references/app-development.md",
+          "sha256": "f2c720ee1b8df13ceb91a648073cfd15a3b96a797fe6b64aee588b043bb267df",
+          "bytes": 1114,
+          "source_sha256": "f2c720ee1b8df13ceb91a648073cfd15a3b96a797fe6b64aee588b043bb267df",
+          "source_ref": "skill:idea-explorer/references/app-development.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "idea-explorer/references/content-production.md",
+          "sha256": "5521a294877cf4e532704c7147972c969a00a6d5a755793fcdc1a44f158a52e5",
+          "bytes": 1737,
+          "source_sha256": "7e55b6ff0ce758013a4f542fcc8b97c32a7debaca1f17cff0fb3154c9f67baea",
+          "source_ref": "skill:idea-explorer/references/content-production.md",
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
+        },
+        {
+          "path": "idea-explorer/references/exploration.md",
+          "sha256": "6cd62d7f1183336e3bb4a9359fca922256856300283e8b045611d21b69b34cb0",
+          "bytes": 5196,
+          "source_sha256": "ef64f43f94fcd4cf54a45d91797d1175038673a1cc1d4478bab292ed5d022707",
+          "source_ref": "skill:idea-explorer/references/exploration.md",
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
+        },
+        {
+          "path": "idea-explorer/references/storage.md",
+          "sha256": "f9690d2285de1e9182a9197e23338659e119025f467b4a90e5292b088beacc05",
+          "bytes": 18259,
+          "source_sha256": "79ab1e9963bdd0a45ad2b3d39e20a5636b770f0745ab9dfdb2b37f95a0d84a97",
+          "source_ref": "skill:idea-explorer/references/storage.md",
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
+        },
+        {
+          "path": "idea-explorer/references/validation.md",
+          "sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+          "bytes": 1976,
+          "source_sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+          "source_ref": "skill:idea-explorer/references/validation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "idea-explorer/scripts/records.py",
+          "sha256": "ad377a78bde64105593ae5c2d343f75057e45badc59655e1e7eb5419084bcfe5",
+          "bytes": 36771,
+          "source_sha256": "907e6b5c2309aea64ecf352fc0ca5545d227af696caf58ba1732624944531daa",
+          "source_ref": "skill:idea-explorer/scripts/records.py",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "idea-explorer/SKILL.md",
+          "sha256": "7221dff7348dca0755164d1d959bf212980492812ec0d6a3c236c8e5d10987c6",
+          "bytes": 6057,
+          "source_sha256": "9dd1f0968b05c7422dccb829b34545f7d544a99b625cdd88f73ce3c64e47a3c0",
+          "source_ref": "skill:idea-explorer/SKILL.md",
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
+        },
+        {
+          "path": "idea-explorer/MODULE_INTEGRATION.md",
+          "sha256": "d61a9f101ea19a66d009abefa4604ac596ba1f5df5d8cea2e2df856722cd294d",
+          "bytes": 4442,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
+        },
+        {
+          "path": "idea-explorer/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "6110f4190d5ad90d7d3e1b260397497b43537102612325c444cc25585f950fa2",
+          "bytes": 567,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": [
+        {
+          "path": "scripts/store-config.json",
+          "source_sha256": "79ed3ff25f280eda8fedd6f249c65e19361e2843fe070b56656e87352ecb25a1",
+          "reason": "private external store pointer; not copied or dereferenced; explicit --root required"
+        }
+      ]
+    },
+    {
+      "id": "requirements-planner",
+      "entrypoint": "requirements-planner/SKILL.md",
+      "content_version": "source-503a28fb27cf+filmprod.1.8b75ad35b9c6",
+      "source_content_version": null,
+      "source_digest": "503a28fb27cf8da28ce49eb0f0fd93b53b270adc5892670022ef7d06d526180c",
+      "sha256": "8b75ad35b9c64ff92ed35dba94d29ad6c792ce1f18f5125b119f558559ab3eb5",
+      "entrypoint_sha256": "80c92681f86e2fa33cb3762dd4c73067432e971780e274645ec88771904f5f6e",
+      "stage_aliases": [
+        "requirements",
+        "planning"
+      ],
+      "source": {
+        "label": "user-provided professional skill and explicit method dependencies",
+        "paths_in_lock": "logical source references; developer source mapping supplied separately"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [
+        {
+          "id": "explicit-external-idea-store",
+          "status": "tool_bundled_no_default_store",
+          "required": false,
+          "license": "user_data_permission_required",
+          "configuration": "explicit absolute --root only; never a managed Registry project or installed source",
+          "fallback": "pure chat exploration without persistence; planning.record/read inside explicit managed project",
+          "disabled_operations": [
+            "implicit_config",
+            "create_project_record",
+            "promote_to_second_project_store"
+          ]
+        }
+      ],
+      "persistence": "unified_registry_in_projects; explicit_external_idea_store_only",
+      "files": [
+        {
+          "path": "requirements-planner/agents/openai.yaml",
+          "sha256": "ef460dcec6c5f4502999f4240046e43cc3dfda8fdf88eff4867df57aaa4426d3",
+          "bytes": 300,
+          "source_sha256": "ef460dcec6c5f4502999f4240046e43cc3dfda8fdf88eff4867df57aaa4426d3",
+          "source_ref": "skill:requirements-planner/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/assets/plan.md",
+          "sha256": "759f0dd789573824890ee2b892ec52f164a67f70590e3ea40ea12f1a65dd08d3",
+          "bytes": 1066,
+          "source_sha256": "759f0dd789573824890ee2b892ec52f164a67f70590e3ea40ea12f1a65dd08d3",
+          "source_ref": "skill:requirements-planner/assets/plan.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/assets/validation-card.md",
+          "sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+          "bytes": 702,
+          "source_sha256": "dcacb75a312181c98f27d0b3c90fdf3da0933d85ada4e95f3a08f0a65bcae113",
+          "source_ref": "skill:requirements-planner/assets/validation-card.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/references/app-development.md",
+          "sha256": "96b4b5498c27d4c4274ed353549276a6c812d80d039243a05fa1cbc49859c341",
+          "bytes": 1730,
+          "source_sha256": "96b4b5498c27d4c4274ed353549276a6c812d80d039243a05fa1cbc49859c341",
+          "source_ref": "skill:requirements-planner/references/app-development.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/references/clarification.md",
+          "sha256": "0495d10f640be2cc4b3fc87de5b90c19a65ba82d6fc81b78386269006373f603",
+          "bytes": 2194,
+          "source_sha256": "0495d10f640be2cc4b3fc87de5b90c19a65ba82d6fc81b78386269006373f603",
+          "source_ref": "skill:requirements-planner/references/clarification.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/references/content-production.md",
+          "sha256": "8e1e1f5b948c08d1cde54b0860b63bc0f88c696038e8eea419fbaeee9e15df6e",
+          "bytes": 1658,
+          "source_sha256": "8e1e1f5b948c08d1cde54b0860b63bc0f88c696038e8eea419fbaeee9e15df6e",
+          "source_ref": "skill:requirements-planner/references/content-production.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/references/storage.md",
+          "sha256": "19daa2a36bc9aca83e55ac5a6f8425715b362587307a91847d2e5fe39d41fa63",
+          "bytes": 14622,
+          "source_sha256": "79ab1e9963bdd0a45ad2b3d39e20a5636b770f0745ab9dfdb2b37f95a0d84a97",
+          "source_ref": "skill:requirements-planner/references/storage.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "requirements-planner/references/validation.md",
+          "sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+          "bytes": 1976,
+          "source_sha256": "9f27a0be6aa9d4a11409bd3ff883823070231d41960acd00501eaa6ff0d236b7",
+          "source_ref": "skill:requirements-planner/references/validation.md",
+          "adapted": false,
+          "adaptation": "unchanged"
+        },
+        {
+          "path": "requirements-planner/scripts/records.py",
+          "sha256": "ad377a78bde64105593ae5c2d343f75057e45badc59655e1e7eb5419084bcfe5",
+          "bytes": 36771,
+          "source_sha256": "907e6b5c2309aea64ecf352fc0ca5545d227af696caf58ba1732624944531daa",
+          "source_ref": "skill:requirements-planner/scripts/records.py",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "requirements-planner/SKILL.md",
+          "sha256": "80c92681f86e2fa33cb3762dd4c73067432e971780e274645ec88771904f5f6e",
+          "bytes": 4838,
+          "source_sha256": "bd9486f826e260899ae30f468c4710b86fa4be67f40ced1addfb39853b8cb2c6",
+          "source_ref": "skill:requirements-planner/SKILL.md",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "requirements-planner/MODULE_INTEGRATION.md",
+          "sha256": "200b325a8e2ad948045797fed8ff27e4a1aca61f167e05b1149cc08f32911982",
+          "bytes": 3396,
+          "source_sha256": null,
+          "source_ref": "release:integration-contract",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        },
+        {
+          "path": "requirements-planner/OPTIONAL_DEPENDENCIES.md",
+          "sha256": "6110f4190d5ad90d7d3e1b260397497b43537102612325c444cc25585f950fa2",
+          "bytes": 567,
+          "source_sha256": null,
+          "source_ref": "release:dependency-policy",
+          "adapted": true,
+          "adaptation": "portable paths and unified persistence"
+        }
+      ],
+      "excluded": [
+        {
+          "path": "scripts/store-config.json",
+          "source_sha256": "79ed3ff25f280eda8fedd6f249c65e19361e2843fe070b56656e87352ecb25a1",
+          "reason": "private external store pointer; not copied or dereferenced; explicit --root required"
+        }
+      ]
+    },
+    {
+      "id": "film-art-director",
+      "entrypoint": "film-art-director/SKILL.md",
+      "content_version": "1.0.0+filmprod.1.31de8c1c0c48",
+      "source_content_version": "1.0.0",
+      "source_digest": "320c4eeab6f42ff08d6e203dc64647099b73a258128c6485e3f55a83a57b4e6e",
+      "sha256": "31de8c1c0c48af713fd3e0f9369b4f13fafd337a4eb043da7a4bae868bcc74a5",
+      "entrypoint_sha256": "29edf2e24976b5fedb4d93ea062babbdd11050871d43f9e766dfa07a10b0d960",
+      "stage_aliases": [
+        "art",
+        "art_director",
+        "style"
+      ],
+      "source": {
+        "label": "first release authored for user-authorized film art direction upgrade",
+        "paths_in_lock": "logical release-authored references"
+      },
+      "distribution": {
+        "scope": "public_repository_user_authorized",
+        "upstream_license": "not_declared",
+        "public_redistribution": "user_authorized_download_and_use; upstream_license_not_verified",
+        "previous_distribution": {
+          "scope": "user_authorized_private_installation",
+          "upstream_license": "not_declared",
+          "public_redistribution": "not_verified"
+        }
+      },
+      "dependency_status": "required_method_files_bundled",
+      "optional_dependencies": [],
+      "persistence": "unified_filmprod_registry_only",
+      "files": [
+        {
+          "path": "film-art-director/agents/openai.yaml",
+          "sha256": "0057837e04d69fc22a454fe38b33dadcdc25aa41b52df4acc72a5c7c6b1244fc",
+          "bytes": 271,
+          "source_sha256": "0057837e04d69fc22a454fe38b33dadcdc25aa41b52df4acc72a5c7c6b1244fc",
+          "source_ref": "release-authored:film-art-director/agents/openai.yaml",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        },
+        {
+          "path": "film-art-director/MODULE_INTEGRATION.md",
+          "sha256": "be6c93f00a451e6f6255624a1786bd8e225cc0ade6376f81ff970008805b5345",
+          "bytes": 1949,
+          "source_sha256": "be6c93f00a451e6f6255624a1786bd8e225cc0ade6376f81ff970008805b5345",
+          "source_ref": "release-authored:film-art-director/MODULE_INTEGRATION.md",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        },
+        {
+          "path": "film-art-director/references/reference-research.md",
+          "sha256": "db5a27af651487eb05b03c61728dbab22c883d86d71222829addfd81e3d36c63",
+          "bytes": 3754,
+          "source_sha256": "db5a27af651487eb05b03c61728dbab22c883d86d71222829addfd81e3d36c63",
+          "source_ref": "release-authored:film-art-director/references/reference-research.md",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        },
+        {
+          "path": "film-art-director/references/review-coordination.md",
+          "sha256": "1c72513987abf6f8c3d4c14eddcccc683dab98b431405dda396d08e605b26674",
+          "bytes": 3878,
+          "source_sha256": "1c72513987abf6f8c3d4c14eddcccc683dab98b431405dda396d08e605b26674",
+          "source_ref": "release-authored:film-art-director/references/review-coordination.md",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        },
+        {
+          "path": "film-art-director/references/visual-development.md",
+          "sha256": "d5381451c48651db4b6000bb984a1f023cd0ad6bc6831bb55e11085441692792",
+          "bytes": 5143,
+          "source_sha256": "d5381451c48651db4b6000bb984a1f023cd0ad6bc6831bb55e11085441692792",
+          "source_ref": "release-authored:film-art-director/references/visual-development.md",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        },
+        {
+          "path": "film-art-director/SKILL.md",
+          "sha256": "29edf2e24976b5fedb4d93ea062babbdd11050871d43f9e766dfa07a10b0d960",
+          "bytes": 4940,
+          "source_sha256": "29edf2e24976b5fedb4d93ea062babbdd11050871d43f9e766dfa07a10b0d960",
+          "source_ref": "release-authored:film-art-director/SKILL.md",
+          "adapted": false,
+          "adaptation": "original_first_release"
+        }
+      ],
+      "excluded": []
+    }
+  ],
+  "music_generation": "not_implemented",
+  "brainstorm_provider": "not_connected"
+}

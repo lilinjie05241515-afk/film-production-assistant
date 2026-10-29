@@ -1,0 +1,4 @@
+interface:
+  display_name: "影视资产与视频提示词 Agent"
+  short_description: "筛选剧本主要资产、逐项设计三套参考图提示词，并承接选用版本编写即梦视频提示词"
+  default_prompt: "使用 $seedance-prompt，按我的任务筛选剧本主要人物、场景和道具，为需要设计的每项资产给三套方向与可复制参考图提示词，或承接已选资产编写纯正文的即梦视频提示词。"

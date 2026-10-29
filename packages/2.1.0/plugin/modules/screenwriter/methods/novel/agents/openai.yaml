@@ -1,0 +1,4 @@
+interface:
+  display_name: "小说创作 Agent"
+  short_description: "按题材、文体与篇幅创作短篇、长篇和连载，并核查修订"
+  default_prompt: "Use $novel-master 先按我的题材、文体、篇幅和原稿选择写法，再完成小说任务；需要稳定出稿时执行写作、核查、独立读稿与定向修订。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "影视开发制作总控"
+  short_description: "统筹编剧、美术与导演协作，按准确版本接续完整正文、视觉基准和制作提示词"
+  default_prompt: "使用 $film-production-agent，恢复当前聊天已绑定作品，读取当前意图、创作阶段和精确版本；灵感与需求可独立进入，未绑定时不自动立项。"

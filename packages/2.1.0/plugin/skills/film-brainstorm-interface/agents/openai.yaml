@@ -1,0 +1,4 @@
+interface:
+  display_name: "影视头脑风暴接口"
+  short_description: "准备精确版本创作输入与后续接入交接包；当前接口尚未连接生成能力"
+  default_prompt: "使用 $film-brainstorm-interface，为当前已明确项目准备头脑风暴输入交接包，保留未知项并说明尚未接入生成。"

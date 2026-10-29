@@ -1,0 +1,4 @@
+interface:
+  display_name: "灵感探索与创意碰撞"
+  short_description: "探索真正不同的创意方向，碰撞取舍并可靠保留分支与决定"
+  default_prompt: "使用 $idea-explorer 和我探索这个想法，挑战关键假设并保留有价值的不同方向。"

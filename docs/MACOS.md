@@ -1,17 +1,17 @@
 # 在 Mac 安装影视制作助手
 
-2.0.2 提供 macOS 安装与运行适配，与 Windows 使用同一发行 ZIP。插件需要支持本地执行和本地插件的 Codex／ChatGPT 桌面客户端、Python 3.11+ 及其 sqlite3。请先确认目标 Mac 能运行所选客户端；插件脚本的兼容性不代表所有旧款 Mac 都能运行该客户端。
+2.1.0 提供 macOS 安装与运行适配，与 Windows 使用同一发行 ZIP。插件需要支持本地执行和本地插件的 Codex／ChatGPT 桌面客户端、Python 3.11+ 及其 sqlite3。请先确认目标 Mac 能运行所选客户端；插件脚本的兼容性不代表所有旧款 Mac 都能运行该客户端。
 
 本页在源码中位于 `docs/`，在发行 ZIP 中位于 `plugin/docs/`。下方命令均从**完整解压后的发行 ZIP 根目录**执行；完整安装、升级和恢复规则在该根目录的 `release/installer-guide.md`。
 
 ## 下载与核验
 
-从 [GitHub Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) 下载 `film-production-agent-2.0.2-stable.zip`、同名 `.zip.sha256` 和 `.release.json`。GitHub 自动附带的 `Source code (zip)` 是源码快照，请选择发行附件。
+从 [GitHub Releases](https://github.com/lilinjie05241515-afk/film-production-assistant/releases/latest) 下载 `film-production-agent-2.1.0-stable.zip`、同名 `.zip.sha256` 和 `.release.json`。GitHub 自动附带的 `Source code (zip)` 是源码快照，请选择发行附件。
 
 打开 Terminal，按文件实际位置调整以下路径。双引号保留空格与中文路径，`$HOME` 会展开为当前用户目录：
 
 ```sh
-film_package="$HOME/Downloads/film-production-agent-2.0.2-stable.zip"
+film_package="$HOME/Downloads/film-production-agent-2.1.0-stable.zip"
 film_expected="$(awk '{print $1; exit}' "$film_package.sha256")"
 film_actual="$(shasum -a 256 "$film_package" | awk '{print $1}')"
 if [ "$film_actual" != "$film_expected" ]; then
@@ -53,7 +53,7 @@ bash release/bootstrap.sh host-plan --app-root "$film_app"
 
 通过目标桌面客户端的插件管理接入 `host-plan` 返回的 marketplace 路径，安装 `film-production-agent@film-production-local`。如果客户端附带 CLI 的实际帮助支持 marketplace 命令，也可使用该 CLI 添加此目录；具体入口以目标客户端当前功能为准，不套用 Windows 的可执行文件路径。
 
-接入后新开工作对话，核实 `film_health.version=2.0.2`、`runtime_isolated=true` 和八个模块校验结果，再打开看板检查文稿与素材展示。安装器检查通过不代表客户端已经加载插件；原生面板的显示和操作仍在该 Mac 上验证。
+接入后新开工作对话，核实 `film_health.version=2.1.0`、`runtime_isolated=true` 和八个模块校验结果，再打开看板检查文稿与素材展示。安装器检查通过不代表客户端已经加载插件；原生面板的显示和操作仍在该 Mac 上验证。
 
 ## 图片、视频与音频
 
@@ -93,7 +93,7 @@ bash release/bootstrap.sh env
 bash release/bootstrap.sh check-update --app-root "$film_app" --package "$film_package"
 bash release/bootstrap.sh stage --package "$film_package" \
   --app-root "$film_app" --data-root "$film_data" --config-root "$film_config"
-bash release/bootstrap.sh switch --app-root "$film_app" --version '2.0.2' --quiescent
+bash release/bootstrap.sh switch --app-root "$film_app" --version '2.1.0' --quiescent
 bash release/bootstrap.sh host-plan --app-root "$film_app"
 ```
 

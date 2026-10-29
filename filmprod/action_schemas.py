@@ -81,6 +81,22 @@ ACTION_TO_TOOL = {"task.create": "film_task_create", "task.checkpoint": "film_dr
 
 
 def action_help(action):
+    if action in {"planning.record", "planning.read"}:
+        from .exploration2100 import exploration_help
+        exploration = exploration_help()
+        read_schema = obj({"expected_project_id": TEXT, "record_id": TEXT, "version": VERSION,
+                           "since_version": BASE_VERSION, "limit": {"type": "integer", "minimum": 1, "maximum": 100}},
+                          ("expected_project_id", "record_id"))
+        write_schema = obj({**WRITE, "record_id": TEXT, "scope": TEXT, "base_version": BASE_VERSION,
+                            "deps": REFS, "change": {"type": "object", "properties": {
+                                "exploration": exploration["command_schema"]}, "additionalProperties": True,
+                                "description": "Existing incremental planning change. Creation requires record_kind and title; append/set/item_updates/entries remain supported. Managed exploration transitions use this one field."}},
+                           (*WRITE, "record_id", "scope", "base_version", "change"))
+        return {"action": action, "inputSchema": write_schema if action == "planning.record" else read_schema,
+                "read_only": True, "executed": False, "preferred_tool": "film_dispatch",
+                "call_shape": "film_dispatch takes root, full action and payload. Read exact record/version before writing against base_version.",
+                "example_only": True, "exploration": exploration,
+                "note": "This help is non-executing. A stored branch selection does not authorize production, messages or approval. Legacy planning records are not migrated by reading."}
     if action.startswith("conversation."):
         from .conversations1170 import action_schemas as conversation_schemas
         schema = conversation_schemas().get(action)
@@ -136,7 +152,7 @@ def tool_definitions(root_schema):
                             {"required": ["source_path", "expected_file_sha256"], "not": {"required": ["draft"]}}]), root_schema)
     entries = [
         ("film_context", "Read compact project context, latest task draft or one exact artifact. Choose only the needed mode. Read-only registry: never initializes or migrates a project.", context, True),
-        ("film_action_help", "Read the supported recommended parameter schema and, when provided, a synthetic example for a creative or conversation action. This executes nothing and needs no project; use instead of reading implementation code.", obj({"action": {"type": "string", "enum": list(ACTION_SCHEMAS) + list(screenwriting_schemas) + list(conversation_schemas)}}, ("action",)), True),
+        ("film_action_help", "Read the supported recommended parameter schema and, when provided, a synthetic example for a creative, planning or conversation action. This executes nothing and needs no project; use instead of reading implementation code.", obj({"action": {"type": "string", "enum": list(ACTION_SCHEMAS) + list(screenwriting_schemas) + list(conversation_schemas) + ["planning.record", "planning.read"]}}, ("action",)), True),
         ("film_task_create", "Create a scoped creative task with exact inputs and an execution lock. Returns a compact receipt; does not create chats, approve or generate prose. Resolve module with film_modules first.", with_root(ACTION_SCHEMAS["task.create"], root_schema), False),
         ("film_draft_save", "Checkpoint a full draft once, either inline draft OR project-relative source_path plus expected_file_sha256. Returns checkpoint_id/draft_sha256 without echoing prose. Same request retries preserve op_id and all fields.", draft, False),
         ("film_draft_submit", "Submit the task's exact latest checkpoint as a new candidate without resending the draft. Requires checkpoint_id/hash and current base_version; all execution-lock, input and scope checks remain. Does not approve.", with_root(ACTION_SCHEMAS["task.submit_checkpoint"], root_schema), False),

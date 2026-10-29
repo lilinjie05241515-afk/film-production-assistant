@@ -11,6 +11,19 @@ import hashlib
 import json
 
 SETTINGS_KEY = "conversation/v1"
+# Explicit duties, not semantic classification of user prose. Host/core routes
+# remain finite and do not claim a bundled professional method exists.
+ROLE_MODULES = {
+    "planning": {"idea", "idea-explorer", "requirements", "requirements-planner"},
+    "script": {"screenwriter", "outline", "character_bio", "screenplay", "script", "source_script",
+               "dynamic_script", "original-screenplay", "adaptation", "novel-to-screenplay"},
+    "novel": {"screenwriter", "outline", "character_bio", "story", "novel", "novel-master"},
+    "director": {"director", "director-agent", "vfx", "vfx-agent"},
+    "art": {"art", "style", "art_director", "film-art-director", "research", "film-analysis"},
+    "assets": {"asset", "asset_prompt", "assets", "seedance-prompt", "video_prompt"},
+    "review": {"review", "editing", "delivery"},
+}
+ROLES = list(ROLE_MODULES)
 ID = {"type": "string", "minLength": 1, "pattern": r"^(?!\s*$)[^\x00-\x1f]{1,240}$"}
 TEXT = {"type": "string", "minLength": 1}
 BOOL = {"type": "boolean"}
@@ -30,7 +43,7 @@ def array(items, minimum=0):
 REF = obj({"artifact_id": ID, "version": {"type": "integer", "minimum": 1}})
 AUTH = obj({"quote": TEXT, "reference": TEXT, "actions": array({"enum": [
     "configure", "prepare", "decide", "accept", "bind_task", "complete", "start", "continue",
-    "create_thread", "send_message_to_thread", "archive"]}, 1),
+    "create_thread", "send_message_to_thread", "archive", "route", "route_accept", "report"]}, 1),
     "target": obj({"project_id": ID, "scopes": array(ID, 1), "thread_ids": array(ID, 1)}),
     "synthetic": BOOL})
 WRITE = {"op_id": ID, "expected_project_id": ID, "base_revision": REV}
@@ -53,15 +66,17 @@ ACTION_SCHEMAS = {
     "conversation.read": obj({"expected_project_id": ID}),
     "conversation.configure": obj({**BASE, "enabled": BOOL}, (*REQUIRED, "enabled", "authorization")),
     "conversation.prepare": obj({**BASE, "topic_id": ID, "kind": {"enum": ["idea", "execution"]},
-        "title": TEXT, "scope": ID, "planning_ref": REF, "handoff_id": ID, "target_artifact_id": ID,
-        "direct_brief": TEXT, "inputs": array(REF), "target_role": {"enum": ["script", "novel"]}},
+        "title": TEXT, "scope": ID, "planning_ref": REF, "handoff_id": ID, "route_id": ID, "target_artifact_id": ID,
+        "direct_brief": TEXT, "inputs": array(REF), "target_role": {"enum": ROLES}},
         (*REQUIRED, "topic_id", "kind", "title", "scope"), oneOf=[
             {"properties": {"kind": {"const": "idea"}}, "required": ["planning_ref"],
-             "not": {"anyOf": [{"required": [key]} for key in ("handoff_id", "target_artifact_id", "direct_brief", "inputs", "target_role")]}},
+             "not": {"anyOf": [{"required": [key]} for key in ("handoff_id", "route_id", "target_artifact_id", "direct_brief", "inputs", "target_role")]}},
             {"properties": {"kind": {"const": "execution"}}, "required": ["handoff_id", "target_artifact_id"],
-             "not": {"anyOf": [{"required": [key]} for key in ("planning_ref", "direct_brief", "inputs", "target_role")]}},
+             "not": {"anyOf": [{"required": [key]} for key in ("planning_ref", "route_id", "direct_brief", "inputs", "target_role")]}},
+            {"properties": {"kind": {"const": "execution"}}, "required": ["route_id", "target_artifact_id"],
+             "not": {"anyOf": [{"required": [key]} for key in ("planning_ref", "handoff_id", "direct_brief", "inputs", "target_role")]}},
             {"properties": {"kind": {"const": "execution"}}, "required": ["direct_brief", "inputs", "target_role", "target_artifact_id"],
-             "not": {"anyOf": [{"required": ["planning_ref"]}, {"required": ["handoff_id"]}]}}]),
+             "not": {"anyOf": [{"required": ["planning_ref"]}, {"required": ["handoff_id"]}, {"required": ["route_id"]}]}}]),
     "conversation.decide": obj({**BASE, "topic_id": ID,
         "decision": {"enum": ["retain", "recycle", "restore", "develop"]}, "reason": TEXT,
         "branch_id": ID, "target_role": {"enum": ["script", "novel"]}, "archive_chat": BOOL, "planning_ref": REF},
@@ -78,9 +93,19 @@ ACTION_SCHEMAS = {
         (*REQUIRED, "topic_id", "task_id")),
     "conversation.complete": obj({**BASE, "topic_id": ID, "task_id": ID,
         "output_ref": REF, "summary": TEXT}, (*REQUIRED, "topic_id", "task_id", "output_ref", "summary")),
+    "conversation.route": obj({**BASE, "request_id": ID, "original_request": TEXT,
+        "target_role": {"enum": ROLES}, "scope": ID, "inputs": array(REF), "deliverable": TEXT,
+        "report_to_thread_id": ID, "target_artifact_id": ID}, (*REQUIRED, "request_id", "original_request", "target_role", "scope",
+                                      "inputs", "deliverable", "report_to_thread_id")),
+    "conversation.route_accept": obj({**BASE, "request_id": ID,
+        "status": {"enum": ["received", "clarifying", "ready", "declined"]},
+        "brief": TEXT, "questions": array(TEXT), "inputs": array(REF)}, (*REQUIRED, "request_id", "status")),
+    "conversation.report": obj({**BASE, "topic_id": ID, "task_id": ID, "output_ref": REF},
+        (*REQUIRED, "topic_id", "task_id", "output_ref")),
     "conversation.start": obj({**BASE, "topic_id": ID}, (*REQUIRED, "topic_id")),
     "conversation.continue": obj({**BASE, "topic_id": ID, "brief": TEXT, "inputs": array(REF),
-        "planning_ref": REF}, (*REQUIRED, "topic_id", "brief", "inputs")),
+        "planning_ref": REF, "route_id": ID}, (*REQUIRED, "topic_id", "brief", "inputs"),
+        description="接续原真实聊天。route_id明确接收新转交；省略则为直接接续，本轮不继承旧转交的额外回报目标，旧轮仍可按准确task/output补report。"),
     "conversation.claim": obj({**WRITE, "request_id": ID, "retry_failed": BOOL}, (*WRITE, "request_id")),
     "conversation.observe": obj({**WRITE, "request_id": ID, "status": {"enum": list(OBS)},
         "observation": {"type": "object"}}, (*WRITE, "request_id", "status", "observation"),
@@ -108,13 +133,15 @@ def validate_conversation_payload(action, payload):
             raise ValueError("observed_at 必须带时区")
         if observation["request_id"] != payload["request_id"]:
             raise ValueError("观察的 request_id 不一致")
-    if action == "conversation.accept":
-        if payload["status"] == "ready" and (not payload.get("brief") or not payload.get("inputs") or payload.get("questions")):
+    if action in ("conversation.accept", "conversation.route_accept"):
+        if payload["status"] == "ready" and (not payload.get("brief") or "inputs" not in payload or (action == "conversation.accept" and not payload["inputs"]) or payload.get("questions")):
             raise ValueError("ready 必须有完整 brief、准确 inputs 且无未决 questions")
         if payload["status"] == "clarifying" and not payload.get("questions"):
             raise ValueError("clarifying 必须记录真正待澄清的 questions")
         if payload["status"] == "declined" and not payload.get("brief"):
             raise ValueError("declined 必须用 brief 记录原因")
+    if action == "conversation.route" and any(not payload[key].strip() for key in ("original_request", "deliverable")):
+        raise ValueError("转交必须保留非空原话与明确交付要求")
     if action == "conversation.decide" and payload.get("archive_chat") and payload["decision"] not in ("recycle", "restore"):
         raise ValueError("archive_chat 只能作为 recycle/restore 的独立宿主待办")
     return payload
@@ -158,6 +185,8 @@ def _view(registry, state, full=False):
                                "retry_with_no_effect_evidence" if request["status"] == "failed" else "check_original_request")
         item["dispatch_allowed"] = False
         pending.append(item)
+    from .conversation_routing2100 import add_business_views
+    add_business_views(registry, state, result, full=full)
     result.update(project_id=project["project_id"], pending_host_actions=pending,
                   host_execution=False, evidence_level="caller_reported", observations_are_live=False,
                   host_accepted_is_business_processed=False, read_only=True)
@@ -193,7 +222,7 @@ def _parents(registry):
     workspace = workspace_view(registry)
     result = {}
     for slot in workspace["slots"]:
-        if slot["role"] not in ("control", "planning", "script", "novel") or slot["scope"] != "project":
+        if slot["role"] not in ("control", *ROLES) or slot["scope"] != "project":
             continue
         if not (slot["status"] == "associated_observed" and slot.get("thread_id") and slot.get("host_observation")
                 and slot.get("catalog_binding_status") == "host_reported_bound" and slot.get("client_project_id")):
@@ -272,7 +301,11 @@ def _planning(registry, ref, scope=None):
 
 def _compatible(registry, role):
     mode = (registry._project().get("workflow") or {}).get("mode")
-    return mode in ({"screenplay", "novel_to_screen"} if role == "script" else {"novel_only", "novel_to_screen"})
+    if role == "script":
+        return mode in {"screenplay", "novel_to_screen"}
+    if role == "novel":
+        return mode in {"novel_only", "novel_to_screen"}
+    return role in ROLE_MODULES and mode in {"screenplay", "novel_to_screen", "novel_only"}
 
 
 def _request(registry, state, payload, topic, tool, purpose, target_thread_id, body, **fields):
@@ -296,13 +329,14 @@ def _prepare(registry, state, payload):
     from .core import ConflictError, now
     existing = next((t for t in state["topics"] if t["topic_id"] == payload["topic_id"]), None)
     fingerprint = {key: payload[key] for key in ("topic_id", "kind", "title", "scope", "planning_ref", "handoff_id",
-        "target_artifact_id", "direct_brief", "inputs", "target_role") if key in payload}
+        "target_artifact_id", "direct_brief", "inputs", "target_role", "route_id") if key in payload}
     if existing:
         if existing["preparation"] != fingerprint:
             raise ConflictError("同 topic_id 已有准确范围和输入；不能重建或静默改绑")
         _actor(payload, existing["parent_thread_id"], state["parents"]["control"]["thread_id"])
         return {"topic": existing, "reused": True}
     handoff = None
+    route = None
     if payload["kind"] == "idea":
         _planning(registry, payload["planning_ref"], payload["scope"])
         role, inputs, brief = "planning", [payload["planning_ref"]], "围绕准确记录开展专题讨论，保留原话、分支与决定；不自动写剧本。"
@@ -314,8 +348,14 @@ def _prepare(registry, state, payload):
         if source["status"] == "recycled":
             raise ConflictError("灵感已回收；先明确恢复，再开始新的下游工作")
         role, inputs, brief = handoff["target_role"], _refs(registry, handoff["inputs"]), handoff["brief"]
+    elif payload.get("route_id"):
+        from .conversation_routing2100 import execution_route
+        route = execution_route(registry, state, payload)
+        role, inputs, brief = route["target_role"], deepcopy(route["inputs"]), route["brief"]
     else:
         role, inputs, brief = payload["target_role"], _refs(registry, payload["inputs"]), payload["direct_brief"]
+    if payload["kind"] == "execution" and handoff is None:
+        registry._fresh(inputs)
     if payload["kind"] == "execution" and not _compatible(registry, role):
         raise ConflictError("请求与既有创作路线不匹配；先澄清，不自动修改路线")
     parent = _parent(registry, state, role)
@@ -344,11 +384,18 @@ def _prepare(registry, state, payload):
         topic["handoff_id"] = payload.get("handoff_id")
     if handoff:
         handoff["execution_topic_id"] = topic["topic_id"]
+    if route:
+        topic["route_id"] = route["request_id"]
+        topic["report_to_thread_id"] = route["report_to_thread_id"]
+        route.update(execution_topic_id=topic["topic_id"], execution_round=topic["round"],
+                     execution_target_artifact_id=topic["target_artifact_id"])
     state["topics"].append(topic)
     request = _request(registry, state, payload, topic, "create_thread", "create", None,
         {"project_id": registry._project()["project_id"], "project_root": str(registry.root),
          "client_project_id": parent["client_project_id"], "title": topic["title"], "topic_id": topic["topic_id"],
          "scope": topic["scope"], "kind": topic["kind"], "parent_thread_id": parent["thread_id"],
+         "parent_role": role, "allowed_task_modules": sorted(ROLE_MODULES[role]),
+         "route_id": topic.get("route_id"), "report_to_thread_id": topic.get("report_to_thread_id"),
          "instructions": "只核对本专题身份并报告就绪，等待父入口记录真实关联和显式start任务；不立即创作、不创建其他聊天。",
          "brief": brief, "inputs": deepcopy(inputs), "target_artifact_id": topic.get("target_artifact_id"),
          "project_control_thread_id": state["parents"]["control"]["thread_id"],
@@ -463,17 +510,14 @@ def _accept(registry, state, payload):
 
 
 def _module_matches(role, module):
-    common = {"screenwriter", "outline", "character_bio"}
-    modes = {"script": {"screenplay", "script", "source_script", "dynamic_script", "original-screenplay", "adaptation", "novel-to-screenplay"},
-             "novel": {"story", "novel", "novel-master"}}
-    return module in common | modes.get(role, set())
+    return module in ROLE_MODULES.get(role, set())
 
 
 def _task_matches(registry, topic, task, completed=False):
     from .core import ConflictError
     from .modules import require_execution
     if not _module_matches(topic["parent_role"], task.get("module")):
-        raise ConflictError("任务模块不属于本专题的剧本或小说编剧职责")
+        raise ConflictError("任务模块不属于本专题的准确专业职责")
     task_frozen_source_ref(registry, task)
     if task.get("thread_id") != topic.get("thread_id") or not topic.get("thread_id") or task["scope"] != topic["scope"]:
         raise ConflictError("任务真实聊天或范围与执行专题不一致")
@@ -526,22 +570,21 @@ def _complete(registry, state, payload):
     artifact = registry._artifact(payload["output_ref"]["artifact_id"], payload["output_ref"]["version"])
     if not artifact or artifact["scope"] != topic["scope"] or artifact["metadata"].get("execution_lock") != task["execution_lock"]:
         raise ConflictError("提交成果与任务范围或冻结执行锁不符")
-    allowed = ({"script", "screenplay", "source_script"} if topic["parent_role"] == "script" else {"novel", "story"}) | {"outline", "character", "character_bio"}
+    from .core import output_kinds
+    allowed = output_kinds(task["module"])
+    if topic["parent_role"] in ("script", "novel"):
+        role_kinds = ({"script", "screenplay", "source_script"} if topic["parent_role"] == "script" else {"novel", "story"}) | {"outline", "character", "character_bio"}
+        allowed &= role_kinds
     if artifact["kind"] not in allowed:
-        raise ConflictError("真实提交成果类型不属于本专题编剧职责")
+        raise ConflictError("真实提交成果类型不属于本专题专业任务")
     if topic["status"] == "completed":
         if topic["output_ref"] != payload["output_ref"] or topic["completion_summary"] != payload["summary"]:
             raise ConflictError("完成回执已冻结；不能覆盖为其他成果或摘要")
         return {"topic": topic, "reused": True}
     topic.update(status="completed", output_ref=deepcopy(payload["output_ref"]), output_sha256=artifact["sha256"],
                  completion_summary=payload["summary"], completed_at=now())
-    requests = []
-    for recipient in dict.fromkeys((topic["parent_thread_id"], state["parents"]["control"]["thread_id"])):
-        requests.append(_request(registry, state, payload, topic, "send_message_to_thread", f"completion-{topic['round']}-{task['task_id']}", recipient,
-            {"project_id": registry._project()["project_id"], "topic_id": topic["topic_id"], "task_id": task["task_id"],
-             "output_ref": deepcopy(topic["output_ref"]), "sha256": artifact["sha256"], "summary": payload["summary"],
-             "notice": "任务已提交完整候选；不是用户采用或发布。请按准确引用读取结果。"}))
-    return {"topic": topic, "requests": requests, "notification_sent": False}
+    from .conversation_routing2100 import queue_completion_reports
+    return queue_completion_reports(registry, state, payload, topic)
 
 
 def _start(registry, state, payload):
@@ -562,11 +605,24 @@ def _start(registry, state, payload):
         _task_matches(registry, topic, task)
         if task["status"] not in ("created", "in_progress", "needs_review"):
             raise ConflictError("已关闭任务不能重新启动")
-    request = _request(registry, state, payload, topic, "send_message_to_thread", f"start-{topic['round']}", topic["thread_id"],
-        {"project_id": registry._project()["project_id"], "topic_id": topic["topic_id"], "round": topic["round"],
+    body = {"project_id": registry._project()["project_id"], "topic_id": topic["topic_id"], "round": topic["round"],
          "task_id": topic.get("task_id"), "scope": topic["scope"], "brief": topic["brief"], "inputs": deepcopy(topic["inputs"]),
          "target_artifact_id": topic.get("target_artifact_id"), "parent_thread_id": topic["parent_thread_id"],
-         "instruction": "读取准确输入及当前任务检查点，执行本轮已授权范围。保留完整成果；完成记录不等于批准，回报须按待办单独发送。"})
+         "parent_role": topic["parent_role"], "allowed_task_modules": sorted(ROLE_MODULES[topic["parent_role"]]),
+         "route_id": topic.get("route_id"), "report_to_thread_id": topic.get("report_to_thread_id"),
+         "instruction": "读取准确输入及当前任务检查点，执行本轮已授权范围。保留完整成果；完成记录不等于批准，回报须按待办单独发送。"}
+    purpose = f"start-{topic['round']}"
+    prior = next((r for r in state["outbox"] if r["topic_id"] == topic["topic_id"] and r["purpose"] == purpose
+                  and r["target_thread_id"] == topic["thread_id"]), None)
+    if prior:
+        # 1170 outbox bodies predate role metadata. Reuse their immutable body;
+        # never rewrite an accepted/unknown request or issue a replacement.
+        additions = {"parent_role", "allowed_task_modules", "route_id", "report_to_thread_id"}
+        comparable = {k: value for k, value in body.items() if k not in additions or k in prior["payload"]}
+        if prior["payload"] != comparable:
+            raise ConflictError("原启动请求内容已冻结，不能替换任务或输入")
+        body = prior["payload"]
+    request = _request(registry, state, payload, topic, "send_message_to_thread", purpose, topic["thread_id"], body)
     return {"topic": topic, "request": request, "dispatch_allowed": False, "business_processed": False}
 
 
@@ -582,6 +638,7 @@ def _continue(registry, state, payload):
            and r["status"] in ("in_flight", "queued", "unknown") for r in state["outbox"]):
         raise ConflictError("原启动请求结果未决；先核查原宿主观察，再接续新轮")
     inputs = _refs(registry, payload["inputs"])
+    route = None
     if topic["kind"] == "execution":
         if payload.get("planning_ref"):
             raise ValueError("执行接续使用准确inputs，不改写灵感专题身份")
@@ -593,7 +650,25 @@ def _continue(registry, state, payload):
             raise ConflictError("先complete准确提交成果并保留回报待办，再接续下一轮")
         if task["status"] not in ("submitted", "cancelled"):
             raise ConflictError("上轮任务尚未结束，不能新任务绕过原执行锁")
+        for other in state["topics"]:
+            if other["topic_id"] != topic["topic_id"] and other["kind"] == "execution" and other["status"] not in ("completed", "recycled"):
+                if other["scope"] == topic["scope"] or other.get("target_artifact_id") == topic["target_artifact_id"]:
+                    raise ConflictError("同范围或成果已有其他执行专题，不能通过接续创建第二编辑者")
+        for other_task in registry._list("tasks"):
+            if other_task["task_id"] != task["task_id"] and other_task["status"] in ("created", "in_progress", "needs_review") and (
+                    other_task["scope"] == topic["scope"] or other_task.get("artifact_id") == topic["target_artifact_id"]):
+                raise ConflictError("范围内仍有未结束任务，不能通过接续绕过旧执行锁")
+        if payload.get("route_id"):
+            from .conversation_routing2100 import execution_route
+            route = execution_route(registry, state, {**payload, "scope": topic["scope"],
+                "target_artifact_id": topic["target_artifact_id"]})
+            if route["target_role"] != topic["parent_role"] or route["receiver_thread_id"] != topic["parent_thread_id"]:
+                raise ConflictError("新转交的目标职责与原执行专题不符，不能改绑专业入口")
+            if sorted(inputs, key=lambda r: (r["artifact_id"], r["version"])) != sorted(route["inputs"], key=lambda r: (r["artifact_id"], r["version"])):
+                raise ConflictError("接续输入必须与新转交ready的准确输入完全一致")
     else:
+        if payload.get("route_id"):
+            raise ValueError("跨职责实作转交只能接续执行专题，不能转入灵感讨论")
         if not payload.get("planning_ref"):
             raise ValueError("灵感接续必须给出同一记录准确planning_ref")
         ref = payload["planning_ref"]
@@ -605,15 +680,26 @@ def _continue(registry, state, payload):
         topic["source_history"].append(deepcopy(topic["planning_ref"]))
         topic["planning_ref"] = deepcopy(ref)
     topic["task_history"].append({k: deepcopy(topic[k]) for k in ("round", "task_id", "task_lock", "inputs", "brief",
-        "output_ref", "output_sha256", "completion_summary", "completed_at") if k in topic})
+        "output_ref", "output_sha256", "completion_summary", "completed_at", "report_recipients",
+        "route_id", "report_to_thread_id", "target_artifact_id") if k in topic})
     for request in state["outbox"]:
         if request["topic_id"] == topic["topic_id"] and request["purpose"].startswith("start-") and request["status"] == "planned":
             request.update(status="cancelled", cancelled_by=payload["op_id"], cancellation_reason="round_closed_before_dispatch")
     topic.update(round=topic["round"] + 1, inputs=inputs, brief=payload["brief"], task_id=None,
                  status="active", continued_at=now())
-    for key in ("task_lock", "output_ref", "output_sha256", "completion_summary", "completed_at"):
+    for key in ("task_lock", "output_ref", "output_sha256", "completion_summary", "completed_at", "report_recipients"):
         topic.pop(key, None)
-    return {"topic": topic, "new_chat_created": False}
+    for key in ("route_id", "report_to_thread_id"):
+        topic.pop(key, None)
+    if route:
+        topic.update(route_id=route["request_id"], report_to_thread_id=route["report_to_thread_id"])
+        route.update(execution_topic_id=topic["topic_id"], execution_round=topic["round"],
+                     execution_target_artifact_id=topic["target_artifact_id"])
+    return {"topic": topic, "new_chat_created": False,
+            "continuation_mode": "routed" if route else "direct",
+            "route_id": topic.get("route_id"), "report_to_thread_id": topic.get("report_to_thread_id"),
+            "previous_round_reports_preserved": True,
+            "extra_report_target_inherited": False}
 
 
 def _claim(registry, state, payload):
@@ -717,7 +803,7 @@ def mutate_conversations(registry, action, payload):
         parents = _parents(registry)
         _actor(payload, parents["control"]["thread_id"])
         authorization = _authorize(registry, state, payload, "configure", "project", parents["control"]["thread_id"])
-        if state["parents"] and state["parents"] != parents:
+        if state["parents"] and any(parents.get(role) != prior for role, prior in state["parents"].items()):
             raise ConflictError("已启用管理入口不可自动改绑；保留原历史并先处理明确迁移")
         state.update(enabled=payload["enabled"], parents=parents, authorization=authorization)
         state["authorization_history"].append(deepcopy(authorization))
@@ -725,7 +811,9 @@ def mutate_conversations(registry, action, payload):
     else:
         if not state["enabled"] and action != "conversation.observe":
             raise ConflictError("尚未启用分层会话模式；先按明确授权 configure")
-        handlers = {"conversation.prepare": _prepare, "conversation.decide": _decide, "conversation.accept": _accept,
+        from .conversation_routing2100 import route_request, accept_route, report_completion
+        handlers = {"conversation.route": route_request, "conversation.route_accept": accept_route,
+                    "conversation.report": report_completion, "conversation.prepare": _prepare, "conversation.decide": _decide, "conversation.accept": _accept,
                     "conversation.bind_task": _bind, "conversation.complete": _complete,
                     "conversation.start": _start, "conversation.continue": _continue,
                     "conversation.claim": _claim, "conversation.observe": _observe}
@@ -734,9 +822,8 @@ def mutate_conversations(registry, action, payload):
 
 
 def guard_task_create(registry, payload):
-    """Enabled hierarchy routes new screenwriter tasks to an exact execution chat."""
+    """Enabled hierarchy routes new professional tasks to an exact execution chat."""
     from .core import ConflictError
-    from .modules import ALIASES, SCRIPT_ROUTES
     state = _load(registry)
     module = payload.get("module")
     if not state["enabled"]:
@@ -744,22 +831,24 @@ def guard_task_create(registry, payload):
     by_thread = [t for t in state["topics"] if t["kind"] == "execution" and t.get("thread_id")
                  and t["thread_id"] == payload.get("thread_id")]
     if by_thread and any(not _module_matches(t["parent_role"], module) for t in by_thread):
-        raise ConflictError("该真实聊天已属于编剧执行专题，不能建立其他专业模块任务占用范围")
-    if not (module in SCRIPT_ROUTES or ALIASES.get(module, module) == "screenwriter"):
+        raise ConflictError("该真实聊天已属于准确专业执行专题，不能建立其他模块任务占用范围")
+    if any(parent["thread_id"] == payload.get("thread_id") for parent in state["parents"].values()):
+        raise ConflictError("分层模式管理入口不承担具体制作；须复用准确执行专题")
+    if not any(_module_matches(role, module) for role in ROLES):
         return
     matches = [t for t in state["topics"] if t["kind"] == "execution" and t.get("thread_id")
                and t["thread_id"] == payload.get("thread_id") and t["scope"] == payload.get("scope")
                and t.get("target_artifact_id") == payload.get("artifact_id")]
     if len(matches) != 1:
-        raise ConflictError("分层模式下编剧任务必须在准确已创建的执行专题中建立")
+        raise ConflictError("分层模式下专业任务必须在准确已创建的执行专题中建立")
     topic = matches[0]
     if not _module_matches(topic["parent_role"], module):
-        raise ConflictError("任务模块与专题编剧职责不符")
+        raise ConflictError("任务模块与专题专业职责不符")
     _parent(registry, state, topic["parent_role"])
     if topic["status"] not in ("active", "prepared") or topic.get("task_id"):
         raise ConflictError("专题已有任务或已关闭，不能新建任务绕过旧执行锁")
     if sorted(payload.get("inputs", []), key=lambda r: (r["artifact_id"], r["version"])) != sorted(topic["inputs"], key=lambda r: (r["artifact_id"], r["version"])):
-        raise ConflictError("编剧任务输入必须与执行专题冻结的准确输入一致")
+        raise ConflictError("专业任务输入必须与执行专题冻结的准确输入一致")
     if not _compatible(registry, topic["parent_role"]):
         raise ConflictError("执行专题与当前路线不符；先澄清，不修改旧任务")
 

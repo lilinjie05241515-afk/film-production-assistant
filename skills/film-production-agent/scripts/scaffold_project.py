@@ -9,6 +9,7 @@ import argparse
 from contextlib import closing
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -92,42 +93,54 @@ def load_source(root: Path, expected_id: str):
         db.execute("PRAGMA query_only=ON")
         db.execute("BEGIN")
         values = dict(db.execute("SELECT key,value FROM settings WHERE key IN ('schema_version','project','workspace/v1','conversation/v1')"))
-    if json.loads(values.get("schema_version", "null")) != 2:
-        raise ValueError("只支持 schema_version=2；本助手不迁移登记库")
-    project = json.loads(values.get("project", "null"))
-    if not isinstance(project, dict) or project.get("project_id") != expected_id:
-        raise ValueError("项目身份不符，未创建目录或写入文件")
-    if not isinstance(project.get("title"), str) or not isinstance(project.get("workflow"), dict):
-        raise ValueError("项目格式未知或尚未选择路线")
-    mode = project["workflow"].get("mode")
-    if mode not in ROUTES:
-        raise ValueError("请先通过影视工具选择 screenplay/novel_to_screen/novel_only 路线")
-    workspace = json.loads(values.get("workspace/v1", "null"))
-    if workspace is None:
-        workspace = {"revision": 0, "prepared": False, "slots": [], "initialization_id": None}
-    if (not isinstance(workspace, dict) or type(workspace.get("revision")) is not int
-            or not isinstance(workspace.get("slots"), list)):
-        raise ValueError("workspace/v1 格式未知")
-    for slot in workspace["slots"]:
-        if (not isinstance(slot, dict) or slot.get("role") not in ROLES
-                or not isinstance(slot.get("scope"), str)
-                or not isinstance(slot.get("slot_id"), str)
-                or slot.get("project_id") != expected_id
-                or not isinstance(slot.get("observations", []), list)):
-            raise ValueError("工作区槽位格式未知或项目身份不符")
-        for key in ("thread_id", "client_thread_id", "client_project_id"):
-            if slot.get(key) is not None and not isinstance(slot[key], str):
-                raise ValueError(f"工作区 {key} 格式未知")
-    conversations = json.loads(values.get("conversation/v1", "null"))
-    if conversations is None:
-        conversations = {"revision": 0, "enabled": False, "parents": {}, "topics": [], "handoffs": [], "outbox": []}
-    if (not isinstance(conversations, dict) or type(conversations.get("revision")) is not int
-            or type(conversations.get("enabled")) is not bool
-            or not isinstance(conversations.get("parents"), dict)
-            or any(not isinstance(conversations.get(key, []), list) for key in ("topics", "handoffs", "outbox"))):
-        raise ValueError("conversation/v1 格式未知，保留原索引")
-    return project, workspace, conversations
-
+        if json.loads(values.get("schema_version", "null")) != 2:
+            raise ValueError("只支持 schema_version=2；本助手不迁移登记库")
+        project = json.loads(values.get("project", "null"))
+        if not isinstance(project, dict) or project.get("project_id") != expected_id:
+            raise ValueError("项目身份不符，未创建目录或写入文件")
+        if not isinstance(project.get("title"), str) or not isinstance(project.get("workflow"), dict):
+            raise ValueError("项目格式未知或尚未选择路线")
+        mode = project["workflow"].get("mode")
+        if mode not in ROUTES:
+            raise ValueError("请先通过影视工具选择 screenplay/novel_to_screen/novel_only 路线")
+        workspace = json.loads(values.get("workspace/v1", "null"))
+        if workspace is None:
+            workspace = {"revision": 0, "prepared": False, "slots": [], "initialization_id": None}
+        if (not isinstance(workspace, dict) or type(workspace.get("revision")) is not int
+                or not isinstance(workspace.get("slots"), list)):
+            raise ValueError("workspace/v1 格式未知")
+        for slot in workspace["slots"]:
+            if (not isinstance(slot, dict) or slot.get("role") not in ROLES
+                    or not isinstance(slot.get("scope"), str)
+                    or not isinstance(slot.get("slot_id"), str)
+                    or slot.get("project_id") != expected_id
+                    or not isinstance(slot.get("observations", []), list)):
+                raise ValueError("工作区槽位格式未知或项目身份不符")
+            for key in ("thread_id", "client_thread_id", "client_project_id"):
+                if slot.get(key) is not None and not isinstance(slot[key], str):
+                    raise ValueError(f"工作区 {key} 格式未知")
+        conversations = json.loads(values.get("conversation/v1", "null"))
+        if conversations is None:
+            conversations = {"revision": 0, "enabled": False, "parents": {}, "topics": [], "handoffs": [], "outbox": []}
+        if (not isinstance(conversations, dict) or type(conversations.get("revision")) is not int
+                or type(conversations.get("enabled")) is not bool
+                or not isinstance(conversations.get("parents"), dict)
+                or any(not isinstance(conversations.get(key, []), list) for key in ("topics", "handoffs", "outbox"))):
+            raise ValueError("conversation/v1 格式未知，保留原索引")
+        task_ids = {topic.get("task_id") for topic in conversations.get("topics", []) if isinstance(topic, dict) and topic.get("task_id")}
+        if any(not isinstance(task_id, str) for task_id in task_ids):
+            raise ValueError("专题任务身份格式未知")
+        tasks = {}
+        has_tasks = db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='tasks'").fetchone()
+        if task_ids and has_tasks:
+            for task_id in sorted(task_ids):
+                row = db.execute("SELECT data FROM tasks WHERE task_id=?", (task_id,)).fetchone()
+                if row:
+                    task = json.loads(row[0])
+                    if not isinstance(task, dict) or task.get("task_id") != task_id or not isinstance(task.get("status"), str):
+                        raise ValueError("专题关联任务格式未知，保留原索引")
+                    tasks[task_id] = task
+    return project, workspace, conversations, tasks
 
 def compact_slots(workspace):
     result = []
@@ -160,13 +173,26 @@ def compact_slots(workspace):
     return result
 
 
-def compact_conversations(state):
+def compact_conversations(state, tasks=None):
     """Navigation only: exclude authorization quotes, prompts and creative prose."""
+    tasks = tasks or {}
+    progress = None
+    if any(isinstance(value, dict) and value.get("task_id") for value in state.get("topics", [])):
+        helper = Path(__file__).resolve().parents[3] / "filmprod/conversation_routing2100.py"
+        if not helper.is_file():
+            raise ValueError("缺少包内会话进度规则，请使用完整插件包")
+        spec = importlib.util.spec_from_file_location("film_scaffold_progress", helper)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        progress = module.derive_topic_progress
     topics = []
     for value in state.get("topics", []):
         if not isinstance(value, dict):
             raise ValueError("专题记录格式未知")
         item = {key: value.get(key) for key in ("topic_id", "kind", "title", "scope", "parent_role", "parent_thread_id", "thread_id", "status", "task_id", "handoff_id", "planning_ref", "output_ref")}
+        item.update(progress(value, tasks.get(value.get("task_id")), state.get("outbox", []), state.get("parents", {}))
+                    if progress else {"task_status": None, "task_output_ref": None, "completion_recorded": False,
+                                      "needs_completion_record": False, "report_status": "not_ready", "report_recipients": []})
         thread = item["thread_id"]
         item["chat_url"] = f"codex://threads/{thread}" if isinstance(thread, str) and thread and thread != value.get("client_thread_id") else None
         topics.append(item)
@@ -210,7 +236,7 @@ def scaffold(root_value: str, expected_id: str):
         raise ValueError("--root 必须是显式绝对路径")
     check_path(raw, "directory")
     root = raw.resolve(strict=True)
-    project, workspace, conversations = load_source(root, expected_id)
+    project, workspace, conversations, tasks = load_source(root, expected_id)
     directories = list(FOLDERS)
     if project["workflow"]["mode"] in {"novel_to_screen", "novel_only"}:
         directories.append("01-故事与剧本/小说")
@@ -232,10 +258,10 @@ def scaffold(root_value: str, expected_id: str):
         "workflow_mode": project["workflow"]["mode"], "workspace_revision": workspace["revision"],
         "initialization_id": workspace.get("initialization_id"), "prepared": workspace.get("prepared", False),
         "read_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "source": ".project/registry.sqlite3 settings workspace/v1 and conversation/v1",
+        "source": ".project/registry.sqlite3 settings workspace/v1 and conversation/v1, referenced tasks",
         "evidence_level": "derived_snapshot_of_caller_reported_observations", "observations_are_live": False,
         "slots": compact_slots(workspace),
-        "conversations": compact_conversations(conversations),
+        "conversations": compact_conversations(conversations, tasks),
     }
     # Keep a byte-identical snapshot on an unchanged repeat; its original read time
     # remains explicit. The command result separately reports this run's read time.
@@ -261,10 +287,16 @@ def scaffold(root_value: str, expected_id: str):
     hierarchy = snapshot["conversations"]
     if hierarchy["enabled"]:
         lines.extend(["", "## 专题与执行对话", "", f"会话管理修订：{hierarchy['revision']}。部门总控协调，专题对话讨论或制作；下表为已保存观察。", "",
-                      "| 专题 | 类型 | 上级职责 | 状态 | 工作对话 |", "| --- | --- | --- | --- | --- |"])
+                      "| 专题 | 类型 | 上级职责 | 话题登记 | 实际任务 | 完成登记 | 回报状态 | 工作对话 |", "| --- | --- | --- | --- | --- | --- | --- | --- |"])
         for item in hierarchy["topics"]:
             link = f"[{md(item['title'])}]({item['chat_url']})" if item["chat_url"] else "等待宿主建立或核对"
-            lines.append(f"| {md(item['topic_id'])} | {md(item['kind'])} | {md(item['parent_role'])} | {md(item['status'])} | {link} |")
+            completion = "已登记" if item["completion_recorded"] else "待补完成登记" if item["needs_completion_record"] else "未登记"
+            task_label = "已提交候选" if item["task_status"] == "submitted" else md(item["task_status"])
+            report_label = {"not_ready": "尚未进入回报", "pending_authorization": "回报待处理：需授权", "planned": "待宿主发送",
+                            "in_flight": "宿主处理中", "queued": "宿主排队", "unknown": "发送结果待核", "failed": "发送失败待处理",
+                            "cancelled": "回报请求已取消", "host_accepted": "宿主已受理，业务读取待核"}.get(item["report_status"], md(item["report_status"]))
+            lines.append(f"| {md(item['topic_id'])} | {md(item['kind'])} | {md(item['parent_role'])} | {md(item['status'])} | {task_label} | {completion} | {report_label} | {link} |")
+        lines.extend(["", "话题状态、任务提交、完成登记、回报和用户采用分别核对；已提交候选不等于通过，宿主受理消息不等于上级已读取或验收。"])
         lines.extend(["", f"待处理的宿主请求：{len(hierarchy['pending_host_actions'])}；创建、发送或归档必须核对实际结果，未知请求不能重复执行。", "接续通过 film_conversations(read) 取得最新专题、交接与待办；本索引不会创建聊天、发送消息或修改任务。"])
     complete = {INDEX / "对话索引.json": encoded(snapshot), INDEX / "对话索引.md": ("\n".join(lines) + "\n").encode("utf-8")}
     for relative, content in complete.items():
@@ -280,7 +312,8 @@ def scaffold(root_value: str, expected_id: str):
 项目 ID：`{expected_id}`；授权作品根目录：`{root}`；创作路线以登记库当前记录为准。
 使用当前已核验的影视制作助手插件；读取其总控技能的 `references/project-bootstrap.md`，以及本目录 `09-任务与接续/工作对话/对话索引.md`。
 主协调器核对本使用者当前请求或个人默认，仅在已授权范围补齐主要工作区；部门总控按已启用的分层机制与实际授权安排独立专题；专题／执行对话只处理本职任务，不递归搭建整套工作区或创建同类总控。
-接续先通过 film_context(summary) / film_workspace(read) / film_conversations(read) 取得该项目的最新状态，精确读取本轮所需成果版本；索引只是派生快照。
+接续先通过 film_context(summary) / film_workspace(read) / film_conversations(read) 取得该项目的最新状态，精确读取本轮所需成果版本；当前登记职责优先于旧初始化提示中的“直接负责写稿”等文字，索引只是派生快照。
+简单咨询可就地解释，越界制作交准确主责，缺主责由项目总控协调；完整交稿、完成登记、实际回报和用户采用分别核对。
 用户文件、候选、已采用版本、云端手改分别保留；目录存在、聊天已建或文件已保存不代表创作或审核完成。
 """
     entry = f"""# {project['title']} · 项目入口

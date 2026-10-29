@@ -559,9 +559,14 @@ class ConversationIntegration1170(unittest.TestCase):
         self.dispatch("content.approve", op_id=self.op(), artifact_id=artifact["artifact_id"], version=artifact["version"],
             scope=artifact["scope"], evidence="TEST synthetic selected source output acceptance", actor="test", synthetic=True)
         output_ref = {key: artifact[key] for key in ("artifact_id", "version")}
+        director_execution = self.write("prepare", actor_thread_id=self.parents["director"],
+            topic_id="TEST-DIRECTOR-AFTER-FROZEN", kind="execution", title="TEST selected-source downstream direction",
+            scope="scene/after-frozen", target_role="director", target_artifact_id="TEST-DIRECTION-AFTER",
+            direct_brief="TEST direct from the exact adopted novel output", inputs=[output_ref])
+        self.host_accept(director_execution["request"], "TEST-director-after-frozen-chat")
         downstream = self.dispatch("task.create", op_id=self.op(), task_id="TEST-AFTER-FROZEN", artifact_id="TEST-DIRECTION-AFTER",
             title="TEST downstream can use adopted output", module="director", scope="scene/after-frozen",
-            thread_id=self.parents["director"], inputs=[output_ref], must_keep=[], allowed_changes=[], requirements=[])
+            thread_id="TEST-director-after-frozen-chat", inputs=[output_ref], must_keep=[], allowed_changes=[], requirements=[])
         self.assertEqual(downstream["inputs"], [output_ref])
 
     def test_ordinary_planning_input_has_no_implicit_frozen_source_exemption(self):
@@ -622,7 +627,7 @@ class ConversationIntegration1170(unittest.TestCase):
         self.assertEqual(direct["request"]["tool"], "create_thread")
 
     def test_execution_topic_rejects_wrong_professional_task_module(self):
-        self.hierarchy(mode="novel_only")
+        self.hierarchy(mode="novel_to_screen")
         execution = self.write("prepare", actor_thread_id=self.parents["novel"], topic_id="TEST-NOVEL-EXEC", kind="execution",
             title="TEST novel prose", scope="chapter/1", target_role="novel", target_artifact_id="TEST-NOVEL",
             direct_brief="TEST full novel chapter", inputs=[])
@@ -636,6 +641,11 @@ class ConversationIntegration1170(unittest.TestCase):
 
         # Corrupt only this isolated TEST fixture to represent a legacy/imported
         # task that predates the new create guard. Binding must still reject it.
+        director_execution = self.write("prepare", actor_thread_id=self.parents["director"],
+            topic_id="TEST-DIRECTOR-EXEC", kind="execution", title="TEST valid director source task",
+            scope="scene/legacy", target_role="director", target_artifact_id="TEST-LEGACY-DIRECTION",
+            direct_brief="TEST create the valid source task before simulating a forged legacy import", inputs=[])
+        self.host_accept(director_execution["request"], "TEST-legacy-director-chat")
         legacy = self.dispatch("task.create", op_id=self.op(), task_id="TEST-LEGACY-DIRECTOR", artifact_id="TEST-LEGACY-DIRECTION",
             title="TEST legacy director", module="director", scope="scene/legacy", thread_id="TEST-legacy-director-chat",
             inputs=[], must_keep=[], allowed_changes=[], requirements=["TEST director plan"])

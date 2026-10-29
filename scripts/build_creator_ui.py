@@ -67,6 +67,10 @@ s=s.replace("async function acceptManaged(out){", "async function acceptManaged(
 # POSIX paths may live on case-sensitive APFS; only Windows spellings fold case.
 s=re.sub(r"^const rootIdentity=.*$",lambda _:r"const rootIdentity=value=>{const path=String(value||'').replaceAll('\\','/').replace(/\/+$/,'');return /^[A-Za-z]:\//.test(path)||path.startsWith('//')?path.toLowerCase():path;};",s,count=1,flags=re.M)
 s=s.replace('module.exports={','module.exports={rootIdentity,',1)
+# Keep the original baseline immutable; render newer derived conversation states.
+s=re.sub(r'^function conversationRows\(topics\).*?\n', '', s, count=1, flags=re.M)
+s=s.replace("if(typeof module!=='undefined'&&module.exports)", (ui/'conversation2100.js').read_text(encoding='utf-8')+"\nif(typeof module!=='undefined'&&module.exports)",1)
+s=s.replace('module.exports={','module.exports={conversationProgress,',1)
 (ui/'board.html').write_text(s,encoding='utf-8',newline='\n')
 import runpy
 runpy.run_path(str(source/'scripts/apply_board2000.py'),run_name='__main__')

@@ -27,6 +27,40 @@ project_root 和 project_id 来自真实解析结果，不由示例填入。plan
 
 正式项目附件的 saved 状态必须引用本项目 media.register 已登记的 media_id，总控核验其路径/hash/大小。外部库 blob 路径不能直接标为项目 saved；未复制文件保留 link_only 及原出处，不声称项目备份含有原件。文本附件与媒体登记适用范围不符时保留 link_only，不能伪造 media 条目。
 
+## 正式项目的持续探索状态
+
+阶段保存在同一规划记录的 `state.exploration`；不新建数据库或另写可覆盖真源的状态文件。本节只适用于正式项目的 planning.record，外部库 CLI 不新增这些转换。
+
+首次开放探索在 change 中增加 exploration：
+
+```json
+{
+  "exploration": {
+    "action": "open", "event_id": "TEST-open-1",
+    "source": {"type": "synthetic_user_message", "reference": "TEST:turn1",
+               "quote": "TEST：先讨论多个可能方向。"}
+  }
+}
+```
+
+上面是合成片段；首建仍带 record_kind/title，更新仍带真实 base_version。source 只接受 user_message 或 synthetic_user_message，reference 必须能定位实际原话，quote 原样保留。生产使用不能拿 TEST 示例充当用户证据。工具只验证结构和已存分支，来源仍是调用方报告；模型分类本身不是经过认证的用户决定。
+
+| action | 作用与引用 |
+| --- | --- |
+| open | 明确开始开放探索。已有受控状态或旧 current_branch 时拒绝，防止初始化抹掉旧选择 |
+| select | 用户明确选定准确分支或组合后，持久进入 deepening；必须带 branch_refs |
+| preview | 用户明确指定本轮局部深入时带 branch_refs；phase/selected_refs 不变，范围仅为 this_request_only |
+| return_open | 用户要求重新发散时清除当前选择指针，旧选择、冻结内容与原话保存在 history |
+| pause / resume | 暂停保存 resume_phase，恢复原阶段与选择；无状态不猜测恢复目标 |
+
+select 和 preview 的 branch_refs 是数组，每项严格为 `{branch_id,record_version,branch_sha256}`。先 planning.read 取得本次 base_version，引用该版本中确实已保存的分支。摘要使用 Python 的 `hashlib.sha256(json.dumps(branch, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')).hexdigest()`；程序也提供 branch_sha256 辅助函数。必须核对准确 ID，不能从列表次序或“A方向”显示名称猜目标。同一转换内不能新增、改写目标分支再引用旧内容；先保存候选并读回。完整可运行的合成例子与字段 schema 见 film_action_help 的 planning.record 说明。
+
+生成状态包含 schema_version、phase（open/deepening/paused）、selected_refs（准确版本、摘要和完整分支快照）、history、resume_phase 与 last_preview。组合保留全部准确引用，不以 current_branch 的单值兼容字段表达完整组合。后续改写分支文案不会改变已经冻结的选择；接续需读取选择快照和版本差异，不能用同编号最新版偷偷替换旧选择。last_preview 只是对应请求的历史记录，后续“继续”不自动延续局部深入。
+
+没有新转换的偏好、答案、约束和讨论仍使用普通 append/entries；这些变化不改变 phase。不要直接写 state.exploration/set.exploration，也不要用 status、details 或 branch.status 冒充受控阶段；启用后 current_branch 由转换维护。每个新转换有稳定 event_id；未知结果用原 op_id 和原请求核查，重复事件不另存一次。转换不会写制作授权、批准、任务或会话。
+
+只读恢复不迁移旧记录；未登记 exploration 就保持未知。先查看旧 current_branch、决定和原始来源，保留已有选择；有证据时可显式 select 接续，用户要求重新探索时用 return_open。不要为了取得新字段先把旧选择清空。暂停恢复、方向选定、创作候选、内容通过和制作授权分别判断；明确制作无需先登记 open/select。
+
 下列外部工具只服务未立项且用户明确选择的独立灵感库；已经进入正式项目的需求与授权不继续在两处并行维护。
 
 ## 外部未立项灵感库的位置与真源

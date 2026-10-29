@@ -335,3 +335,20 @@ prepare、start 和 complete 只创建稳定待办，不能证明真实聊天、
 
 ## 1.18.0 创作看板
 主导航和精确决定接口以 [1.18.0 接入](docs/integration-1.18.0.md) 为准，取代历史版本中看板禁止所有采用的界面能力描述。所有普通管理动作继续不修改正文和采用。
+
+
+# 2.1.0 全部门协作、独立完成记录与开放探索
+
+本节更新 1.17.0 的部门范围及完成/回报约定，精确字段见 [2.1.0 接入](docs/integration-2.1.0.md) 和当前 `film_action_help`。保留 Registry schema 2、conversation/v1、planning_record、原事务/幂等/基础修订机制；读取不迁移真实项目或改写旧任务 execution_lock。
+
+会话父职责扩展为已核验的 planning/script/novel/director/art/assets/review，项目总控仍为 control。当前登记决定协调或执行身份，旧初始化提示不覆盖新职责；真实模块由 film_modules 返回，任务模块与成果类型须符合该部门。新增角色不表示媒体服务、音乐技能或后台执行器已经接入。既有灵感 decide/accept 交编剧及直接需求 prepare 保留，prepare 新增互斥 route_id 执行来源。
+
+conversation.route 记录 request_id、原用户请求、目标部门、scope、准确 inputs、deliverable 与 report_to_thread_id，来源 actor 和目标均须在当前作品核验；不发送或创建聊天。conversation.route_accept 仅由目标部门真实 actor 报告 received/clarifying/ready/declined；ready 保留原始精确输入并补齐必要来源。原请求身份被冻结，不静默替换版本和目标。缺主责由总控协调，同范围优先复用，不递归新建总控。新增动作依实际授权登记，跨聊天发送还须独立的人类发送授权。
+
+conversation.complete 保持原请求形状，须有 complete 授权，并校验已提交任务、准确成果、范围、成果类型和锁。缺少外发授权时仍保存完成事实及待回报状态，不将发消息作为完成记录的前置。conversation.report 以 topic_id/task_id/output_ref 接续已登记完成的准确当前轮或历史轮，分别核验 report 与每个目标的发送授权，复用已有稳定 outbox 请求。两动作都不实际发送，不批准候选；host_accepted 也不证明接收业务已读。
+
+会话只读视图和项目索引共同派生 task_status/task_output_ref/completion_recorded/needs_completion_record/report_status/report_recipients，不改原 topic.status。已提交但未完成登记、已完成但回报待授权、宿主受理与业务读取分别显示。看板仅查询这些进度，不增加业务派发或自动补完成入口。宿主仍在当前轮次执行创建、发送、有限等待和观察；持久化不承诺后台调度。
+
+planning.record 新增 change.exploration 显式动作 open/select/preview/return_open/pause/resume，仍使用原写入版本与 op_id。source 保存实际 user_message 或 synthetic_user_message 的 reference/quote；select/preview 必须引用本次基础版本已保存分支的 ID、版本和 SHA-256，不允许同轮改支后选旧快照。服务端生成 state.exploration 与历史，拒绝直接 state/set 写阶段。普通偏好、回答、约束和“继续”不形成阶段命令；preview 只允许该请求局部深入，不改变阶段或正式选择，last_preview 不授权后续持续深挖。旧记录无状态保持未知，不重置既有决定。
+
+阶段校验只核验结构与精确引用，不认证人类身份、语义选择或制作授权。选定方向不等于 Canon、成果采用、派发或生成许可；直接明确任务不强制先脑暴。外部 film_brainstorm 继续 interface_only/not_connected/can_generate=false，真实讨论由宿主按包内 idea-explorer 执行。个人风格、私人路径与持续授权不进入公开包。

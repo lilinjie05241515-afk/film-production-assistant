@@ -8,6 +8,8 @@ import hashlib
 import json
 import re
 
+from .exploration2100 import apply_exploration, validate_state as validate_exploration
+
 ARRAYS = {'facts', 'preferences', 'assumptions', 'unknowns', 'branches', 'decisions',
           'authorizations', 'sources', 'attachments', 'alternatives', 'projects',
           'validation_cards', 'requirements', 'constraints', 'tasks'}
@@ -56,7 +58,7 @@ def items(field, values):
 
 
 def validate(state):
-    if not isinstance(state, dict) or set(state) - ARRAYS - SCALARS:
+    if not isinstance(state, dict) or set(state) - ARRAYS - SCALARS - {'exploration'}:
         raise ValueError('未知状态字段放入 details；不能静默丢弃')
     if not isinstance(state.get('details', {}), dict):
         raise ValueError('details 必须为对象')
@@ -65,6 +67,12 @@ def validate(state):
     chosen = state.get('current_branch')
     if chosen is not None and not any(b['id'] == chosen for b in state['branches']):
         raise ValueError('current_branch 必须引用已保存分支，未知用 null')
+    if 'exploration' in state:
+        validate_exploration(state['exploration'])
+        selected = state['exploration']['selected_refs']
+        expected = selected[0]['branch_id'] if len(selected) == 1 else None
+        if chosen != expected:
+            raise ValueError('current_branch 必须与受控探索选择一致')
 
 
 def frozen_selection(entry):
@@ -116,13 +124,15 @@ def apply(previous, payload, *, record_id, version, timestamp):
     if not isinstance(payload, dict):
         raise ValueError('change 必须为对象')
     create = previous is None
-    allowed = {'record_kind', 'title', 'state', 'entries'} if create else {'title', 'set', 'append', 'item_updates', 'branch_updates', 'entries'}
+    allowed = ({'record_kind', 'title', 'state', 'entries'} if create else {'title', 'set', 'append', 'item_updates', 'branch_updates', 'entries'}) | {'exploration'}
     if set(payload) - allowed:
         raise ValueError('未知 change 字段或试图改变记录类型')
     for key in ('state', 'set', 'append', 'item_updates'):
         if key in payload and not isinstance(payload[key], dict):
             raise ValueError(key + ' 必须为对象')
     if create:
+        if 'exploration' in payload.get('state', {}):
+            raise ValueError('不能直接写入探索状态；请使用 change.exploration 转换')
         if payload.get('record_kind') not in KINDS:
             raise ValueError('record_kind 必须为 idea 或 requirements')
         nonempty(payload.get('title'), 'title')
@@ -140,6 +150,8 @@ def apply(previous, payload, *, record_id, version, timestamp):
         changes = payload.get('set', {})
         if set(changes) - SCALARS:
             raise ValueError('set 不得整体覆盖集合；请追加或按编号修订')
+        if 'current_branch' in changes and ('exploration' in previous['state'] or 'exploration' in payload):
+            raise ValueError('受控探索选择须由 change.exploration 转换，不能直接改 current_branch')
         result['state'].update(deepcopy(changes))
         for key, additions in payload.get('append', {}).items():
             if key not in ARRAYS:
@@ -166,6 +178,8 @@ def apply(previous, payload, *, record_id, version, timestamp):
                 if len(targets) != 1:
                     raise ValueError('修订目标编号不存在')
                 targets[0].update(deepcopy(patch))
+    if 'exploration' in payload:
+        apply_exploration(previous, result, payload['exploration'], version=version, timestamp=timestamp)
     validate(result['state'])
     entries = payload.get('entries', [])
     if not isinstance(entries, list):

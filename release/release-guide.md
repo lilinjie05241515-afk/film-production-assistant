@@ -2,7 +2,7 @@
 
 正式插件身份固定为 `film-production-agent@film-production-local`。本工具只构建、核验、写入明确的本地 Git 发布目录及获取发行包；不会联网、设置远端、上传、注册宿主插件或切换运行中的聊天。
 
-当前目标为 2.0.2，支持 Windows 与 macOS 桌面本地执行。发行运行环境需要 Python 3.11+（核心使用 `hashlib.file_digest`），仅使用 Python 标准库；本地 Git 发布还需要 Git。其他操作系统未列为本版支持平台。Python、FFmpeg 与桌面宿主的可用性由安装器检查；FFmpeg 是媒体预览和渲染的可选外部依赖。
+当前目标为 2.1.0，支持 Windows 与 macOS 桌面本地执行。发行运行环境需要 Python 3.11+（核心使用 `hashlib.file_digest`），仅使用 Python 标准库；本地 Git 发布还需要 Git。其他操作系统未列为本版支持平台。Python、FFmpeg 与桌面宿主的可用性由安装器检查；FFmpeg 是媒体预览和渲染的可选外部依赖。
 
 ## 构建并冻结
 
@@ -37,7 +37,7 @@ python -X utf8 -B release/publisher.py verify '<发行ZIP绝对路径>' --sha256
 
 ## 版本与跨平台验证
 
-运行模块、插件清单、看板版本及发行清单必须一致；2.0.2 的预期是 26 个工具、8 个方法模块和 5 个公开技能入口。维护旧版本目录、标签和摘要，不将本轮修改反写已安装缓存或既有发行包。
+运行模块、插件清单、看板版本及发行清单必须一致；2.1.0 的预期是 26 个工具、8 个方法模块和 5 个公开技能入口。维护旧版本目录、标签和摘要，不将本轮修改反写已安装缓存或既有发行包。
 
 使用 `.github/workflows/compatibility.yml` 验证 Windows、Apple Silicon Mac 与 Intel Mac：后端工作流、安装/发行工具、全部当前看板交互测试，以及由实际安装包启动的隔离 stdio 和合成媒体流程。冻结后再次使用同一 ZIP 验证，重新组装的 payload 必须与 ZIP 内文件逐字节一致。跨平台 Unicode 文件名与换行差异不能仅靠版本字符串掩盖。
 

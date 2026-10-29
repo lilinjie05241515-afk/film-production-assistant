@@ -6,7 +6,11 @@
 
 已在总控管理的正式项目中，先用 film_projects 解析本聊天的明确 root/project_id，以 film_resume 恢复 task_id、精确输入、执行锁和检查点。增量讨论使用 film_dispatch 的 planning.record；读回使用 planning.read。不能在项目内或其子目录调用外部 records.py，不能另建 .idea-planning 状态库。
 
-planning.record 的 payload 为 {op_id,expected_project_id,record_id,scope,base_version,change,deps?}。首次 change 为 {record_kind:idea|requirements,title,state?,entries?}，base_version=0；之后 change 为 {title?,set?,append?,item_updates?,branch_updates?,entries?}。record_kind 与 scope 不可改变。集合与标量遵照 storage.md；authorizations 另要求 scope 和 source.quote。用实际可取得的原话和来源，不能把分析或历史摘要当作新的授权。
+planning.record 的 payload 为 {op_id,expected_project_id,record_id,scope,base_version,change,deps?}。首次 change 为 {record_kind:idea|requirements,title,state?,entries?,exploration?}，base_version=0；之后 change 为 {title?,set?,append?,item_updates?,branch_updates?,entries?,exploration?}。record_kind 与 scope 不可改变。集合与标量遵照 storage.md；authorizations 另要求 scope 和 source.quote。用实际可取得的原话和来源，不能把分析或历史摘要当作新的授权。
+
+idea 记录可用 change.exploration 的显式 open/select/preview/return_open/pause/resume 转换保存持续发散状态，字段以 film_action_help 的 planning.record 说明和 [storage.md](references/storage.md) 为准。普通偏好、问题回答、约束和摘要仅作普通增量，不附阶段转换。select 表示明确选定讨论方向；preview 只记录本次请求的局部深入，不修改当前阶段或选择。来源是调用方报告的用户原话，程序校验结构与准确已存分支，不认证人类身份或自动判断语义，更不新增制作权限。
+
+旧记录未提供 exploration 时原样兼容。缺失状态不自动补成 open/deepening；已有 current_branch 不可用 open 清除，只能按用户明确请求 return_open 或重新 select。不要通过 state/set 或 details 模拟受控阶段；分支文案修订不会改写已选快照，恢复时核对 selected_refs 的精确版本。明确制作请求可直接按原流程处理，不要求建立探索状态。
 
 planning.read {record_id,version?,since_version?,limit?} 读取记录及有界变化历史，artifact.history 可定位完整不可变版本。写入必须真实返回 saved=true、readback_verified=true，核对 record/version/artifact_ref/project_root 后才报告成功。结果未知先用原 op_id/原请求查核；冲突重读并合并仍适用增量，不换号覆盖。planning_record 属于记录，不能审批或写入通过总稿。
 

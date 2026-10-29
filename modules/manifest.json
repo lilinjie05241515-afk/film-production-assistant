@@ -1390,11 +1390,11 @@
     {
       "id": "idea-explorer",
       "entrypoint": "idea-explorer/SKILL.md",
-      "content_version": "source-2e7cc8a035fa+filmprod.1.10e5c30a9570",
+      "content_version": "source-2e7cc8a035fa+filmprod.1.90f5052fe567",
       "source_content_version": null,
       "source_digest": "2e7cc8a035fad131be3c21e8cb40b14cdd306418eea3fcbd26ca153d1bcf9123",
-      "sha256": "10e5c30a957003c835fbfbb8d732d2237a23dc6c6fe3e9c36d95b2474adece87",
-      "entrypoint_sha256": "fa0936cc8bd56aabe204e163f23ef1e844804ea6d755786e4c4228d409223a96",
+      "sha256": "90f5052fe567db5bec310dfa7d8c06d16d06ec9a89fd4059aa49ea25579cf252",
+      "entrypoint_sha256": "7221dff7348dca0755164d1d959bf212980492812ec0d6a3c236c8e5d10987c6",
       "stage_aliases": [
         "idea",
         "ideation"
@@ -1460,30 +1460,30 @@
         },
         {
           "path": "idea-explorer/references/content-production.md",
-          "sha256": "7e55b6ff0ce758013a4f542fcc8b97c32a7debaca1f17cff0fb3154c9f67baea",
-          "bytes": 1135,
+          "sha256": "5521a294877cf4e532704c7147972c969a00a6d5a755793fcdc1a44f158a52e5",
+          "bytes": 1737,
           "source_sha256": "7e55b6ff0ce758013a4f542fcc8b97c32a7debaca1f17cff0fb3154c9f67baea",
           "source_ref": "skill:idea-explorer/references/content-production.md",
-          "adapted": false,
-          "adaptation": "unchanged"
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
         },
         {
           "path": "idea-explorer/references/exploration.md",
-          "sha256": "ef64f43f94fcd4cf54a45d91797d1175038673a1cc1d4478bab292ed5d022707",
-          "bytes": 2696,
+          "sha256": "6cd62d7f1183336e3bb4a9359fca922256856300283e8b045611d21b69b34cb0",
+          "bytes": 5196,
           "source_sha256": "ef64f43f94fcd4cf54a45d91797d1175038673a1cc1d4478bab292ed5d022707",
           "source_ref": "skill:idea-explorer/references/exploration.md",
-          "adapted": false,
-          "adaptation": "unchanged"
+          "adapted": true,
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
         },
         {
           "path": "idea-explorer/references/storage.md",
-          "sha256": "19daa2a36bc9aca83e55ac5a6f8425715b362587307a91847d2e5fe39d41fa63",
-          "bytes": 14622,
+          "sha256": "f9690d2285de1e9182a9197e23338659e119025f467b4a90e5292b088beacc05",
+          "bytes": 18259,
           "source_sha256": "79ab1e9963bdd0a45ad2b3d39e20a5636b770f0745ab9dfdb2b37f95a0d84a97",
           "source_ref": "skill:idea-explorer/references/storage.md",
           "adapted": true,
-          "adaptation": "portable paths and unified persistence"
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
         },
         {
           "path": "idea-explorer/references/validation.md",
@@ -1505,21 +1505,21 @@
         },
         {
           "path": "idea-explorer/SKILL.md",
-          "sha256": "fa0936cc8bd56aabe204e163f23ef1e844804ea6d755786e4c4228d409223a96",
-          "bytes": 4737,
+          "sha256": "7221dff7348dca0755164d1d959bf212980492812ec0d6a3c236c8e5d10987c6",
+          "bytes": 6057,
           "source_sha256": "9dd1f0968b05c7422dccb829b34545f7d544a99b625cdd88f73ce3c64e47a3c0",
           "source_ref": "skill:idea-explorer/SKILL.md",
           "adapted": true,
-          "adaptation": "portable paths and unified persistence"
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
         },
         {
           "path": "idea-explorer/MODULE_INTEGRATION.md",
-          "sha256": "200b325a8e2ad948045797fed8ff27e4a1aca61f167e05b1149cc08f32911982",
-          "bytes": 3396,
+          "sha256": "d61a9f101ea19a66d009abefa4604ac596ba1f5df5d8cea2e2df856722cd294d",
+          "bytes": 4442,
           "source_sha256": null,
           "source_ref": "release:integration-contract",
           "adapted": true,
-          "adaptation": "portable paths and unified persistence"
+          "adaptation": "filmprod 2.1.0: persistent user-directed exploration and exact branch selection; original source provenance retained"
         },
         {
           "path": "idea-explorer/OPTIONAL_DEPENDENCIES.md",
